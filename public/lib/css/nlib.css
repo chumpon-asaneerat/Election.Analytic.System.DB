@@ -1,0 +1,65 @@
+:root {
+    --default-box-shadow: 4px 4px 8px -3px rgba(0, 0, 0, 0.4);
+
+    /*== Sidebar Layout =======================================================*/
+    --sidebar-width: 200px;
+    --sidebar-collapse-width: 30px;
+    --sidebar-zindex: 9999;
+
+    /*== Navi Bar   =======================================================*/
+    /* Navi Bar: normal */
+    --navibar-foreground-color: white;
+    --navibar-background-color: cornflowerblue;
+
+    /*== Tab Control =======================================================*/
+    /* Tab Header: normal */
+    --tabheader-foreground-color: navy;
+    --tabheader-background-color: silver;
+    --tabheader-border-color: cornflowerblue;
+    /* Tab Header: hover */
+    --tabheader-hover-background-color: forestgreen;
+    --tabheader-hover-border-color: green;
+    /* Tab Header: active */
+    --tabheader-active-background-color: cornflowerblue;
+    --tabheader-active-border-color: cornflowerblue;
+    /* Tab Pages: box shadow. */
+    --tabpages-box-shadow: var(--default-box-shadow);
+
+    /*== Card Layout =======================================================*/
+    --card-box-shadow: var(--default-box-shadow);
+}
+
+::-webkit-scrollbar {
+    width: 11px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG);
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+}
+
+html, body { 
+    width: 100%;
+    height: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    /* Extra small devices (phones, 600px and down use max-width) */
+}
+@media only screen and (min-width: 600px) {
+    /* Small devices (portrait tablets and large phones, 600px and up use min-width) */
+}
+@media only screen and (min-width: 768px) {
+    /* Medium devices (landscape tablets, 768px and up) */
+}
+@media only screen and (min-width: 992px) {
+    /* Large devices (laptops/desktops, 992px and up) */
+}
+@media only screen and (min-width: 1200px) {
+    /* Extra large devices (large laptops and desktops, 1200px and up) */
+}

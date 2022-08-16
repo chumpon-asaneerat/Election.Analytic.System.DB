@@ -1,0 +1,51 @@
+----------------------------------------------------------------------------------------------
+[commited]
+Update 2021-03-05 #2
+- Update nlib-express -> morgan use short format and set logger.stream.
+
+[commited]
+Update 2021-03-05 #1
+- Update nlib-logger -> add logger.stream.
+
+-------------------------------------------------------------------------------------------------
+[commited]
+Update 2021-02-25 #10
+- fixed nlib-logger bug and set log folder in default config.
+
+[commited]
+Update 2021-02-25 #9
+- Implements supports logger in nlib-mssql #3.
+
+[commited]
+Update 2021-02-25 #8
+- Implements supports logger in nlib-mssql #2.
+
+[commited]
+Update 2021-02-25 #7
+- Implements supports logger in nlib-mssql #1.
+
+[commited]
+Update 2021-02-25 #6
+- Implements nlib-logger #4.
+
+[commited]
+Update 2021-02-25 #5
+- Implements nlib-logger #3.
+
+[commited]
+Update 2021-02-25 #4
+- Implements nlib-logger #2.
+
+[commited]
+Update 2021-02-25 #3
+- Implements nlib-logger #1.
+
+[commit]
+Update 2021-02-25 #2
+- Update .gitignore
+
+[commit]
+Update 2021-02-25 #1
+- Update history.txt
+
+-------------------------------------------------------------------------------------------------
