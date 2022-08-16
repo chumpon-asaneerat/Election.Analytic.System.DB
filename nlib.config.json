@@ -5,7 +5,7 @@
         "updated": "2019-08-12 02:00"
     },
     "webserver": {
-        "port": 3000,
+        "port": 4000,
         "websocket": {
             "enable": false
         },
@@ -58,6 +58,11 @@
                     "enable": true
                 },
                 {
+                    "route": "/dist/js",
+                    "path": "public/dist/tooltipjs-1.3.2",
+                    "maxAge": "5y",
+                    "enable": true
+                },                 {
                     "route": "/dist",
                     "path": "public/dist/bootstrap-4.2.1",
                     "maxAge": "5y",
@@ -82,6 +87,11 @@
                     "enable": true
                 },
                 {
+                    "route": "/dist/js",
+                    "path": "public/dist/moment-2.24.0",
+                    "maxAge": "5y",
+                    "enable": true
+                },                 {
                     "route": "/dist/js",
                     "path": "public/dist/riotjs-3.13.2",
                     "maxAge": "5y",

@@ -71,11 +71,13 @@ const defaultWSvr = {
             { route: "/dist/css", path: "public/dist/jquery-ui-1.12.1", maxAge: distMaxAge, enable: true },
             { route: "/dist/js", path: "public/dist/jquery-ui-1.12.1", maxAge: distMaxAge, enable: true },
             { route: "/dist/js", path: "public/dist/popperjs-1.15.0", maxAge: distMaxAge, enable: true },
+            { route: "/dist/js", path: "public/dist/tooltipjs-1.3.2", maxAge: distMaxAge, enable: true },
             { route: "/dist", path: "public/dist/bootstrap-4.2.1", maxAge: distMaxAge, enable: true },
             { route: "/dist", path: "public/dist/font-awesome-5.9.0", maxAge: distMaxAge, enable: true },
             { route: "/dist/css", path: "public/dist/emoji-symbols-1.0.0", maxAge: distMaxAge, enable: true },
             { route: "/dist", path: "public/dist/flag-icon-css-3.1.0", maxAge: distMaxAge, enable: true },
             { route: "/dist/js", path: "public/dist/moment-2.24.0", maxAge: distMaxAge, enable: true },
+            { route: "/dist/js", path: "public/dist/riotjs-3.13.2", maxAge: distMaxAge, enable: true },
             { route: "/components", path: "dist/component/riot", maxAge: distMaxAge, enable: true },
             { route: "/dist", path: "public/lib", maxAge: "15s", enable: true }
         ]
