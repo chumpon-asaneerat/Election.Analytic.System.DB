@@ -1,2 +1,2 @@
-# github-nlib-web-app-template
-The git hub nlib web application template project.
+# Election Analytic System v1.0.0 database script
+The Election Analytic System v1.0.0 database script project.
