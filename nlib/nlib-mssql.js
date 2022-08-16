@@ -740,7 +740,7 @@ const SqlServer = class {
     async query(text, pObj, inputs, outputs) {
         let ret = createResult();
         if (this.connected) {
-            logger.info('execute query: ' + text)
+            logger.info('execute query: ' + text)            
             let ps = new mssql.PreparedStatement(this.connection);
             
             let o = clone(pObj);

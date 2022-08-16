@@ -111,5 +111,18 @@
                 }
             ]
         }
-    }
+    },
+    "mssql": {
+        "default": {
+            "server": "localhost",
+            "database": "PPRPDemo",
+            "user": "sa",
+            "password": "winnt123",
+            "pool": {
+                "max": 10,
+                "min": 0,
+                "timeout": 1000
+            }
+        }
+    } 
 }

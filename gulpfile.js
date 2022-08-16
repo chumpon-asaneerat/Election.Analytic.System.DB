@@ -86,8 +86,9 @@ gulp.task('bundle-js', () => {
 
 gulp.task('merge-sql-scripts', () => {
     let task = new GulpFileMerge();
-    let sDate = '2019-04-26';
-    let rootPath = path.join(__dirname, 'src/server/db/scripts/' + sDate);
+    let sDate = '2022-08-17';
+    
+    let rootPath = path.join(__dirname, 'db/scripts/' + sDate);
     task.opts = {
         src: [
             /* Concat all *.sql file in subdirectories. */

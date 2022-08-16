@@ -1,0 +1,65 @@
+{
+    "SaveMRegion": {
+        "type": "PROCEDURE",
+        "updated": "2022-08-17T01:18:46.387Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "RegionId",
+                    "type": "nvarchar(10)"
+                },
+                {
+                    "name": "RegionName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "GeoGroup",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "GeoSubGroup",
+                    "type": "nvarchar(100)"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "GetMRegions": {
+        "type": "PROCEDURE",
+        "updated": "2022-08-17T01:23:12.313Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "RegionId",
+                    "type": "nvarchar(10)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "RegionName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "GeoGroup",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "GeoSubGroup",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": []
+        }
+    }
+}
