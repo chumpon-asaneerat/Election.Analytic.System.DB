@@ -1,0 +1,33 @@
+### Gets MRegions - all
+POST http://localhost:4000/api/master/MRegion/Search
+content-type: application/json
+
+{
+  "RegionId": null,
+  "RegionName": null,
+  "GeoGroup": null,
+  "GeoSubGroup": null
+}
+
+### Gets MRegions - geosubgroup contains 'เหนือ'
+POST http://localhost:4000/api/master/MRegion/Search
+content-type: application/json
+
+{
+  "RegionId": null,
+  "RegionName": null,
+  "GeoGroup": null,
+  "GeoSubGroup": "เหนือ"
+}
+
+
+### Save MRegion - geosubgroup contains 'เหนือ'
+POST http://localhost:4000/api/master/MRegion/Save
+content-type: application/json
+
+{
+  "RegionId": "10",
+  "RegionName": "ภาค 10",
+  "GeoGroup": "กลาง",
+  "GeoSubGroup": "กรุงเทพมหานคร"
+}

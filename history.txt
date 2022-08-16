@@ -1,5 +1,13 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-17 #4
+- Add MRegion routes api.
+  - GetMRegions
+  - SaveMRegion
+- Add MRegion rest api test file.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-17 #3
 - convert all db scripts file to UTF8.
 - update package.json
