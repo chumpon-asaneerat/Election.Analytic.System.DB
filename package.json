@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chumpon-asaneerat/github-nlib-web-app-template.git"
+    "url": "git+https://github.com/chumpon-asaneerat/Election.Analytic.System.DB.git"
   },
   "author": "Chumpon Asaneerat",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/chumpon-asaneerat/github-nlib-web-app-template/issues"
+    "url": "https://github.com/chumpon-asaneerat/Election.Analytic.System.DB/issues"
   },
-  "homepage": "https://github.com/chumpon-asaneerat/github-nlib-web-app-template#readme",
+  "homepage": "https://github.com/chumpon-asaneerat/Election.Analytic.System.DB#readme",
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/bl": "^2.1.0",
