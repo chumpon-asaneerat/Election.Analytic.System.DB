@@ -1,11 +1,22 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-18 #4
+- Add database script.
+  - MGender + Init data
+  - MTitle + Init data
+  - MAge + Init data
+  - MOccupation + Init data
+  - MEducation + Init data
+  - MContent
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-18 #3
 - Add database script.
   - MFileType
   - MFileSubType
   - Init MFileType,  MFileSubType
-  
+
 ----------------------------------------------------------------------------------------------
 [commited]
 Update 2022-08-18 #2
