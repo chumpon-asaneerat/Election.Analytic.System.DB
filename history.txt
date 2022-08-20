@@ -1,5 +1,13 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-20 #6
+- Update database script.
+  - Change all scripts date to 2022-08-24
+  - Update gulpfile.
+  - Fixed file encoding to UTF8.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-20 #5
 - Update database script.
   - Add SP SaveMTitle
