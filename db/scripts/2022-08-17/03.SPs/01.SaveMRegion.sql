@@ -32,39 +32,43 @@ CREATE PROCEDURE SaveMRegion (
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
-BEGIN TRY
-	IF NOT EXISTS 
-	(
-		SELECT * 
-		  FROM MRegion
-		 WHERE RegionId = @RegionId
-	)
-	BEGIN
-		INSERT INTO MRegion
-		(
-			  RegionId
-			, RegionName 
-			, GeoGroup
-			, GeoSubGroup
-		)
-		VALUES
-		(
-			  @RegionId
-			, @RegionName
-			, @GeoGroup
-			, @GeoSubGroup
-		);
-	END
-	ELSE
-	BEGIN
-		UPDATE MRegion
-		   SET RegionName = @RegionName
-		     , GeoGroup = @GeoGroup
-		     , GeoSubGroup = @GeoSubGroup
-		 WHERE RegionId = @RegionId
-	END
-
-		
+	BEGIN TRY
+		IF ((@RegionId IS NULL)
+            OR
+            NOT EXISTS 
+			(
+				SELECT * 
+				  FROM MRegion
+				 WHERE RegionId = @RegionId
+			)
+		   )
+		BEGIN
+			INSERT INTO MRegion
+			(
+				  RegionId
+				, RegionName 
+				, GeoGroup
+				, GeoSubGroup
+			)
+			VALUES
+			(
+				  @RegionId
+				, @RegionName
+				, @GeoGroup
+				, @GeoSubGroup
+			);
+		END
+		ELSE
+		BEGIN
+			UPDATE MRegion
+			   SET RegionName = @RegionName
+				 , GeoGroup = @GeoGroup
+				 , GeoSubGroup = @GeoSubGroup
+			 WHERE RegionId = @RegionId
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
 	END TRY
 	BEGIN CATCH
 		SET @errNum = ERROR_NUMBER();

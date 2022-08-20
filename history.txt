@@ -1,5 +1,13 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-20 #5
+- Update database script.
+  - Add SP SaveMTitle
+  - Check all sp to update variable name case sensitive match actual coulmn name.
+  - Check all sp to SET ErrNum, ErrMsg
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-20 #4
 - Update database script.
   - Add SP SaveMContent

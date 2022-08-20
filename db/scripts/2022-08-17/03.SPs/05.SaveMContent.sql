@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[SaveMContent]    Script Date: 8/20/2022 8:41:02 PM ******/
+/****** Object:  StoredProcedure [dbo].[SaveMContent]    Script Date: 8/20/2022 8:49:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -42,49 +42,52 @@ GO
 --   FROM MContent
 -- =============================================
 CREATE PROCEDURE [dbo].[SaveMContent] (
-  @data varbinary(MAX)
-, @fileTypeId int = NULL
-, @fileSubTypeId int = NULL
-, @contentId uniqueidentifier out
+  @Data varbinary(MAX)
+, @FileTypeId int = NULL
+, @FileSubTypeId int = NULL
+, @ContentId uniqueidentifier out
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
 	BEGIN TRY
-		IF ((@contentId IS NULL)
+		IF ((@ContentId IS NULL)
 			OR 
 			NOT EXISTS 
 			(
 				SELECT * 
 				  FROM MContent
-				 WHERE ContentId = @contentId 
+				 WHERE ContentId = @ContentId 
 			)
 		   )
 		BEGIN
-			SET @contentId = NEWID();
+			SET @ContentId = NEWID();
 			INSERT INTO MContent
 			(
 				  ContentId
-				, Data 
+				, [Data] 
 				, FileTypeId
 				, FileSubTypeId
 			)
 			VALUES
 			(
-				  @contentId
-				, @data
-				, @fileTypeId
-				, @fileSubTypeId
+				  @ContentId
+				, @Data
+				, @FileTypeId
+				, @FileSubTypeId
 			);
 		END
 		ELSE
 		BEGIN
 			UPDATE MContent
-			   SET Data = @data
-				 , FileTypeId = @fileTypeId
-				 , FileSubTypeId = @fileSubTypeId
-			 WHERE @contentId = @contentId
+			   SET [Data] = @Data
+				 , FileTypeId = @FileTypeId
+				 , FileSubTypeId = @FileSubTypeId
+			 WHERE ContentId = @ContentId
 		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
 	END TRY
 	BEGIN CATCH
 		SET @errNum = ERROR_NUMBER();
