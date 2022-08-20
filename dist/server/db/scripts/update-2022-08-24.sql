@@ -462,6 +462,33 @@ GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  View [dbo].[MContentView]    Script Date: 8/20/2022 10:00:17 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[MContentView]
+AS
+	SELECT A.ContentId
+	     , A.Data
+	     , A.LastUpdated
+		 , B.[Description] AS FileTypeName
+		 , C.[Description] AS FileSubTypeName
+		 , A.FileTypeId
+		 , A.FileSubTypeId
+	  FROM MContent A
+	     , MFileType B
+	     , MFileSubType C
+	 WHERE C.FileTypeId = B.FileTypeId
+	   AND A.FileTypeId = C.FileTypeId
+	   AND A.FileSubTypeId = C.FileSubTypeId
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -720,7 +747,7 @@ GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
-/****** Object:  StoredProcedure [dbo].[SaveMContent]    Script Date: 8/20/2022 8:49:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[SaveMContent]    Script Date: 8/20/2022 9:55:44 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -742,7 +769,7 @@ GO
 -- DECLARE @jsonData NVARCHAR(MAX) = N'{"age":1,"name":"sample"}'
 -- DECLARE @data VARBINARY(MAX) = CONVERT(VARBINARY(MAX), @jsonData)
 -- 
--- EXEC SaveMContent @data, NULL, NULL, @contentId out, @errNum out, @errMsg out
+-- EXEC SaveMContent @data, 2, 1, @contentId out, @errNum out, @errMsg out
 -- 
 -- SELECT @contentId AS ContentId, @errNum AS ErrNum, @errMsg AS ErrMsg
 -- 
@@ -754,7 +781,7 @@ GO
 -- -- CHANGE DATA
 -- SET @jsonData = N'{"age":100,"name":"sample 222"}'
 -- SET @data = CONVERT(VARBINARY(MAX), @jsonData)
--- EXEC SaveMContent @data, NULL, NULL, @contentId out, @errNum out, @errMsg out
+-- EXEC SaveMContent @data, 2, 1, @contentId out, @errNum out, @errMsg out
 -- 
 -- SELECT @contentId AS ContentId, @errNum AS ErrNum, @errMsg AS ErrMsg
 -- 
@@ -772,7 +799,11 @@ CREATE PROCEDURE [dbo].[SaveMContent] (
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
+DECLARE @LastUpdate datetime
 	BEGIN TRY
+        -- SET LAST UPDATE DATETIME
+	    SET @LastUpdate = GETDATE();
+        
 		IF ((@ContentId IS NULL)
 			OR 
 			NOT EXISTS 
@@ -790,6 +821,7 @@ BEGIN
 				, [Data] 
 				, FileTypeId
 				, FileSubTypeId
+				, LastUpdated
 			)
 			VALUES
 			(
@@ -797,6 +829,7 @@ BEGIN
 				, @Data
 				, @FileTypeId
 				, @FileSubTypeId
+				, @LastUpdate
 			);
 		END
 		ELSE
@@ -805,6 +838,7 @@ BEGIN
 			   SET [Data] = @Data
 				 , FileTypeId = @FileTypeId
 				 , FileSubTypeId = @FileSubTypeId
+				 , LastUpdated = @LastUpdate
 			 WHERE ContentId = @ContentId
 		END
 		-- Update Error Status/Message
@@ -815,6 +849,47 @@ BEGIN
 		SET @errNum = ERROR_NUMBER();
 		SET @errMsg = ERROR_MESSAGE();
 	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[GetMContents]    Script Date: 8/20/2022 9:41:24 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetMContents
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- EXEC GetMContents NULL, NULL, NULL      -- Gets all
+-- EXEC GetMContents NULL, 1, NULL         -- Gets all images
+-- EXEC GetMContents NULL, 1, 2            -- Gets all person images
+-- EXEC GetMContents NULL, 1, 2            -- Gets all logo images
+-- EXEC GetMContents NULL, 2, NULL         -- Gets all data
+-- EXEC GetMContents NULL, 2, 1            -- Gets all json data
+-- =============================================
+CREATE PROCEDURE [dbo].[GetMContents]
+(
+  @ContentId uniqueidentifier = NULL
+, @FileTypeId int = NULL
+, @FileSubTypeId int = NULL
+)
+AS
+BEGIN
+	SELECT *
+	  FROM MContentView
+	 WHERE ContentId = COALESCE(@ContentId, ContentId)
+	   AND FileTypeId = COALESCE(@FileTypeId, FileTypeId)
+	   AND FileSubTypeId = COALESCE(@FileSubTypeId, FileSubTypeId)
 END
 
 GO

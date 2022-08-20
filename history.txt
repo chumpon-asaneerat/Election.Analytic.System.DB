@@ -1,5 +1,13 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-20 #7
+- Update database script.
+  - Add View MContentView
+  - Add SP GetMContents
+  - Update SP SaveMContent (add auto create LastUpdate data).
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-20 #6
 - Update database script.
   - Change all scripts date to 2022-08-24

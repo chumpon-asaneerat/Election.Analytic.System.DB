@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[SaveMContent]    Script Date: 8/20/2022 8:49:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[SaveMContent]    Script Date: 8/20/2022 9:55:44 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -20,7 +20,7 @@ GO
 -- DECLARE @jsonData NVARCHAR(MAX) = N'{"age":1,"name":"sample"}'
 -- DECLARE @data VARBINARY(MAX) = CONVERT(VARBINARY(MAX), @jsonData)
 -- 
--- EXEC SaveMContent @data, NULL, NULL, @contentId out, @errNum out, @errMsg out
+-- EXEC SaveMContent @data, 2, 1, @contentId out, @errNum out, @errMsg out
 -- 
 -- SELECT @contentId AS ContentId, @errNum AS ErrNum, @errMsg AS ErrMsg
 -- 
@@ -32,7 +32,7 @@ GO
 -- -- CHANGE DATA
 -- SET @jsonData = N'{"age":100,"name":"sample 222"}'
 -- SET @data = CONVERT(VARBINARY(MAX), @jsonData)
--- EXEC SaveMContent @data, NULL, NULL, @contentId out, @errNum out, @errMsg out
+-- EXEC SaveMContent @data, 2, 1, @contentId out, @errNum out, @errMsg out
 -- 
 -- SELECT @contentId AS ContentId, @errNum AS ErrNum, @errMsg AS ErrMsg
 -- 
@@ -50,7 +50,11 @@ CREATE PROCEDURE [dbo].[SaveMContent] (
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
+DECLARE @LastUpdate datetime
 	BEGIN TRY
+        -- SET LAST UPDATE DATETIME
+	    SET @LastUpdate = GETDATE();
+        
 		IF ((@ContentId IS NULL)
 			OR 
 			NOT EXISTS 
@@ -68,6 +72,7 @@ BEGIN
 				, [Data] 
 				, FileTypeId
 				, FileSubTypeId
+				, LastUpdated
 			)
 			VALUES
 			(
@@ -75,6 +80,7 @@ BEGIN
 				, @Data
 				, @FileTypeId
 				, @FileSubTypeId
+				, @LastUpdate
 			);
 		END
 		ELSE
@@ -83,6 +89,7 @@ BEGIN
 			   SET [Data] = @Data
 				 , FileTypeId = @FileTypeId
 				 , FileSubTypeId = @FileSubTypeId
+				 , LastUpdated = @LastUpdate
 			 WHERE ContentId = @ContentId
 		END
 		-- Update Error Status/Message
