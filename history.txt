@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-22 #1
+- Update database script.
+  - Add Table UserRole
+  - Add Table UserInfo
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-20 #7
 - Update database script.
   - Add View MContentView
