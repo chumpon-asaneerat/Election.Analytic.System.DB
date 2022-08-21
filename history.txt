@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-22 #3
+- Update database script.
+  - Add init users script.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-22 #2
 - Update database script.
   - Add View UserInfoView
