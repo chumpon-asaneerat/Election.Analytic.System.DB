@@ -414,6 +414,92 @@ GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  Table [dbo].[UserRole]    Script Date: 8/22/2022 6:09:02 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[UserRole](
+	[RoleId] [int] NOT NULL,
+	[RoleName] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_UserRole] PRIMARY KEY CLUSTERED 
+(
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_UserRole_RoleName]    Script Date: 8/22/2022 6:09:02 AM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [IX_UserRole_RoleName] ON [dbo].[UserRole]
+(
+	[RoleName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  Table [dbo].[UserInfo]    Script Date: 8/22/2022 6:09:02 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[UserInfo](
+	[UserId] [int] IDENTITY(1,1) NOT NULL,
+	[RoleId] [int] NOT NULL,
+	[FullName] [nvarchar](100) NOT NULL,
+	[UserName] [nvarchar](50) NOT NULL,
+	[Password] [nvarchar](50) NOT NULL,
+	[Active] [int] NOT NULL,
+	[LastUpdated] [datetime] NOT NULL,
+ CONSTRAINT [PK_UserInfo] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Index [IX_UserInfo]    Script Date: 8/22/2022 6:09:02 AM ******/
+CREATE NONCLUSTERED INDEX [IX_UserInfo] ON [dbo].[UserInfo]
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_UserInfo_FullName]    Script Date: 8/22/2022 6:09:02 AM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [IX_UserInfo_FullName] ON [dbo].[UserInfo]
+(
+	[FullName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+
+/****** Object:  Index [IX_UserInfo_UserName]    Script Date: 8/22/2022 6:09:02 AM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [IX_UserInfo_UserName] ON [dbo].[UserInfo]
+(
+	[UserName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[UserInfo] ADD  CONSTRAINT [DF_UserInfo_Active]  DEFAULT ((1)) FOR [Active]
+GO
+ALTER TABLE [dbo].[UserInfo] ADD  CONSTRAINT [DF_UserInfo_LastUpdated]  DEFAULT (getdate()) FOR [LastUpdated]
+GO
+ALTER TABLE [dbo].[UserInfo]  WITH CHECK ADD  CONSTRAINT [FK_UserInfo_UserRole] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[UserRole] ([RoleId])
+GO
+ALTER TABLE [dbo].[UserInfo] CHECK CONSTRAINT [FK_UserInfo_UserRole]
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
 /****** Object:  Table [dbo].[MContent]    Script Date: 8/18/2022 1:52:48 AM ******/
 SET ANSI_NULLS ON
 GO
@@ -457,6 +543,31 @@ SELECT TitleId
 	 , LEN([Description]) AS DLen
 	 , LEN(ShortName) AS SLen
   FROM MTitle
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  View [dbo].[UserInfoView]    Script Date: 8/20/2022 10:00:17 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[UserInfoView]
+AS
+	SELECT A.UserId
+	     , A.FullName
+	     , A.UserName
+	     , A.[Password]
+		 , A.Active
+         , A.LastUpdated
+		 , A.RoleId
+		 , B.RoleName
+	  FROM UserInfo A
+	     , UserRole B
+	 WHERE A.RoleId = B.RoleId
 
 GO
 
@@ -890,6 +1001,277 @@ BEGIN
 	 WHERE ContentId = COALESCE(@ContentId, ContentId)
 	   AND FileTypeId = COALESCE(@FileTypeId, FileTypeId)
 	   AND FileSubTypeId = COALESCE(@FileSubTypeId, FileSubTypeId)
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SaveUserRole
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+--exec SaveUserRole 10, N'Exclusive';
+--exec SaveUserRole 10, N'Supervisor';
+--exec SaveUserRole 20, N'Normal User';
+--exec SaveUserRole 20, N'User';
+-- =============================================
+CREATE PROCEDURE SaveUserRole (
+  @RoleId int
+, @RoleName nvarchar(100)
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+		IF ((@RoleId IS NULL)
+            OR
+            NOT EXISTS 
+			(
+				SELECT * 
+				  FROM UserRole
+				 WHERE RoleId = @RoleId
+			)
+		   )
+		BEGIN
+			INSERT INTO UserRole
+			(
+				  RoleId
+				, RoleName 
+			)
+			VALUES
+			(
+				  @RoleId
+				, @RoleName
+			);
+		END
+		ELSE
+		BEGIN
+			UPDATE UserRole
+			   SET RoleName = @RoleName
+			 WHERE RoleId = @RoleId
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[GetUserRoles]    Script Date: 8/20/2022 9:41:24 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetUserRoles
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- EXEC GetUserRoles NULL, NULL      -- Gets all
+-- EXEC GetUserRoles 1, NULL         -- Get RoleId 1
+-- EXEC GetUserRoles NULL, N'adm'    -- Gets all person images
+-- =============================================
+CREATE PROCEDURE [dbo].[GetUserRoles]
+(
+  @RoleId int = NULL
+, @RoleName nvarchar(100) = NULL
+)
+AS
+BEGIN
+	SELECT *
+	  FROM UserRole
+	 WHERE RoleId = COALESCE(@RoleId, RoleId)
+       AND UPPER(LTRIM(RTRIM(RoleName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RoleName, RoleName)))) + '%'
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SaveUser
+-- [== History ==]
+-- <2022-08-22> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+--exec SaveUser 20, N'User 6', N'user6', N'123';     -- Save User with RoleId = 20 (user)
+-- =============================================
+CREATE PROCEDURE SaveUser (
+  @RoleId int
+, @FullName nvarchar(100)
+, @UserName nvarchar(50)
+, @Password nvarchar(50)
+, @UserId int = NULL out
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+DECLARE @LastUpdated datetime;
+	BEGIN TRY
+        -- Gets Current DateTime
+        SET @LastUpdated = GETDATE();
+
+		IF ((@UserId IS NULL)
+            OR
+            NOT EXISTS 
+			(
+				SELECT * 
+				  FROM UserInfo
+				 WHERE UserId = @UserId
+			)
+		   )
+		BEGIN
+			INSERT INTO UserInfo
+			(
+				  RoleId 
+				, FullName 
+				, UserName 
+				, [Password] 
+				, Active
+                , LastUpdated 
+			)
+			VALUES
+			(
+				  @RoleId 
+				, @FullName 
+				, @UserName 
+				, @Password
+                , 1
+                , @LastUpdated
+			);
+
+            SET @UserId = @@IDENTITY;
+		END
+		ELSE
+		BEGIN
+			UPDATE UserInfo
+			   SET FullName = @FullName
+                 , RoleId = @RoleId
+                 , UserName = @UserName
+                 , [Password] = @Password
+                 , LastUpdated = @LastUpdated
+			 WHERE UserId = @UserId
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 8/20/2022 9:41:24 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetUsers
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- EXEC GetUsers                                  -- Gets all active users
+-- EXEC GetUsers N'user'                          -- Gets active all users that full name contains 'user'
+-- EXEC GetUsers NULL, N'sup'                     -- Gets all active users that user name contains 'sup'
+-- EXEC GetUsers NULL, NULL, N'u'                 -- Gets all active users that role name contains 'u'
+-- EXEC GetUsers NULL, NULL, N'u', 10             -- Gets all active users that role name contains 'u' and RoleId = 10
+-- EXEC GetUsers NULL, NULL, NULL, NULL, NULL     -- Gets all users (active/inactive)
+-- =============================================
+CREATE PROCEDURE [dbo].[GetUsers]
+(
+  @FullName nvarchar(100) = NULL
+, @UserName nvarchar(50) = NULL
+, @RoleName nvarchar(100) = NULL
+, @RoleId int = NULL
+, @Active int = 1
+)
+AS
+BEGIN
+	SELECT *
+	  FROM UserInfoView
+	 WHERE UPPER(LTRIM(RTRIM(FullName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@FullName, FullName)))) + '%'
+       AND UPPER(LTRIM(RTRIM(UserName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@UserName, UserName)))) + '%'
+       AND UPPER(LTRIM(RTRIM(RoleName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RoleName, RoleName)))) + '%'
+       AND RoleId = COALESCE(@RoleId, RoleId)
+       AND Active = COALESCE(@Active, Active)
+     ORDER BY FullName, UserName
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[GetUser]    Script Date: 8/20/2022 9:41:24 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetUser
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- EXEC GetUser N'user1', N'123'  -- Get active user that has UserName = 'user1' and password = '123'
+-- =============================================
+CREATE PROCEDURE [dbo].[GetUser]
+(
+  @UserName nvarchar(50)
+, @Password nvarchar(50)
+)
+AS
+BEGIN
+	SELECT *
+	  FROM UserInfoView
+	 WHERE UPPER(LTRIM(RTRIM(UserName))) = UPPER(LTRIM(RTRIM(@UserName)))
+       AND UPPER(LTRIM(RTRIM([Password]))) = UPPER(LTRIM(RTRIM(@Password)))
+       AND Active = 1
 END
 
 GO
@@ -1473,5 +1855,25 @@ INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(1
 INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(13, N'วิชาชีพ', 13, 1);
 INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(14, N'ที่ปรึกษา', 14, 1);
 INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(15, N'อื่นๆ', 15, 1);
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+-- CREATE DEFAULT USER ROLES
+INSERT INTO UserRole(RoleId, RoleName) VALUES(1, N'Admistrator');
+INSERT INTO UserRole(RoleId, RoleName) VALUES(10, N'Supervisor');
+INSERT INTO UserRole(RoleId, RoleName) VALUES(20, N'User');
+
+-- CREATE DEFAULT USERS
+INSERT INTO UserInfo(RoleId, FullName, UserName, [Password]) VALUES(1, N'Administrator', N'admin', N'admin');
+
+INSERT INTO UserInfo(RoleId, FullName, UserName, [Password]) VALUES(10, N'Supervisor 1', N'sup1', N'123');
+INSERT INTO UserInfo(RoleId, FullName, UserName, [Password]) VALUES(10, N'Supervisor 2', N'sup2', N'123');
+INSERT INTO UserInfo(RoleId, FullName, UserName, [Password]) VALUES(20, N'User 1', N'user1', N'123');
+
+INSERT INTO UserInfo(RoleId, FullName, UserName, [Password]) VALUES(20, N'User 2', N'user2', N'123');
+INSERT INTO UserInfo(RoleId, FullName, UserName, [Password]) VALUES(20, N'User 3', N'user3', N'123');
+INSERT INTO UserInfo(RoleId, FullName, UserName, [Password]) VALUES(20, N'User 4', N'user4', N'123');
+INSERT INTO UserInfo(RoleId, FullName, UserName, [Password]) VALUES(20, N'User 5', N'user5', N'123');
 GO
 
