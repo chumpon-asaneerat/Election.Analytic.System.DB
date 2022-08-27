@@ -15,6 +15,10 @@ GO
 --
 -- [== Example ==]
 --
+--SELECT dbo.IsNullOrEmpty(null) AS RET;     -- NULL Returns 1
+--SELECT dbo.IsNullOrEmpty('') AS RET;       -- Empty Returns 1
+--SELECT dbo.IsNullOrEmpty(' ') AS RET;      -- Whitespace Returns 1
+--SELECT dbo.IsNullOrEmpty('Test') AS RET;   -- Has data Returns 0
 -- =============================================
 CREATE FUNCTION [dbo].[IsNullOrEmpty](@str nvarchar)
 RETURNS bit

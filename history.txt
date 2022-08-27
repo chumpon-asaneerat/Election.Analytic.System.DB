@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-27 #3
+- Update database script.
+  - Update Example for Function IsNullOrEmpty
+- Generate merge db script.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-27 #2
 - Generate merge db script.
 
