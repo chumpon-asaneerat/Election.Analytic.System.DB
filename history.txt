@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-29 #1
+- Update database script.
+  - Update Init MEducation.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-27 #3
 - Update database script.
   - Update Example for Function IsNullOrEmpty
