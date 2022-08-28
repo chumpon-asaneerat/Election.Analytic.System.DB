@@ -536,6 +536,89 @@ GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  Table [dbo].[MParty]    Script Date: 8/29/2022 1:52:32 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MParty](
+	[PartyId] [int] IDENTITY(1,1) NOT NULL,
+	[PartyName] [nvarchar](100) NOT NULL,
+	[ContentId] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_MParty] PRIMARY KEY CLUSTERED 
+(
+	[PartyId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_MParty_PartyName]    Script Date: 8/29/2022 1:52:32 AM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [IX_MParty_PartyName] ON [dbo].[MParty]
+(
+	[PartyName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  Table [dbo].[MPerson]    Script Date: 8/29/2022 3:04:03 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MPerson](
+	[PersonId] [int] NOT NULL,
+	[Prefix] [nvarchar](100) NULL,
+	[FirstName] [nvarchar](100) NOT NULL,
+	[LastName] [nvarchar](100) NULL,
+	[DOB] [datetime] NULL,
+	[GenderId] [int] NULL,
+	[EducationId] [int] NULL,
+	[OccupationId] [int] NULL,
+	[ContentId] [uniqueidentifier] NULL,
+	[Remark] [nvarchar](255) NULL,
+ CONSTRAINT [PK_MPerson] PRIMARY KEY CLUSTERED 
+(
+	[PersonId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_MPerson_FirstName]    Script Date: 8/29/2022 3:04:04 AM ******/
+CREATE NONCLUSTERED INDEX [IX_MPerson_FirstName] ON [dbo].[MPerson]
+(
+	[FirstName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_MPerson_LastName]    Script Date: 8/29/2022 3:04:04 AM ******/
+CREATE NONCLUSTERED INDEX [IX_MPerson_LastName] ON [dbo].[MPerson]
+(
+	[LastName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_MPerson_Prefix]    Script Date: 8/29/2022 3:04:04 AM ******/
+CREATE NONCLUSTERED INDEX [IX_MPerson_Prefix] ON [dbo].[MPerson]
+(
+	[Prefix] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[MPerson] ADD  CONSTRAINT [DF_MPerson_GenderId]  DEFAULT ((0)) FOR [GenderId]
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
 /****** Object:  Table [dbo].[MContent]    Script Date: 8/18/2022 1:52:48 AM ******/
 SET ANSI_NULLS ON
 GO
@@ -1353,6 +1436,109 @@ GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[ImportPartyImage]    Script Date: 8/29/2022 1:57:44 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	ImportPartyImage
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- DECLARE @errNum int
+-- DECLARE @errMsg nvarchar(MAX)
+-- DECLARE @partyName nvarchar(100)
+-- 
+-- DECLARE @jsonData NVARCHAR(MAX) = N'{"age":1,"name":"sample"}'
+-- DECLARE @data VARBINARY(MAX) = CONVERT(VARBINARY(MAX), @jsonData)
+-- 
+-- SET @partyName = N'พลังประชารัฐ';
+-- EXEC ImportPartyImage @partyName, @data, @errNum out, @errMsg out
+-- 
+-- SELECT @errNum AS ErrNum, @errMsg AS ErrMsg
+-- 
+-- SELECT * FROM MParty
+-- 
+-- SELECT A.PartyId
+--      , A.PartyName
+--      , B.Data
+--      , CONVERT(NVARCHAR(MAX), B.Data) AS JsonData
+--   FROM MParty A, MContent B
+-- =============================================
+CREATE PROCEDURE [dbo].[ImportPartyImage] (
+  @partyName nvarchar(100)
+, @Data varbinary(MAX) = NULL
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+DECLARE @LastUpdate datetime;
+DECLARE @FileTypeId int = 1;    -- 1: Images
+DECLARE @FileSubTypeId int = 2; -- 1: Person, 2: Logo
+DECLARE @PartyId int;
+DECLARE @ContentId uniqueidentifier;
+DECLARE @IsNewContentId bit;
+	BEGIN TRY
+        -- SET LAST UPDATE DATETIME
+	    SET @LastUpdate = GETDATE();
+		SELECT @PartyId = PartyId
+		     , @ContentId = ContentId
+		  FROM MParty
+		 WHERE UPPER(LTRIM(RTRIM(PartyName))) = UPPER(LTRIM(RTRIM(@PartyName)))
+
+		IF (@PartyId IS NULL)
+		BEGIN
+			INSERT INTO MParty
+			(
+				  PartyName 
+			)
+			VALUES
+			(
+				  @PartyName
+			);
+
+			SET @PartyId = @@IDENTITY;
+		END
+
+		IF (@ContentId IS NULL)  
+		BEGIN
+			SET @IsNewContentId = 1
+		END
+
+		-- SAVE IMAGE
+		EXEC SaveMContent @Data, @FileTypeId, @FileSubTypeId, @ContentId out, @errNum out, @errMsg out
+
+		IF (@errNum = 0)
+		BEGIN
+		    -- SAVE IMAGE WITH NO ERROR
+			IF (@IsNewContentId = 1)
+			BEGIN
+				-- Update Content Id back to MParty Table
+				UPDATE MParty
+				   SET ContentId = @ContentId
+				 WHERE PartyId = @PartyId
+			END
+			-- Update Error Status/Message
+			SET @errNum = 0;
+			SET @errMsg = 'Success';
+		END
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
 EXEC SaveMRegion N'01', N'ภาค 1', N'กลาง', N'กลาง';
 EXEC SaveMRegion N'02', N'ภาค 2', N'ตะวันออก', N'ตะวันออก';
 EXEC SaveMRegion N'03', N'ภาค 3', N'ตะวันออกเฉียงเหนือ', N'ตะวันออกเฉียงเหนือตอนล่าง';
@@ -1907,6 +2093,7 @@ GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
+INSERT INTO MEducation(EducationId, [Description], SortOrder, Active) VALUES(0, N'ไม่ระบุ', 0, 1);
 INSERT INTO MEducation(EducationId, [Description], SortOrder, Active) VALUES(1, N'ต่ำกว่าปริญญาตรี', 1, 1);
 INSERT INTO MEducation(EducationId, [Description], SortOrder, Active) VALUES(2, N'ปริญญาตรี', 2, 1);
 INSERT INTO MEducation(EducationId, [Description], SortOrder, Active) VALUES(3, N'ปริญญาโท', 3, 1);
