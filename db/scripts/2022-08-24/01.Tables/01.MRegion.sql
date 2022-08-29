@@ -1,4 +1,4 @@
-/****** Object:  Table [dbo].[MRegion]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Table [dbo].[MRegion]    Script Date: 8/29/2022 10:05:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -18,7 +18,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_GeoGroup]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_GeoGroup]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_GeoGroup] ON [dbo].[MRegion]
 (
 	[GeoGroup] ASC
@@ -27,7 +27,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_GeoSubGroup]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_GeoSubGroup]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_GeoSubGroup] ON [dbo].[MRegion]
 (
 	[GeoSubGroup] ASC
@@ -36,7 +36,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_RegionName]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_RegionName]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_RegionName] ON [dbo].[MRegion]
 (
 	[RegionName] ASC

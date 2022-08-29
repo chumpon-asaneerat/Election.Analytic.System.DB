@@ -1,16 +1,20 @@
-/****** Object:  Table [dbo].[MDistrict]    Script Date: 8/17/2022 1:31:23 AM ******/
+/****** Object:  Table [dbo].[MDistrict]    Script Date: 8/29/2022 10:05:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[MDistrict](
 	[DistrictId] [nvarchar](10) NOT NULL,
+	[RegionId] [nvarchar](10) NOT NULL,
+	[ProvinceId] [nvarchar](10) NOT NULL,
 	[DistrictNameEN] [nvarchar](100) NULL,
 	[DistrictNameTH] [nvarchar](100) NOT NULL,
 	[ADM2Code] [nvarchar](20) NULL,
- CONSTRAINT [PK_MDistrict] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_MDistrict_1] PRIMARY KEY CLUSTERED 
 (
-	[DistrictId] ASC
+	[DistrictId] ASC,
+	[RegionId] ASC,
+	[ProvinceId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -18,7 +22,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_ADM2Code]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_ADM2Code]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_ADM2Code] ON [dbo].[MDistrict]
 (
 	[ADM2Code] ASC
@@ -27,7 +31,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_DistrictNameEN]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_DistrictNameEN]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_DistrictNameEN] ON [dbo].[MDistrict]
 (
 	[DistrictNameEN] ASC
@@ -36,9 +40,14 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_DistrictNameTH]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_DistrictNameTH]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_DistrictNameTH] ON [dbo].[MDistrict]
 (
 	[DistrictNameTH] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[MDistrict]  WITH CHECK ADD  CONSTRAINT [FK_MDistrict_MProvince] FOREIGN KEY([ProvinceId], [RegionId])
+REFERENCES [dbo].[MProvince] ([ProvinceId], [RegionId])
+GO
+ALTER TABLE [dbo].[MDistrict] CHECK CONSTRAINT [FK_MDistrict_MProvince]
 GO

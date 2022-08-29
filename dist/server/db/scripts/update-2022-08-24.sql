@@ -1,5 +1,5 @@
 /*********** Script Update Date: 2022-08-24  ***********/
-/****** Object:  Table [dbo].[MRegion]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Table [dbo].[MRegion]    Script Date: 8/29/2022 10:05:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -19,7 +19,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_GeoGroup]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_GeoGroup]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_GeoGroup] ON [dbo].[MRegion]
 (
 	[GeoGroup] ASC
@@ -28,7 +28,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_GeoSubGroup]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_GeoSubGroup]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_GeoSubGroup] ON [dbo].[MRegion]
 (
 	[GeoSubGroup] ASC
@@ -37,7 +37,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_RegionName]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_RegionName]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_RegionName] ON [dbo].[MRegion]
 (
 	[RegionName] ASC
@@ -56,19 +56,21 @@ GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
-/****** Object:  Table [dbo].[MProvince]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Table [dbo].[MProvince]    Script Date: 8/29/2022 10:05:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[MProvince](
 	[ProvinceId] [nvarchar](10) NOT NULL,
+	[RegionId] [nvarchar](10) NOT NULL,
 	[ProvinceNameEN] [nvarchar](100) NULL,
 	[ProvinceNameTH] [nvarchar](100) NOT NULL,
 	[ADM1Code] [nvarchar](20) NULL,
- CONSTRAINT [PK_Province] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_MProvince] PRIMARY KEY CLUSTERED 
 (
-	[ProvinceId] ASC
+	[ProvinceId] ASC,
+	[RegionId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -76,7 +78,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_ADM1PCode]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_ADM1PCode]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_ADM1PCode] ON [dbo].[MProvince]
 (
 	[ADM1Code] ASC
@@ -85,7 +87,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_ProvinceNameEN]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_ProvinceNameEN]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_ProvinceNameEN] ON [dbo].[MProvince]
 (
 	[ProvinceNameEN] ASC
@@ -94,30 +96,39 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_ProvinceNameTH]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_ProvinceNameTH]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_ProvinceNameTH] ON [dbo].[MProvince]
 (
 	[ProvinceNameTH] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[MProvince]  WITH CHECK ADD  CONSTRAINT [FK_MProvince_MRegion] FOREIGN KEY([RegionId])
+REFERENCES [dbo].[MRegion] ([RegionId])
+GO
+ALTER TABLE [dbo].[MProvince] CHECK CONSTRAINT [FK_MProvince_MRegion]
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The shape file reference for Admin level 1 code' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MProvince', @level2type=N'COLUMN',@level2name=N'ADM1Code'
 GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
-/****** Object:  Table [dbo].[MDistrict]    Script Date: 8/17/2022 1:31:23 AM ******/
+/****** Object:  Table [dbo].[MDistrict]    Script Date: 8/29/2022 10:05:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[MDistrict](
 	[DistrictId] [nvarchar](10) NOT NULL,
+	[RegionId] [nvarchar](10) NOT NULL,
+	[ProvinceId] [nvarchar](10) NOT NULL,
 	[DistrictNameEN] [nvarchar](100) NULL,
 	[DistrictNameTH] [nvarchar](100) NOT NULL,
 	[ADM2Code] [nvarchar](20) NULL,
- CONSTRAINT [PK_MDistrict] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_MDistrict_1] PRIMARY KEY CLUSTERED 
 (
-	[DistrictId] ASC
+	[DistrictId] ASC,
+	[RegionId] ASC,
+	[ProvinceId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -125,7 +136,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_ADM2Code]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_ADM2Code]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_ADM2Code] ON [dbo].[MDistrict]
 (
 	[ADM2Code] ASC
@@ -134,7 +145,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_DistrictNameEN]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_DistrictNameEN]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_DistrictNameEN] ON [dbo].[MDistrict]
 (
 	[DistrictNameEN] ASC
@@ -143,28 +154,39 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_DistrictNameTH]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_DistrictNameTH]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_DistrictNameTH] ON [dbo].[MDistrict]
 (
 	[DistrictNameTH] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+ALTER TABLE [dbo].[MDistrict]  WITH CHECK ADD  CONSTRAINT [FK_MDistrict_MProvince] FOREIGN KEY([ProvinceId], [RegionId])
+REFERENCES [dbo].[MProvince] ([ProvinceId], [RegionId])
+GO
+ALTER TABLE [dbo].[MDistrict] CHECK CONSTRAINT [FK_MDistrict_MProvince]
+GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
-/****** Object:  Table [dbo].[MSubdistrict]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Table [dbo].[MSubdistrict]    Script Date: 8/29/2022 10:05:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[MSubdistrict](
 	[SubdistrictId] [nvarchar](10) NOT NULL,
+	[RegionId] [nvarchar](10) NOT NULL,
+	[ProvinceId] [nvarchar](10) NOT NULL,
+	[DistrictId] [nvarchar](10) NOT NULL,
 	[SubdistrictNameEN] [nvarchar](100) NULL,
 	[SubdistrictNameTH] [nvarchar](100) NULL,
 	[ADM3Code] [nvarchar](20) NULL,
- CONSTRAINT [PK_MSubdistrict] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_MSubdistrict_1] PRIMARY KEY CLUSTERED 
 (
-	[SubdistrictId] ASC
+	[SubdistrictId] ASC,
+	[RegionId] ASC,
+	[ProvinceId] ASC,
+	[DistrictId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -172,7 +194,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_ADM3Code]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_ADM3Code]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_ADM3Code] ON [dbo].[MSubdistrict]
 (
 	[ADM3Code] ASC
@@ -181,7 +203,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_SubdistrictNameEN]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_SubdistrictNameEN]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_SubdistrictNameEN] ON [dbo].[MSubdistrict]
 (
 	[SubdistrictNameEN] ASC
@@ -190,11 +212,16 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_SubdistrictNameTH]    Script Date: 8/17/2022 1:31:24 AM ******/
+/****** Object:  Index [IX_SubdistrictNameTH]    Script Date: 8/29/2022 10:05:54 PM ******/
 CREATE NONCLUSTERED INDEX [IX_SubdistrictNameTH] ON [dbo].[MSubdistrict]
 (
 	[SubdistrictNameTH] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[MSubdistrict]  WITH CHECK ADD  CONSTRAINT [FK_MSubdistrict_MDistrict] FOREIGN KEY([DistrictId], [RegionId], [ProvinceId])
+REFERENCES [dbo].[MDistrict] ([DistrictId], [RegionId], [ProvinceId])
+GO
+ALTER TABLE [dbo].[MSubdistrict] CHECK CONSTRAINT [FK_MSubdistrict_MDistrict]
 GO
 
 

@@ -1,5 +1,14 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-29 #7
+- Update database script.
+  - Update Table MRegion
+  - Update Table MProvince
+  - Update Table MDistrict
+  - Update Table MSubdistrict
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-29 #6
 - Update database script.
   - Add Table PollingStation.
