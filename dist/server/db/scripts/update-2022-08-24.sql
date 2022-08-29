@@ -646,6 +646,35 @@ GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  Table [dbo].[PollingStation]    Script Date: 8/29/2022 9:30:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PollingStation](
+	[YearThai] [int] NOT NULL,
+	[RegionId] [nvarchar](10) NOT NULL,
+	[ProvinceId] [nvarchar](10) NOT NULL,
+	[DistrictId] [nvarchar](10) NOT NULL,
+	[SubdistrictId] [nvarchar](10) NOT NULL,
+	[PollingUnitNo] [int] NOT NULL,
+	[PollingSubUnitNo] [int] NULL,
+	[VillageCount] [int] NULL,
+ CONSTRAINT [PK_PollingStation] PRIMARY KEY CLUSTERED 
+(
+	[YearThai] ASC,
+	[RegionId] ASC,
+	[ProvinceId] ASC,
+	[DistrictId] ASC,
+	[SubdistrictId] ASC,
+	[PollingUnitNo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
 /****** Object:  View [dbo].[MTitleView]    Script Date: 8/20/2022 7:40:12 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -714,6 +743,49 @@ AS
 	 WHERE C.FileTypeId = B.FileTypeId
 	   AND A.FileTypeId = C.FileTypeId
 	   AND A.FileSubTypeId = C.FileSubTypeId
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  View [dbo].[PollingStationView]    Script Date: 8/29/2022 9:33:46 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[PollingStationView]
+AS
+	SELECT A.YearThai
+	     , A.RegionId
+		 , B.RegionName
+		 , B.GeoGroup
+		 , B.GeoSubGroup
+	     , A.ProvinceId
+		 , C.ProvinceNameTH
+		 , C.ProvinceNameEN
+		 , C.ADM1Code
+		 , A.DistrictId
+		 , D.DistrictNameTH
+		 , D.DistrictNameEN
+		 , D.ADM2Code
+		 , A.SubdistrictId
+		 , E.SubdistrictNameTH
+		 , E.SubdistrictNameEN
+		 , E.ADM3Code
+		 , A.PollingUnitNo
+		 , A.PollingSubUnitNo
+		 , A.VillageCount
+	  FROM PollingStation A
+	     , MRegion B
+	     , MProvince C
+	     , MDistrict D
+	     , MSubdistrict E
+	 WHERE A.RegionId = B.RegionId
+	   AND A.ProvinceId = C.ProvinceId
+	   AND A.DistrictId = D.DistrictId
+	   AND A.SubdistrictId = E.SubdistrictId
 
 GO
 
@@ -1528,6 +1600,184 @@ DECLARE @IsNewContentId bit;
 			SET @errNum = 0;
 			SET @errMsg = 'Success';
 		END
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  UserDefinedFunction [dbo].[FindRegionId]    Script Date: 8/29/2022 8:52:22 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Name: indRegionId.
+-- Description:	IsNullOrEmpty is function to check is string is in null or empty
+--              returns 1 if string is null or empty string otherwise return 0.
+-- [== History ==]
+-- <2022-08-26> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+--SELECT dbo.FindRegionId(N'ภาค 10') AS RegionId;
+-- =============================================
+CREATE FUNCTION [dbo].[FindRegionId]
+(
+  @RegionName nvarchar(100)
+)
+RETURNS nvarchar(10)
+AS
+BEGIN
+DECLARE @diff int;
+DECLARE @RegionId nvarchar(10);
+	SET @RegionId = NULL;
+
+	SELECT @RegionId = RegionId
+	  FROM MRegion
+	 WHERE UPPER(LTRIM(RTRIM(RegionName))) = UPPER(LTRIM(RTRIM(@RegionName)))
+
+	RETURN @RegionId;
+END
+
+GO
+
+
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[ImportPollingStation]    Script Date: 8/29/2022 8:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	ImportPollingStation
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- DECLARE @errNum int
+-- DECLARE @errMsg nvarchar(MAX)
+-- 
+-- EXEC ImportPollingStatione @data, @errNum out, @errMsg out
+-- 
+-- SELECT @errNum AS ErrNum, @errMsg AS ErrMsg
+-- =============================================
+CREATE PROCEDURE [dbo].[ImportPollingStation] (
+  @YearThai int
+, @RegionName nvarchar(100)
+, @GeoSubGroup nvarchar(100)
+, @ProvinceId nvarchar(10)
+, @ProvinceNameTH nvarchar(100)
+, @DistrictId nvarchar(10)
+, @DistrictNameTH nvarchar(100)
+, @SubdistrictId nvarchar(10)
+, @SubdistrictNameTH nvarchar(100)
+, @PollingUnitNo int
+, @PollingSubUnitNo int
+, @VillageCount int
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+DECLARE @RegionId nvarchar(10);
+	BEGIN TRY
+	    -- Check all required parameters should not be null
+		IF (   @YearThai IS NULL 
+		    OR @RegionName IS NULL
+		    OR @GeoSubGroup IS NULL
+		    OR @ProvinceId IS NULL
+		    OR @ProvinceNameTH IS NULL
+		    OR @DistrictId IS NULL
+		    OR @DistrictNameTH IS NULL
+		    OR @SubdistrictId IS NULL
+		    OR @SubdistrictNameTH IS NULL
+			OR @PollingUnitNo IS NULL
+			OR @PollingSubUnitNo IS NULL
+		   )
+		BEGIN
+			SET @errNum = 100;
+			SET @errMsg = 'Some of required parameters is null.';
+			RETURN
+		END
+	    
+		-- Check RegionName to find RegionId
+		SET @RegionId = dbo.FindRegionId(@RegionName);
+		IF (@RegionId IS NULL)
+		BEGIN
+			SET @errNum = 101;
+			SET @errMsg = 'Cannot Find RegionId by RegionName: ' + CONVERT(nvarchar(100), @RegionName);
+			RETURN
+		END
+
+		-- Check Province
+		IF (NOT EXISTS 
+			(
+				SELECT * 
+				  FROM PollingStation
+				 WHERE YearThai = @YearThai
+				   AND RegionId = @RegionId
+				   AND ProvinceId = @ProvinceId
+				   AND DistrictId = @DistrictId
+				   AND SubdistrictId = @SubdistrictId
+				   AND PollingUnitNo = @PollingUnitNo
+			)
+		   )
+		BEGIN
+			INSERT INTO PollingStation
+			(
+				  YearThai
+				, RegionId
+				, ProvinceId
+				, DistrictId
+				, SubdistrictId
+				, PollingUnitNo
+				, PollingSubUnitNo
+				, VillageCount
+			)
+			VALUES
+			(
+				  @YearThai
+				, @RegionId
+				, @ProvinceId
+				, @DistrictId
+				, @SubdistrictId
+				, @PollingUnitNo
+				, @PollingSubUnitNo
+				, @VillageCount
+			);
+		END
+		ELSE
+		BEGIN
+			UPDATE PollingStation
+			   SET PollingSubUnitNo = @PollingSubUnitNo
+				 , VillageCount = @VillageCount
+			 WHERE YearThai = @YearThai
+			   AND RegionId = @RegionId
+			   AND ProvinceId = @ProvinceId
+			   AND DistrictId = @DistrictId
+			   AND SubdistrictId = @SubdistrictId
+			   AND PollingUnitNo = @PollingUnitNo;
+		END
+
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
 	END TRY
 	BEGIN CATCH
 		SET @errNum = ERROR_NUMBER();
