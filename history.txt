@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-30 #9
+- Update database script.
+  - Add SP SavePersonImage.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-30 #8
 - Update database script.
   - Add Table PersonImage.
