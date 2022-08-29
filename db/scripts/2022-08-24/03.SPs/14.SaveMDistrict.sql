@@ -68,8 +68,8 @@ BEGIN
 		ELSE
 		BEGIN
 			UPDATE MDistrict
-			   SET @DistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameEN, DistrictNameEN))))
-				 , @DistrictNameTH = UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH))))
+			   SET DistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameEN, DistrictNameEN))))
+				 , DistrictNameTH = UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH))))
 				 , ADM2Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM2Code, ADM2Code))))
 			 WHERE DistrictId = @DistrictId
 			   AND RegionId = @RegionId

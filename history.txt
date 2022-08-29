@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-30 #6
+- Update database script.
+  - Update SP SaveMDistrict
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-30 #5
 - Update database script.
   - Add Table MPD2562VoteSummary
