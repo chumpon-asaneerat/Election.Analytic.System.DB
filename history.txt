@@ -1,6 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
-Update 2022-08-30 #2
+Update 2022-08-30 #4
+- Generate merge db script.
+
+----------------------------------------------------------------------------------------------
+[commited]
+Update 2022-08-30 #3
 - Update database script.
   - Update View PollingStationView
   - Update SP ImportPollingStation
