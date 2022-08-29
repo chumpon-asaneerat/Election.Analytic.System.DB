@@ -1,9 +1,10 @@
-/****** Object:  View [dbo].[MSubdistrictView]    Script Date: 8/29/2022 11:04:09 PM ******/
+/****** Object:  View [dbo].[MSubdistrictView]    Script Date: 8/29/2022 11:38:03 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 CREATE VIEW [dbo].[MSubdistrictView]
 AS
@@ -28,7 +29,10 @@ AS
 		 , MProvince C
 		 , MDistrict D
 	 WHERE A.RegionId = B.RegionId
+	   AND C.RegionId = B.RegionId
+	   AND D.RegionId = B.RegionId
 	   AND A.ProvinceId = C.ProvinceId
+	   AND D.ProvinceId = C.ProvinceId
 	   AND A.DistrictId = D.DistrictId
 
 GO
