@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[ImportPollingStation]    Script Date: 8/29/2022 8:54:01 PM ******/
+/****** Object:  StoredProcedure [dbo].[ImportPollingStation]    Script Date: 8/30/2022 12:38:38 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -20,7 +20,7 @@ GO
 -- 
 -- SELECT @errNum AS ErrNum, @errMsg AS ErrMsg
 -- =============================================
-CREATE PROCEDURE [dbo].[ImportPollingStation] (
+CREATe PROCEDURE [dbo].[ImportPollingStation] (
   @YearThai int
 , @RegionName nvarchar(100)
 , @GeoSubGroup nvarchar(100)
@@ -67,7 +67,12 @@ DECLARE @RegionId nvarchar(10);
 			RETURN
 		END
 
-		-- Check Province
+		-- Auto save master tables.
+		EXEC SaveMProvince @ProvinceId, @RegionId, @ProvinceNameTH
+		EXEC SaveMDistrict @DistrictId, @RegionId, @ProvinceId, @DistrictNameTH
+		EXEC SaveMSubdistrict @SubdistrictId, @RegionId, @ProvinceId, @DistrictId, @SubdistrictNameTH
+
+		-- Check INSERT OR UPDATE
 		IF (NOT EXISTS 
 			(
 				SELECT * 
