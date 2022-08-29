@@ -2,7 +2,9 @@
 [commited]
 Update 2022-08-30 #5
 - Update database script.
-  Add Table MPD2562VoteSummary
+  - Add Table MPD2562VoteSummary
+  - Add SP SaveMPD2562VoteSummary
+  - Update SP SaveMSubdistrict
 
 ----------------------------------------------------------------------------------------------
 [commited]

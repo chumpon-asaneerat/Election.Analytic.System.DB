@@ -72,8 +72,8 @@ BEGIN
 		ELSE
 		BEGIN
 			UPDATE MSubdistrict
-			   SET @SubdistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameEN, SubdistrictNameEN))))
-				 , @SubdistrictNameTH = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameTH, SubdistrictNameTH))))
+			   SET SubdistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameEN, SubdistrictNameEN))))
+				 , SubdistrictNameTH = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameTH, SubdistrictNameTH))))
 				 , ADM3Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM3Code, ADM3Code))))
 			 WHERE SubdistrictId = @SubdistrictId
 			   AND DistrictId = @DistrictId

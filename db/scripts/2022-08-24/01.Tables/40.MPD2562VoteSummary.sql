@@ -10,6 +10,7 @@ CREATE TABLE [dbo].[MPD2562VoteSummary](
 	[PartyName] [nvarchar](100) NOT NULL,
 	[RevoteNo] [int] NOT NULL,
 	[VoteCount] [int] NOT NULL,
+	[Data] [varbinary](max) NULL,
  CONSTRAINT [PK_MPDVoteSummary] PRIMARY KEY CLUSTERED 
 (
 	[ProvinceName] ASC,
