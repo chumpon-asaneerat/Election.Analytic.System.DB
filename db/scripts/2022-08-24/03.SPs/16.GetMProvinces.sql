@@ -28,24 +28,22 @@ CREATE PROCEDURE [dbo].[GetMProvinces]
 )
 AS
 BEGIN
-	SELECT A.ProvinceId
-	     , A.ProvinceNameTH
-	     , A.ProvinceNameEN
-	     , A.ADM1Code
-	     , B.RegionId
-		 , B.RegionName
-		 , B.GeoGroup
-		 , B.GeoSubGroup
-	  FROM MProvince A
-	     , MRegion B
-	 WHERE A.RegionId = B.RegionId
-	   AND UPPER(LTRIM(RTRIM(A.ProvinceId))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceId, A.ProvinceId))))
-	   AND UPPER(LTRIM(RTRIM(A.ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, A.ProvinceNameTH)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(B.RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, B.RegionId))))
-	   AND UPPER(LTRIM(RTRIM(B.RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, B.RegionName)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(B.GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, B.GeoGroup)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(B.GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, B.GeoSubGroup)))) + '%'
-	 ORDER BY RegionId
+	SELECT ProvinceId
+	     , ProvinceNameTH
+	     , ProvinceNameEN
+	     , ADM1Code
+	     , RegionId
+		 , RegionName
+		 , GeoGroup
+		 , GeoSubGroup
+	  FROM MProvinceView
+	 WHERE UPPER(LTRIM(RTRIM(ProvinceId))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceId, ProvinceId))))
+	   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
+	   AND UPPER(LTRIM(RTRIM(RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, RegionName)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, GeoGroup)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, GeoSubGroup)))) + '%'
+	 ORDER BY ProvinceNameTH
 
 END
 

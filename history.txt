@@ -1,5 +1,14 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-30 #1
+- Update database script.
+  - Add View MProvinceView.
+  - Add View MDistrictView.
+  - Update View MSubdistrictView.
+  - Update SP GetMProvinces.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-29 #9
 - Generate merge db script.
 
