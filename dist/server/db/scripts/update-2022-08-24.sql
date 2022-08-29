@@ -748,6 +748,43 @@ GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  View [dbo].[MSubdistrictView]    Script Date: 8/29/2022 11:04:09 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[MSubdistrictView]
+AS
+	SELECT A.RegionId
+		 , A.ProvinceId
+		 , A.DistrictId
+		 , A.SubdistrictId
+		 , B.RegionName
+		 , B.GeoGroup
+		 , B.GeoSubGroup
+		 , C.ProvinceNameTH
+		 , D.DistrictNameTH
+		 , A.SubdistrictNameTH
+		 , C.ProvinceNameEN
+		 , D.DistrictNameEN
+		 , A.SubdistrictNameEN
+		 , C.ADM1Code
+		 , D.ADM2Code
+		 , A.ADM3Code
+	  FROM MSubdistrict A
+		 , MRegion B
+		 , MProvince C
+		 , MDistrict D
+	 WHERE A.RegionId = B.RegionId
+	   AND A.ProvinceId = C.ProvinceId
+	   AND A.DistrictId = D.DistrictId
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
 /****** Object:  View [dbo].[MContentView]    Script Date: 8/20/2022 10:00:17 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -1529,6 +1566,280 @@ DECLARE @result bit;
 	ELSE SET @result = 0
 
     RETURN @result;
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[SaveMProvince]    Script Date: 8/29/2022 10:10:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SaveMProvince
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- EXEC SaveMProvince N'10', N'10', N'กรุงเทพมหานคร', NULL, NULL
+-- =============================================
+ALTER PROCEDURE [dbo].[SaveMProvince] (
+  @ProvinceId nvarchar(10)
+, @RegionId nvarchar(10)
+, @ProvinceNameTH nvarchar(100)
+, @ProvinceNameEN nvarchar(100) = NULL
+, @ADM1Code nvarchar(20) = NULL
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+		IF (@RegionId IS NULL)
+		BEGIN
+			SET @errNum = 100;
+			SET @errMsg = 'Parameter RegionId is null';
+			RETURN
+		END
+
+		IF ((@ProvinceId IS NULL)
+            OR
+            NOT EXISTS 
+			(
+				SELECT * 
+				  FROM MProvince
+				 WHERE RegionId = @RegionId
+				   AND ProvinceId = @ProvinceId
+			)
+		   )
+		BEGIN
+			INSERT INTO MProvince
+			(
+				  RegionId
+				, ProvinceId 
+				, ProvinceNameEN
+				, ProvinceNameTH
+				, ADM1Code
+			)
+			VALUES
+			(
+				  @RegionId
+				, @ProvinceId
+				, @ProvinceNameEN
+				, @ProvinceNameTH
+				, @ADM1Code
+			);
+		END
+		ELSE
+		BEGIN
+			UPDATE MProvince
+			   SET ProvinceNameEN = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameEN, ProvinceNameEN))))
+				 , ProvinceNameTH = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH))))
+				 , ADM1Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM1Code, ADM1Code))))
+			 WHERE RegionId = @RegionId
+			   AND ProvinceId = @ProvinceId
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[SaveMDistrict]    Script Date: 8/29/2022 10:35:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SaveMDistrict
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- SaveMDistrict N'01', N'10', N'10', N'พระนคร', NULL, NULL
+-- =============================================
+CREATE PROCEDURE [dbo].[SaveMDistrict] (
+  @DistrictId nvarchar(10)
+, @RegionId nvarchar(10)
+, @ProvinceId nvarchar(10)
+, @DistrictNameTH nvarchar(100)
+, @DistrictNameEN nvarchar(100) = NULL
+, @ADM2Code nvarchar(20) = NULL
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+		IF (@RegionId IS NULL OR @ProvinceId IS NULL)
+		BEGIN
+			SET @errNum = 100;
+			SET @errMsg = 'Parameter RegionId or ProvinceId is null';
+			RETURN
+		END
+
+		IF ((@DistrictId IS NULL)
+            OR
+            NOT EXISTS 
+			(
+				SELECT * 
+				  FROM MDistrict
+				 WHERE DistrictId = @DistrictId
+				   AND RegionId = @RegionId
+				   AND ProvinceId = @ProvinceId
+			)
+		   )
+		BEGIN
+			INSERT INTO MDistrict
+			(
+				  DistrictId
+				, RegionId
+				, ProvinceId 
+				, DistrictNameEN
+				, DistrictNameTH
+				, ADM2Code
+			)
+			VALUES
+			(
+				  @DistrictId
+				, @RegionId
+				, @ProvinceId
+				, @DistrictNameEN
+				, @DistrictNameTH
+				, @ADM2Code
+			);
+		END
+		ELSE
+		BEGIN
+			UPDATE MDistrict
+			   SET @DistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameEN, DistrictNameEN))))
+				 , @DistrictNameTH = UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH))))
+				 , ADM2Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM2Code, ADM2Code))))
+			 WHERE DistrictId = @DistrictId
+			   AND RegionId = @RegionId
+			   AND ProvinceId = @ProvinceId
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[SaveMSubdistrict]    Script Date: 8/29/2022 10:35:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SaveMSubdistrict
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- EXEC SaveMDistrict N'02', N'10', N'10', N'01', N'วังบูรพาภิรมย์', NULL, NULL
+-- =============================================
+CREATE PROCEDURE [dbo].[SaveMSubdistrict] (
+  @SubdistrictId nvarchar(10)
+, @RegionId nvarchar(10)
+, @ProvinceId nvarchar(10)
+, @DistrictId nvarchar(10)
+, @SubdistrictNameTH nvarchar(100)
+, @SubdistrictNameEN nvarchar(100) = NULL
+, @ADM3Code nvarchar(20) = NULL
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+		IF (@RegionId IS NULL OR @ProvinceId IS NULL OR @DistrictId IS NULL)
+		BEGIN
+			SET @errNum = 100;
+			SET @errMsg = 'Parameter RegionId or ProvinceId is null';
+			RETURN
+		END
+
+		IF ((@SubdistrictId IS NULL)
+            OR
+            NOT EXISTS 
+			(
+				SELECT * 
+				  FROM MSubdistrict
+				 WHERE SubdistrictId = @SubdistrictId
+				   AND RegionId = @RegionId
+				   AND ProvinceId = @ProvinceId
+				   AND DistrictId = @DistrictId
+			)
+		   )
+		BEGIN
+			INSERT INTO MSubdistrict
+			(
+				  SubdistrictId
+				, DistrictId
+				, RegionId
+				, ProvinceId 
+				, SubdistrictNameEN
+				, SubdistrictNameTH
+				, ADM3Code
+			)
+			VALUES
+			(
+				  @SubdistrictId
+				, @DistrictId
+				, @RegionId
+				, @ProvinceId
+				, @SubdistrictNameEN
+				, @SubdistrictNameTH
+				, @ADM3Code
+			);
+		END
+		ELSE
+		BEGIN
+			UPDATE MSubdistrict
+			   SET @SubdistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameEN, SubdistrictNameEN))))
+				 , @SubdistrictNameTH = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameTH, SubdistrictNameTH))))
+				 , ADM3Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM3Code, ADM3Code))))
+			 WHERE SubdistrictId = @SubdistrictId
+			   AND DistrictId = @DistrictId
+			   AND RegionId = @RegionId
+			   AND ProvinceId = @ProvinceId
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
 END
 
 GO
