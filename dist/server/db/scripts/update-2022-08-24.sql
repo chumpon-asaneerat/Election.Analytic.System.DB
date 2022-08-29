@@ -748,6 +748,64 @@ GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  View [dbo].[MProvinceView]    Script Date: 8/30/2022 12:04:44 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[MProvinceView]
+AS
+	SELECT A.ProvinceId
+	     , A.ProvinceNameTH
+	     , A.ProvinceNameEN
+	     , A.ADM1Code
+	     , B.RegionId
+		 , B.RegionName
+		 , B.GeoGroup
+		 , B.GeoSubGroup
+	  FROM MProvince A
+	     , MRegion B
+	 WHERE A.RegionId = B.RegionId
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  View [dbo].[MDistrictView]    Script Date: 8/29/2022 11:38:03 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE VIEW [dbo].[MDistrictView]
+AS
+	SELECT A.RegionId
+		 , A.ProvinceId
+		 , A.DistrictId
+		 , B.RegionName
+		 , B.GeoGroup
+		 , B.GeoSubGroup
+		 , C.ProvinceNameTH
+		 , A.DistrictNameTH
+		 , C.ProvinceNameEN
+		 , A.DistrictNameEN
+		 , C.ADM1Code
+		 , A.ADM2Code
+	  FROM MDistrict A
+		 , MRegion B
+		 , MProvince C
+	 WHERE A.RegionId = B.RegionId
+	   AND C.RegionId = B.RegionId
+	   AND A.ProvinceId = C.ProvinceId
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
 /****** Object:  View [dbo].[MSubdistrictView]    Script Date: 8/29/2022 11:38:03 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -1880,24 +1938,152 @@ CREATE PROCEDURE [dbo].[GetMProvinces]
 )
 AS
 BEGIN
-	SELECT A.ProvinceId
-	     , A.ProvinceNameTH
-	     , A.ProvinceNameEN
-	     , A.ADM1Code
-	     , B.RegionId
-		 , B.RegionName
-		 , B.GeoGroup
-		 , B.GeoSubGroup
-	  FROM MProvince A
-	     , MRegion B
-	 WHERE A.RegionId = B.RegionId
-	   AND UPPER(LTRIM(RTRIM(A.ProvinceId))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceId, A.ProvinceId))))
-	   AND UPPER(LTRIM(RTRIM(A.ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, A.ProvinceNameTH)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(B.RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, B.RegionId))))
-	   AND UPPER(LTRIM(RTRIM(B.RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, B.RegionName)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(B.GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, B.GeoGroup)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(B.GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, B.GeoSubGroup)))) + '%'
-	 ORDER BY RegionId
+	SELECT ProvinceId
+	     , ProvinceNameTH
+	     , ProvinceNameEN
+	     , ADM1Code
+	     , RegionId
+		 , RegionName
+		 , GeoGroup
+		 , GeoSubGroup
+	  FROM MProvinceView
+	 WHERE UPPER(LTRIM(RTRIM(ProvinceId))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceId, ProvinceId))))
+	   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
+	   AND UPPER(LTRIM(RTRIM(RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, RegionName)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, GeoGroup)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, GeoSubGroup)))) + '%'
+	 ORDER BY ProvinceNameTH
+
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[GetMDistricts]    Script Date: 8/30/2022 12:19:45 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetMDistricts
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- EXEC GetMDistricts NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL	-- Gets all
+-- EXEC GetMDistricts NULL, NULL, NULL, NULL, NULL, N'1', NULL, NULL	-- Search all that RegionName contains '1'
+-- EXEC GetMDistricts NULL, NULL, NULL, N'ก', NULL, NULL, N'กลาง', NULL	-- Search all that ProvinceNameTH contains 'ก' GeoGroup contains 'กลาง'
+-- =============================================
+CREATE PROCEDURE [dbo].[GetMDistricts]
+(
+  @DistrictId nvarchar(10) = NULL
+, @DistrictNameTH nvarchar(100) = NULL
+, @ProvinceId nvarchar(10) = NULL
+, @ProvinceNameTH nvarchar(100) = NULL
+, @RegionId nvarchar(10) = NULL
+, @RegionName nvarchar(100) = NULL
+, @GeoGroup nvarchar(100) = NULL
+, @GeoSubGroup nvarchar(100) = NULL
+)
+AS
+BEGIN
+	SELECT DistrictId
+	     , DistrictNameTH
+	     , DistrictNameEN
+	     , ProvinceId
+	     , ProvinceNameTH
+	     , ProvinceNameEN
+	     , ADM1Code
+	     , ADM2Code
+	     , RegionId
+		 , RegionName
+		 , GeoGroup
+		 , GeoSubGroup
+	  FROM MDistrictView
+	 WHERE UPPER(LTRIM(RTRIM(DistrictId))) = UPPER(LTRIM(RTRIM(COALESCE(@DistrictId, DistrictId))))
+	   AND UPPER(LTRIM(RTRIM(DistrictNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(ProvinceId))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceId, ProvinceId))))
+	   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
+	   AND UPPER(LTRIM(RTRIM(RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, RegionName)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, GeoGroup)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, GeoSubGroup)))) + '%'
+	 ORDER BY ProvinceNameTH
+
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[GetMSubdistricts]    Script Date: 8/30/2022 12:19:45 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetMSubdistricts
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- EXEC GetMSubdistricts NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL		-- Gets all
+-- EXEC GetMSubdistricts NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'1', NULL, NULL		-- Search all that RegionName contains '1'
+-- EXEC GetMSubdistricts NULL, NULL, NULL, NULL, NULL, N'ก', NULL, NULL, N'กลาง', NULL	-- Search all that ProvinceNameTH contains 'ก' GeoGroup contains 'กลาง'
+-- =============================================
+CREATE PROCEDURE [dbo].[GetMSubdistricts]
+(
+  @SubdistrictId nvarchar(10) = NULL
+, @SubdistrictNameTH nvarchar(100) = NULL
+, @DistrictId nvarchar(10) = NULL
+, @DistrictNameTH nvarchar(100) = NULL
+, @ProvinceId nvarchar(10) = NULL
+, @ProvinceNameTH nvarchar(100) = NULL
+, @RegionId nvarchar(10) = NULL
+, @RegionName nvarchar(100) = NULL
+, @GeoGroup nvarchar(100) = NULL
+, @GeoSubGroup nvarchar(100) = NULL
+)
+AS
+BEGIN
+	SELECT SubdistrictId
+	     , SubdistrictNameTH
+	     , SubdistrictNameEN
+	     , DistrictId
+	     , DistrictNameTH
+	     , DistrictNameEN
+	     , ProvinceId
+	     , ProvinceNameTH
+	     , ProvinceNameEN
+	     , ADM1Code
+	     , ADM2Code
+	     , ADM3Code
+	     , RegionId
+		 , RegionName
+		 , GeoGroup
+		 , GeoSubGroup
+	  FROM MSubdistrictView
+	 WHERE UPPER(LTRIM(RTRIM(SubdistrictId))) = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictId, SubdistrictId))))
+	   AND UPPER(LTRIM(RTRIM(SubdistrictNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameTH, SubdistrictNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(DistrictId))) = UPPER(LTRIM(RTRIM(COALESCE(@DistrictId, DistrictId))))
+	   AND UPPER(LTRIM(RTRIM(DistrictNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(ProvinceId))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceId, ProvinceId))))
+	   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
+	   AND UPPER(LTRIM(RTRIM(RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, RegionName)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, GeoGroup)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, GeoSubGroup)))) + '%'
+	 ORDER BY ProvinceNameTH
 
 END
 
