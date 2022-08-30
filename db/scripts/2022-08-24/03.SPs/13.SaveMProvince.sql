@@ -15,7 +15,7 @@ GO
 --
 -- EXEC SaveMProvince N'10', N'10', N'กรุงเทพมหานคร', NULL, NULL
 -- =============================================
-ALTER PROCEDURE [dbo].[SaveMProvince] (
+CREATE PROCEDURE [dbo].[SaveMProvince] (
   @ProvinceId nvarchar(10)
 , @RegionId nvarchar(10)
 , @ProvinceNameTH nvarchar(100)

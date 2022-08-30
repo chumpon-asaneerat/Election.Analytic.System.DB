@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-31 #1
+- Update database script.
+  - Update SP SaveMProvince change alter to create.
+- Generate merge db script.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-30 #10
 - Generate merge db script.
 
