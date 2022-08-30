@@ -702,6 +702,94 @@ GO
 
 
 /*********** Script Update Date: 2022-08-24  ***********/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MPD2562VoteSummary](
+	[ProvinceName] [nvarchar](100) NOT NULL,
+	[PollingUnitNo] [int] NOT NULL,
+	[FullName] [nvarchar](200) NOT NULL,
+	[VoteNo] [int] NOT NULL,
+	[PartyName] [nvarchar](100) NOT NULL,
+	[RevoteNo] [int] NOT NULL,
+	[VoteCount] [int] NOT NULL,
+ CONSTRAINT [PK_MPDVoteSummary] PRIMARY KEY CLUSTERED 
+(
+	[ProvinceName] ASC,
+	[PollingUnitNo] ASC,
+	[FullName] ASC,
+	[VoteNo] ASC,
+	[PartyName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+ALTER TABLE [dbo].[MPD2562VoteSummary] ADD  CONSTRAINT [DF_MPD2562VoteSummary_RevoteNo]  DEFAULT ((0)) FOR [RevoteNo]
+GO
+ALTER TABLE [dbo].[MPD2562VoteSummary] ADD  CONSTRAINT [DF_MPDVoteSummary_VoteCount]  DEFAULT ((0)) FOR [VoteCount]
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  Table [dbo].[MPDC2566]    Script Date: 8/30/2022 6:28:53 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[MPDC2566](
+	[ProvinceName] [nvarchar](100) NOT NULL,
+	[PollingUnitNo] [int] NOT NULL,
+	[CandidateNo] [int] NOT NULL,
+	[FullName] [nvarchar](200) NOT NULL,
+	[PrevPartyName] [nvarchar](100) NULL,
+	[EducationLevel] [nvarchar](100) NULL,
+	[Remark] [nvarchar](200) NULL,
+ CONSTRAINT [PK_MPDC2566] PRIMARY KEY CLUSTERED 
+(
+	[ProvinceName] ASC,
+	[PollingUnitNo] ASC,
+	[CandidateNo] ASC,
+	[FullName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[MPDC2566] ADD  CONSTRAINT [DF_MPDC2566_CandidateNo]  DEFAULT ((0)) FOR [CandidateNo]
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  Table [dbo].[PersonImage]    Script Date: 8/30/2022 6:47:52 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[PersonImage](
+	[FullName] [nvarchar](200) NOT NULL,
+	[Data] [varbinary](max) NULL,
+ CONSTRAINT [PK_PersonImage] PRIMARY KEY CLUSTERED 
+(
+	[FullName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
 /****** Object:  View [dbo].[MTitleView]    Script Date: 8/20/2022 7:40:12 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -1788,8 +1876,8 @@ BEGIN
 		ELSE
 		BEGIN
 			UPDATE MDistrict
-			   SET @DistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameEN, DistrictNameEN))))
-				 , @DistrictNameTH = UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH))))
+			   SET DistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameEN, DistrictNameEN))))
+				 , DistrictNameTH = UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH))))
 				 , ADM2Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM2Code, ADM2Code))))
 			 WHERE DistrictId = @DistrictId
 			   AND RegionId = @RegionId
@@ -1883,8 +1971,8 @@ BEGIN
 		ELSE
 		BEGIN
 			UPDATE MSubdistrict
-			   SET @SubdistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameEN, SubdistrictNameEN))))
-				 , @SubdistrictNameTH = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameTH, SubdistrictNameTH))))
+			   SET SubdistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameEN, SubdistrictNameEN))))
+				 , SubdistrictNameTH = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameTH, SubdistrictNameTH))))
 				 , ADM3Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM3Code, ADM3Code))))
 			 WHERE SubdistrictId = @SubdistrictId
 			   AND DistrictId = @DistrictId
@@ -2368,6 +2456,299 @@ DECLARE @RegionId nvarchar(10);
 		SET @errNum = ERROR_NUMBER();
 		SET @errMsg = ERROR_MESSAGE();
 	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SaveMPD2562VoteSummary
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- =============================================
+CREATE PROCEDURE [dbo].[SaveMPD2562VoteSummary] (
+  @ProvinceName nvarchar(100)
+, @PollingUnitNo int
+, @FullName nvarchar(200)
+, @VoteNo int
+, @PartyName nvarchar(200)
+, @VoteCount int = 0
+, @RevoteNo int = 0
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+		IF (@ProvinceName IS NULL 
+		 OR @PollingUnitNo IS NULL 
+		 OR @FullName IS NULL 
+		 OR @VoteNo IS NULL
+		 OR @PartyName IS NULL)
+		BEGIN
+			SET @errNum = 100;
+			SET @errMsg = 'Parameter RegionId or ProvinceId is null';
+			RETURN
+		END
+		IF (@VoteCount IS NULL) SET @VoteCount = 0;
+		IF (@RevoteNo IS NULL) SET @RevoteNo = 0;
+
+		IF (NOT EXISTS 
+			(
+				SELECT * 
+				  FROM MPD2562VoteSummary
+				 WHERE ProvinceName = @ProvinceName
+				   AND PollingUnitNo = @PollingUnitNo
+				   AND FullName = @FullName
+				   AND VoteNo = @VoteNo
+				   AND PartyName = @PartyName
+			)
+		   )
+		BEGIN
+			INSERT INTO MPD2562VoteSummary
+			(
+				  ProvinceName
+				, PollingUnitNo
+				, FullName
+				, VoteNo 
+				, PartyName
+				, VoteCount
+				, RevoteNo
+			)
+			VALUES
+			(
+				  @ProvinceName
+				, @PollingUnitNo
+				, @FullName
+				, @VoteNo
+				, @PartyName
+				, @VoteCount
+				, @RevoteNo
+			);
+		END
+		ELSE
+		BEGIN
+			UPDATE MPD2562VoteSummary
+			   SET VoteCount = @VoteCount
+				 , RevoteNo = @RevoteNo
+			 WHERE ProvinceName = @ProvinceName
+			   AND PollingUnitNo = @PollingUnitNo
+			   AND FullName = @FullName
+			   AND VoteNo = @VoteNo
+			   AND PartyName = @PartyName
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[SaveMPDC2566]    Script Date: 8/30/2022 6:31:39 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SaveMPDC2566
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- =============================================
+CREATE PROCEDURE [dbo].[SaveMPDC2566] (
+  @ProvinceName nvarchar(100)
+, @PollingUnitNo int
+, @CandidateNo int
+, @FullName nvarchar(200)
+, @PrevPartyName nvarchar(100) = NULL
+, @EducationLevel nvarchar(100) = NULL
+, @Remark nvarchar(200) = NULL
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+		IF (@ProvinceName IS NULL 
+		 OR @PollingUnitNo IS NULL 
+		 OR @CandidateNo IS NULL
+		 OR @FullName IS NULL)
+		BEGIN
+			SET @errNum = 100;
+			SET @errMsg = 'Parameter RegionId or ProvinceId is null';
+			RETURN
+		END
+
+		IF (NOT EXISTS 
+			(
+				SELECT * 
+				  FROM MPDC2566
+				 WHERE ProvinceName = @ProvinceName
+				   AND PollingUnitNo = @PollingUnitNo
+				   AND CandidateNo = @CandidateNo
+				   AND FullName = @FullName
+			)
+		   )
+		BEGIN
+			INSERT INTO MPDC2566
+			(
+				  ProvinceName
+				, PollingUnitNo
+				, CandidateNo 
+				, FullName
+				, PrevPartyName
+				, EducationLevel
+				, [Remark]
+			)
+			VALUES
+			(
+				  @ProvinceName
+				, @PollingUnitNo
+				, @CandidateNo
+				, @FullName
+				, @PrevPartyName
+				, @EducationLevel
+				, @Remark
+			);
+		END
+		ELSE
+		BEGIN
+			UPDATE MPDC2566
+			   SET PrevPartyName = @PrevPartyName
+				 , EducationLevel = @EducationLevel
+				 , [Remark] = @Remark
+			 WHERE ProvinceName = @ProvinceName
+			   AND PollingUnitNo = @PollingUnitNo
+			   AND CandidateNo = @CandidateNo
+			   AND FullName = @FullName
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[SavePersonImage]    Script Date: 8/30/2022 6:49:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SavePersonImage
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- =============================================
+CREATE PROCEDURE [dbo].[SavePersonImage] (
+  @FullName nvarchar(200)
+, @Data varbinary(MAX)
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+DECLARE @LastUpdate datetime
+	BEGIN TRY
+        -- SET LAST UPDATE DATETIME
+	    SET @LastUpdate = GETDATE();
+
+		IF (NOT EXISTS 
+			(
+				SELECT * 
+				  FROM PersonImage
+				 WHERE FullName = @FullName 
+			)
+		   )
+		BEGIN
+			INSERT INTO PersonImage
+			(
+				  FullName
+				, [Data] 
+			)
+			VALUES
+			(
+				  @FullName
+				, @Data
+			);
+		END
+		ELSE
+		BEGIN
+			UPDATE PersonImage
+			   SET [Data] = @Data
+			 WHERE FullName = @FullName
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-08-24  ***********/
+/****** Object:  StoredProcedure [dbo].[GetPersonImage]    Script Date: 8/30/2022 6:52:44 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetPersonImage
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- =============================================
+CREATE PROCEDURE [dbo].[GetPersonImage]
+(
+  @FullName nvarchar(200)
+)
+AS
+BEGIN
+	SELECT *
+	  FROM PersonImage
+	 WHERE FullName = @FullName
 END
 
 GO
