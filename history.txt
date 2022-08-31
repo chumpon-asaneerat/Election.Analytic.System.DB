@@ -1,5 +1,16 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-08-31 #2
+- Generate merge db script.
+- Change database config to PPRP
+- Generate Schema files
+- Rebuild to gen database js code.
+- Update all routes to used new PPRP.db.js
+- Update Rest api Test file.
+- Remove unused file.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-31 #1
 - Update database script.
   - Update SP SaveMProvince change alter to create.

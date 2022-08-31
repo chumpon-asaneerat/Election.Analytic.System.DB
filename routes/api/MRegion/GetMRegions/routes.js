@@ -4,7 +4,7 @@ const path = require('path');
 const rootPath = process.env['ROOT_PATHS'];
 const nlib = require(path.join(rootPath, 'nlib', 'nlib'));
 
-const sqldb = require(path.join(nlib.paths.root, 'PPRPDemo.db'));
+const sqldb = require(path.join(nlib.paths.root, 'PPRP.db'));
 const dbutils = require(path.join(rootPath, 'nlib', 'db-utils')).DbUtils;
 
 const WebServer = require(path.join(rootPath, 'nlib', 'nlib-express'));
