@@ -1,4 +1,3 @@
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (0, N'คุณ', N'คุณ', 0)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (1, N'เด็กชาย', N'ด.ช.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2, N'เด็กหญิง', N'ด.ญ.', 2)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (3, N'นาย', N'นาย', 1)

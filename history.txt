@@ -1,5 +1,14 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-01 #1
+- Update database script.
+  - 2022-08-24
+    - Update Insert.MTitle.sql -> remove first item.
+  - 2022-08-31
+    - Update Insert.MTitle.sql -> delete all and add new title list (extend) #1.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-08-31 #2
 - Generate merge db script.
 - Change database config to PPRP
