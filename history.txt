@@ -1,5 +1,14 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-01 #13
+- Update database script (2022-08-31).
+  - Add Insert.MTitle1.sql.
+  - Update Insert.MTitle2.sql #12.
+- Generate merge sql script 2022-08-24
+- Update Gulp file.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-01 #12
 - Update database script (2022-08-31).
   - Update Insert.MTitle.sql #11.
