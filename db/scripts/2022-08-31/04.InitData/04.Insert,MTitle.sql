@@ -377,15 +377,13 @@ INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2447
 
 
 
-
-
-
+/*
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (391, N'นาวาตรีแพทย์หญิง', N'น.ต.พ.ญ.', 2)
 
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (395, N'นาวาตรีนายแพทย์', N'น.ต.น.พ.', 1)
 
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (718, N'ศาสตราจารย์นายแพทย์พันตำรวจเอก', N'ศจ.น.พ.พ.ต.อ.', 1)
-
+*/
 
 /*
 
