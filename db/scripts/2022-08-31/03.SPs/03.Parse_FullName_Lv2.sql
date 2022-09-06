@@ -25,8 +25,8 @@ CREATE PROCEDURE [dbo].[Parse_FullName_Lv2] (
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
-	-- EXTRACT Prefix/FirstName from element
 	BEGIN TRY
+		-- EXTRACT Prefix/FirstName from element
 		EXEC Parse_FullName_Lv1 @fullName, @el1
 							  , @prefix out, @firstName out, @lastName out
 							  , @errNum out, @errMsg out
