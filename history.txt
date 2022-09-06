@@ -1,5 +1,14 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-07 #2
+- Update database script (2022-08-31).
+  - Update SP Parse_FullName_Lv2.
+  - Add SP Parse_FullName_Lv3.
+  - Add SP Parse_FullName_Lv4.
+  - Add SP Parse_FullName_Lv5.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-07 #1
 - Update database script (2022-08-31).
   - Update Insert.MTitle2.sql #1.
