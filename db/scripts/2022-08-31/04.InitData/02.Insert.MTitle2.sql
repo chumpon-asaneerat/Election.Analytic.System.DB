@@ -357,5 +357,6 @@ INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2444
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2445, N'พลตรี น.พ.', N'พล.ต.น.พ.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2446, N'พล.ต.นายแพทย์', N'พล.ต.น.พ.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2447, N'พล.ต. น.พ.', N'พล.ต.น.พ.', 1)
+-- ALL ABOVE DATA IS OK
 
 GO
