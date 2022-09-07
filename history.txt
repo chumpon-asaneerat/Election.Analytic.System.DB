@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-07 #14
+- Update database script (2022-08-31).
+  - Add SP SaveMPD2562PollingUnitSummary.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-07 #13
 - Update database script (2022-08-31).
   - Add Table MPD2562PollingUnitSummary.
