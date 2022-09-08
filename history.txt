@@ -1,5 +1,13 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-08 #13
+- Update database script (2022-09-07).
+  - Update Insert.MTitle1.sql #13.
+  - Update Insert.MTitle2.sql.
+  - Add Insert.MTitle3.sql.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-08 #12
 - Update database script (2022-09-07).
   - Update Insert.MTitle1.sql #12.
