@@ -244,9 +244,6 @@ INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2709
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2710, N'ว่าที่ สิบเอก', N'ว่าที่ ส.อ.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2711, N'ว่าที่.ส.อ.', N'ว่าที่ ส.อ.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2712, N'ว่าที่. ส.อ.', N'ว่าที่ ส.อ.', 1)
--- ABOVE IS OK
-
-
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2713, N'ว่าที่สิบโท', N'ว่าที่ ส.ท.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2714, N'ว่าที่ สิบโท', N'ว่าที่ ส.ท.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2715, N'ว่าที่.ส.ท.', N'ว่าที่ ส.ท.', 1)
@@ -255,6 +252,9 @@ INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2717
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2718, N'ว่าที่ สิบตรี', N'ว่าที่ ส.ต.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2719, N'ว่าที่.ส.ต.', N'ว่าที่ ส.ต.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2720, N'ว่าที่. ส.ต.', N'ว่าที่ ส.ต.', 1)
+-- ABOVE IS OK
+
+
 
 
 
