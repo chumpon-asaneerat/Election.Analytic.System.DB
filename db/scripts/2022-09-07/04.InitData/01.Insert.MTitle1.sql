@@ -62,23 +62,32 @@ INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2508
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2509, N'พันตรี คุณหญิง', N'พ.ต.คุณหญิง', 2)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2510, N'พ.ต. คุณหญิง', N'พ.ต.คุณหญิง', 2)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2511, N'พ.ต.คุณหญิง', N'พ.ต.คุณหญิง', 2)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2512, N'ว่าที่ พลตำรวจเอก', N'ว่าที่ พล.ต.อ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2513, N'ว่าที่ พลตำรวจ เอก', N'ว่าที่ พล.ต.อ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2514, N'ว่าที่ พล.ต.เอก', N'ว่าที่ พล.ต.อ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2515, N'ว่าที่พล.ต.อ', N'ว่าที่ พล.ต.อ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2516, N'ว่าที่ พลตำรวจโท', N'ว่าที่ พล.ต.ท.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2517, N'ว่าที่ พลตำรวจ โท', N'ว่าที่ พล.ต.ท.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2518, N'ว่าที่ พล.ต.โท', N'ว่าที่ พล.ต.ท.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2519, N'ว่าที่พล.ต.ท', N'ว่าที่ พล.ต.ท.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2520, N'ว่าที่ พลตำรวจตรี', N'ว่าที่ พล.ต.ต.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2521, N'ว่าที่ พลตำรวจ ตรี', N'ว่าที่ พล.ต.ต.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2522, N'ว่าที่ พล.ต.ตรี', N'ว่าที่ พล.ต.ต.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2523, N'ว่าที่พล.ต.ต', N'ว่าที่ พล.ต.ต.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2524, N'ว่าที่ พลตำรวจจัตวา', N'ว่าที่พล.ต.จ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2525, N'ว่าที่ พลตำรวจ จัตวา', N'ว่าที่พล.ต.จ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2526, N'ว่าที่ พล.ต.จัตวา', N'ว่าที่พล.ต.จ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2527, N'ว่าที่พล.ต.จ', N'ว่าที่พล.ต.จ.', 1)
 -- ABOVE IS OK
 
 
 
 
 
+
+
+
 /*
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (293, N'พันเอกหญิงคุณหญิง', N'พ.อ.หญิง คุณหญิง', 2)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (289, N'พันโทคุณหญิง', N'พ.ท.คุณหญิง', 2)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2282, N'พันตรีคุณหญิง', N'พ.ต.คุณหญิง', 2)
-
-
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (652, N'ว่าที่พลตำรวจเอก', N'ว่าที่ พล.ต.อ.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (654, N'ว่าที่พลตำรวจโท', N'ว่าที่ พล.ต.ท.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (656, N'ว่าที่พลตำรวจตรี', N'ว่าที่ พล.ต.ต.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (658, N'ว่าที่พลตำรวจจัตวา', N'ว่าที่พล.ต.จ.', 1)
-
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (660, N'ว่าที่พันตำรวจเอก(พิเศษ)', N'ว่าที่ พ.ต.อ.พิเศษ', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (662, N'ว่าที่พันตำรวจเอก', N'ว่าที่ พ.ต.อ.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (664, N'ว่าที่พันตำรวจโท', N'ว่าที่ พ.ต.ท.', 1)
