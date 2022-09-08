@@ -129,6 +129,41 @@ INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2575
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2576, N'ว่าที่ น.ต.', N'ว่าที่ น.ต.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2577, N'ว่าที่.น.ต.', N'ว่าที่ น.ต.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2578, N'ว่าที่. น.ต.', N'ว่าที่ น.ต.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2579, N'พลตำรวจ.พิเศษ', N'พลฯพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2580, N'พลฯ.พิเศษ', N'พลฯพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2581, N'พลตำรวจ(พิเศษ)', N'พลฯพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2582, N'พลฯ(พิเศษ)', N'พลฯพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2583, N'พลตำรวจ (พิเศษ)', N'พลฯพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2584, N'พลฯ (พิเศษ)', N'พลฯพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2585, N'พลตำรวจ อาสาสมัคร', N'พลฯอาสา', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2586, N'พลตำรวจ อาสา', N'พลฯอาสา', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2587, N'พลตำรวจ(อาสา)', N'พลฯอาสา', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2588, N'พลตำรวจ (อาสา)', N'พลฯอาสา', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2590, N'พลฯ อาสา', N'พลฯอาสา', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2591, N'พลฯ(อาสา)', N'พลฯอาสา', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2592, N'พลฯ (อาสา)', N'พลฯอาสา', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2594, N'พลตำรวจ สำรอง', N'พลฯสำรอง', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2595, N'พลตำรวจ (สำรอง)', N'พลฯสำรอง', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2596, N'พลตำรวจ(สำรอง)', N'พลฯสำรอง', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2597, N'พลฯ สำรอง', N'พลฯสำรอง', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2598, N'พลฯ (สำรอง)', N'พลฯสำรอง', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2599, N'พลฯ(สำรอง)', N'พลฯสำรอง', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2600, N'พลตำรวจ สำรองพิเศษ', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2601, N'พลตำรวจ สำรอง พิเศษ', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2602, N'พลตำรวจ สำรอง (พิเศษ)', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2603, N'พลตำรวจ สำรอง(พิเศษ)', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2604, N'พลฯ สำรองพิเศษ', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2605, N'พลฯ สำรอง พิเศษ', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2606, N'พลฯ สำรอง (พิเศษ)', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2607, N'พลฯ สำรอง(พิเศษ)', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2608, N'พลฯสำรองพิเศษ', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2609, N'พลฯสำรอง พิเศษ', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2610, N'พลฯสำรอง (พิเศษ)', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2611, N'พลฯสำรอง(พิเศษ)', N'พลฯสำรองพิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2612, N'พลตำรวจ (สมัคร)', N'พลฯสมัคร', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2613, N'พลฯ (สมัคร)', N'พลฯสมัคร', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2614, N'พลตำรวจ(สมัคร)', N'พลฯสมัคร', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2615, N'พลฯ(สมัคร)', N'พลฯสมัคร', 1)
 -- ABOVE IS OK
 
 
@@ -136,14 +171,12 @@ INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2578
 
 
 
+
+
+
+
+
 /*
-
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (682, N'พลตำรวจพิเศษ', N'พลฯพิเศษ', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (683, N'พลตำรวจอาสาสมัคร', N'พลฯอาสา', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (684, N'พลตำรวจสำรอง', N'พลฯสำรอง', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (685, N'พลตำรวจสำรองพิเศษ', N'พลฯสำรองพิเศษ', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (686, N'พลตำรวจสมัคร', N'พลฯสมัคร', 1)
-
 
 
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (515, N'ว่าที่เรืออากาศเอก', N'ว่าที่ ร.อ.', 1)
