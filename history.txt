@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-08 #14
+- Update database script (2022-09-07).
+  - Update Insert.MTitle1.sql #14.
+  - Generate merge sql script.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-08 #13
 - Update database script (2022-09-07).
   - Update Insert.MTitle1.sql #13.
