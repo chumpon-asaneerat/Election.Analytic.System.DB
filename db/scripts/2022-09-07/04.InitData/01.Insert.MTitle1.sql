@@ -7,7 +7,7 @@ INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2453
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2454, N'นาวาโท แพทย์หญิง', N'น.ท.พ.ญ.', 2)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2455, N'นาวาโท พ.ญ.', N'น.ท.พ.ญ.', 2)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2456, N'น.ท. แพทย์หญิง', N'น.ท.พ.ญ.', 2)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2457, N'น.ท. แพทย์หญิง', N'น.ท.พ.ญ.', 2)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2457, N'น.ท. พ.ญ.', N'น.ท.พ.ญ.', 2)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2458, N'นาวาตรี แพทย์หญิง', N'น.ต.พ.ญ.', 2)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2459, N'นาวาตรี พ.ญ.', N'น.ต.พ.ญ.', 2)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2460, N'น.ต. แพทย์หญิง', N'น.ต.พ.ญ.', 2)
@@ -38,21 +38,36 @@ INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2484
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2485, N'ศาสตราจารย์ น.พ. พันตำรวจเอก', N'ศจ.น.พ.พ.ต.อ.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2486, N'ศาสตราจารย์ น.พ.พ.ต.อ.', N'ศจ.น.พ.พ.ต.อ.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2487, N'ศาสตราจารย์ น.พ. พ.ต.อ.', N'ศจ.น.พ.พ.ต.อ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2488, N'ร้อยเอก ดอกเตอร์', N'ร.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2489, N'ร้อยเอก ดร.', N'ร.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2490, N'ร.อ. ดอกเตอร์', N'ร.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2491, N'ร.อ.ดอกเตอร์', N'ร.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2492, N'ร.อ. ดร.', N'ร.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2493, N'ร้อยโท ดอกเตอร์', N'ร.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2494, N'ร้อยโท ดร.', N'ร.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2495, N'ร.ท. ดอกเตอร์', N'ร.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2496, N'ร.ท.ดอกเตอร์', N'ร.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2497, N'ร.ท. ดร.', N'ร.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2498, N'ร้อยตรี ดอกเตอร์', N'ร.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2499, N'ร้อยตรี ดร.', N'ร.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2500, N'ร.ต. ดอกเตอร์', N'ร.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2501, N'ร.ต.ดอกเตอร์', N'ร.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2502, N'ร.ต. ดร.', N'ร.ต.ดร.', 1)
+-- ABOVE IS OK
+
+
 
 
 
 /*
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2275, N'ศาสตราจารย์พันเอก', N'ศจ.พ.อ.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2278, N'ร้อยโทดอกเตอร์', N'ร.ท.ดร.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2279, N'ร้อยเอกดอกเตอร์', N'ร.อ.ดร.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2281, N'ร้อยตรีดอกเตอร์', N'ร.ต.ดร.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2282, N'พันตรีคุณหญิง', N'พ.ต.คุณหญิง', 2)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2284, N'พลจัตวาหลวง', N'พล.จ.หลวง', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2285, N'พลตรีหม่อมราชวงศ์', N'พล.ต.ม.ร.ว.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2288, N'ศาสตราจารย์ร้อยเอก', N'ศจ.ร.อ.', 1)
 */
 
 /*
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2284, N'พลจัตวาหลวง', N'พล.จ.หลวง', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2285, N'พลตรีหม่อมราชวงศ์', N'พล.ต.ม.ร.ว.', 1)
 
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (712, N'พันตำรวจเอกหม่อมหลวง', N'พ.ต.อ.ม.ล.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (713, N'พันตำรวจโทหม่อมหลวง', N'พ.ต.ท.ม.ล.', 1)
