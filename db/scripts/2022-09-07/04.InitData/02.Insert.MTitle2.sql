@@ -89,21 +89,18 @@ INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2809
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2810, N'พล.ต.ต. ดอกเตอร์', N'พล.ต.ต.ดร.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2811, N'พล.ต.ต.ดอกเตอร์', N'พล.ต.ต.ดร.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2812, N'พล.ต.ต. ดร.', N'พล.ต.ต.ดร.', 1)
--- ABOVE IS OK
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2813, N'นักเรียนพยาบาล ท.อ.', N'น.พ.อ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2814, N'สมาชิก อส.', N'อส.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2815, N'เรืออากาศเอก นายแพทย์', N'ร.อ.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2816, N'เรืออากาศเอก น.พ.', N'ร.อ.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2817, N'ร.อ. นายแพทย์', N'ร.อ.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2820, N'เรืออากาศโทนายแพทย์', N'ร.ท.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2821, N'เรืออากาศโท นายแพทย์', N'ร.ท.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2822, N'เรืออากาศโท น.พ.', N'ร.ท.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2823, N'ร.ท. นายแพทย์', N'ร.ท.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2826, N'เรืออากาศตรีนายแพทย์', N'ร.ต.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2827, N'เรืออากาศตรี นายแพทย์', N'ร.ต.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2828, N'เรืออากาศตรี น.พ.', N'ร.ต.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2829, N'ร.ต. นายแพทย์', N'ร.ต.น.พ.', 1)
 
-
-
-
-
-
-
-
-
-
-/*
-
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (529, N'นักเรียนพยาบาลทหารอากาศ', N'น.พ.อ.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (535, N'เรืออากาศเอกนายแพทย์', N'ร.อ.น.พ.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (687, N'สมาชิกอาสารักษาดินแดน', N'อส.', 1)
-
-*/
+GO
