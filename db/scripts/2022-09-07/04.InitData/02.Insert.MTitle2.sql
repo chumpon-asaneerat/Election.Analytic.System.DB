@@ -1,8 +1,23 @@
-
--- ALREADY INSERTED
-/*
---INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2720, N'ว่าที่. ส.ต.', N'ว่าที่ ส.ต.', 1)
-*/
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2721, N'จ่าสิบเอก(พิเศษ)', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2722, N'จ่าสิบเอก (พิเศษ)', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2723, N'จ่าสิบเอก.(พิเศษ)', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2724, N'จ่าสิบเอก.พิเศษ', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2725, N'จ.ส.อ.(พิเศษ)', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2726, N'จ.ส.อ. (พิเศษ)', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2727, N'พลเรือ จัตวา', N'พล.ร.จ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2728, N'พล.ร จัตวา', N'พล.ร.จ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2729, N'พล.ร.จัตวา', N'พล.ร.จ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2730, N'พลเรือ จ.', N'พล.ร.จ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2731, N'พลฯ ทหารเรือ', N'พลฯ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2732, N'พลฯ ทร', N'พลฯ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2733, N'พลฯ.ทร', N'พลฯ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2734, N'นาวาเอก(พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2735, N'นาวาเอก (พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2736, N'นาวาเอก.(พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2737, N'น.อ. (พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2738, N'น.อ.(พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2739, N'นาวาอากาศเอก(พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2740, N'นาวาอากาศเอก (พิเศษ)', N'น.อ.พิเศษ', 1)
 -- ABOVE IS OK
 
 
@@ -16,14 +31,9 @@
 
 
 
+
+
 /*
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (294, N'จ่าสิบเอกพิเศษ', N'จ.ส.อ.พิเศษ', 1)
-
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (506, N'นาวาอากาศเอกพิเศษ', N'น.อ.พิเศษ', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (357, N'นาวาเอกพิเศษ', N'น.อ.พิเศษ', 1)
-
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (377, N'พลฯทหารเรือ', N'พลฯ', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (380, N'พลเรือจัตวา', N'พล.ร.จ.', 1)
 
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (526, N'พลฯทหารอากาศ', N'พลฯ', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (527, N'นักเรียนนายเรืออากาศ', N'นนอ.', 1)
