@@ -1,10 +1,19 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-11 #2
+- Update database script (2022-09-07).
+  - Alter Table MProvince - Add ContentId
+  - Alter Table MDistrict - Add ContentId
+  - Alter Table MSubdistrict - Add ContentId
+  - Add SP SaveMDistrictADM2
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-11 #1
 - Update database script (2022-09-07).
-  - Alter Table MProvince
-  - Alter Table MDistrict
-  - Alter Table MSubdistrict
+  - Alter Table MProvince - Add AreaKm2
+  - Alter Table MDistrict - Add AreaKm2
+  - Alter Table MSubdistrict - Add AreaKm2
   - Add SP SaveMProvinceADM1
 
 ----------------------------------------------------------------------------------------------
