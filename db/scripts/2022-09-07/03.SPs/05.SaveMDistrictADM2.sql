@@ -26,8 +26,6 @@ ALTER PROCEDURE [dbo].[SaveMDistrictADM2] (
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
-DECLARE @ProvinceId nvarchar(10)
-DECLARE @DistrictId nvarchar(10)
 	BEGIN TRY
 		IF (   @ProvinceNameTH IS NULL 
 		    OR @ProvinceNameEN IS NULL 
