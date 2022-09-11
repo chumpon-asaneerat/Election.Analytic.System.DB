@@ -42,7 +42,7 @@ BEGIN
 			(
 				SELECT * 
 				  FROM MProvince
-				 WHERE ProvinceNameTH = @ProvinceNameTH
+				 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
 			)
 		   )
 		BEGIN
@@ -50,7 +50,7 @@ BEGIN
 			   SET ProvinceNameEN = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameEN, ProvinceNameEN))))
 				 , ADM1Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM1Code, ADM1Code))))
 				 , AreaM2 = @AreaM2
-			 WHERE ProvinceNameTH = @ProvinceNameTH
+			 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
 		END
 		-- Update Error Status/Message
 		SET @errNum = 0;
@@ -63,4 +63,3 @@ BEGIN
 END
 
 GO
-

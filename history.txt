@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-11 #4
+- Update database script (2022-09-07).
+  - Update SP SaveMProvinceADM1 #2
+  - Update SP SaveMDistrictADM2 #2
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-11 #3
 - Update database script (2022-09-07).
   - Alter Table MProvince - Change AreaKm2 to AreaM2

@@ -12,44 +12,54 @@ GO
 --
 -- [== Example ==]
 --
--- SaveMDistrictADM2 N'อากาศอำนวย', N'Akat Amnuai', N'TH4711', 661338974.564
+-- SaveMDistrictADM2 N'สกลนคร', N'Sakon Nakhon', N'อากาศอำนวย', N'Akat Amnuai', N'TH4711', 661338974.564
 -- =============================================
 CREATE PROCEDURE [dbo].[SaveMDistrictADM2] (
-  @DistrictNameTH nvarchar(100)
+  @ProvinceNameTH nvarchar(100)
+, @ProvinceNameEN nvarchar(100)
+, @DistrictNameTH nvarchar(100)
 , @DistrictNameEN nvarchar(100)
 , @ADM2Code nvarchar(20)
-, @AreaKm2 decimal(16, 3) = NULL
+, @AreaM2 decimal(16, 3) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
+DECLARE @ProvinceId nvarchar(10)
+DECLARE @DistrictId nvarchar(10)
 	BEGIN TRY
-		IF (@DistrictNameTH IS NULL)
+		IF (   @ProvinceNameTH IS NULL 
+		    OR @ProvinceNameEN IS NULL 
+			OR @DistrictNameTH IS NULL 
+			OR @DistrictNameEN IS NULL
+			OR @ADM2Code IS NULL)
 		BEGIN
 			SET @errNum = 100;
 			SET @errMsg = 'Parameter DistrictNameTH or ProvinceId is null';
 			RETURN
 		END
 
-		IF ((@DistrictNameTH IS NOT NULL)
-		    AND 
+		SELECT @ProvinceId = ProvinceId
+		     , @DistrictId = DistrictId
+		  FROM MDistrictView
+		 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
+		   AND UPPER(LTRIM(RTRIM(DistrictNameTH))) = UPPER(LTRIM(RTRIM(@DistrictNameTH)))
+
+		IF ((@ProvinceId IS NOT NULL)
+			AND
+			(@DistrictId IS NOT NULL)
+			AND 
 			(@DistrictNameEN IS NOT NULL)
 		    AND 
 			(@ADM2Code IS NOT NULL)
-            AND
-            EXISTS 
-			(
-				SELECT * 
-				  FROM MDistrict
-				 WHERE DistrictNameTH = @DistrictNameTH
-			)
 		   )
 		BEGIN
 			UPDATE MDistrict
 			   SET DistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameEN, DistrictNameEN))))
 				 , ADM2Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM2Code, ADM2Code))))
-				 , AreaKm2 = @AreaKm2
-			 WHERE DistrictNameTH = @DistrictNameTH
+				 , AreaM2 = @AreaM2
+			 WHERE ProvinceId = @ProvinceId
+			   AND DistrictId = @DistrictId
 		END
 		-- Update Error Status/Message
 		SET @errNum = 0;
