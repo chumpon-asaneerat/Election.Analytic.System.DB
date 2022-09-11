@@ -2,6 +2,12 @@
 [commited]
 Update 2022-09-11 #8
 - Update database script (2022-09-07).
+  - Update SP GetMProvinces
+
+----------------------------------------------------------------------------------------------
+[commited]
+Update 2022-09-11 #8
+- Update database script (2022-09-07).
   - Update View MProvinceView
   - Update View MDistrictView
   - Update View MSubdistrictView
