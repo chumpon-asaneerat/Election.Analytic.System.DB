@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-11 #6
+- Update database script (2022-09-07).
+  - Add SP SaveMSubdistrictADM3
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-11 #5
 - Update database script (2022-09-07).
   - Update SP SaveMProvinceADM1 #3
