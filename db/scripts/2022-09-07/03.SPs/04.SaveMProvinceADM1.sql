@@ -28,7 +28,7 @@ BEGIN
 		IF (@ProvinceNameTH IS NULL)
 		BEGIN
 			SET @errNum = 100;
-			SET @errMsg = 'Parameter ProvinceNameTH is null';
+			SET @errMsg = 'Parameter some parameter(s) is null';
 			RETURN
 		END
 

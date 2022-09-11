@@ -35,7 +35,7 @@ DECLARE @DistrictId nvarchar(10)
 			OR @ADM2Code IS NULL)
 		BEGIN
 			SET @errNum = 100;
-			SET @errMsg = 'Parameter DistrictNameTH or ProvinceId is null';
+			SET @errMsg = 'Parameter some parameter(s) is null';
 			RETURN
 		END
 
