@@ -1,3 +1,4 @@
+/****** Object:  StoredProcedure [dbo].[SaveMSubdistrictADM3]    Script Date: 9/11/2022 8:35:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -14,7 +15,7 @@ GO
 --
 -- EXEC SaveMSubdistrictADM3 N'ชลบุรี', N'Chon Buri', N'เมืองชลบุรี', N'Mueang Chon Buri', N'อ่างศิลา', N'Ang Sila', N'TH200117', 6568129.19107
 -- =============================================
-CREATE PROCEDURE [dbo].[SaveMSubdistrictADM3] (
+ALTER PROCEDURE [dbo].[SaveMSubdistrictADM3] (
   @ProvinceNameTH nvarchar(100)
 , @ProvinceNameEN nvarchar(100)
 , @DistrictNameTH nvarchar(100)
@@ -46,13 +47,20 @@ BEGIN
 			(@ADM3Code IS NOT NULL)
 		   )
 		BEGIN
-			UPDATE MSubdistrict
-			   SET SubdistrictNameEN = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameEN, SubdistrictNameEN))))
-				 , ADM3Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM3Code, ADM3Code))))
+			UPDATE MM
+			   SET SubdistrictNameEN = UPPER(LTRIM(RTRIM(@SubdistrictNameEN)))
+				 , ADM3Code = UPPER(LTRIM(RTRIM(@ADM3Code)))
 				 , AreaM2 = @AreaM2
-			 WHERE ProvinceId = @ProvinceId
-			   AND DistrictId = @DistrictId
-			   AND SubdistrictId = @SubdistrictId
+		     FROM MSubdistrict MM
+			 JOIN MSubdistrictView MV ON
+				  (
+					    MM.DistrictId = MV.DistrictId 
+				    AND MM.ProvinceId = MV.ProvinceId
+					AND MM.SubdistrictId = MV.SubdistrictId
+				  )
+			 WHERE UPPER(LTRIM(RTRIM(MV.ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
+			   AND UPPER(LTRIM(RTRIM(MV.DistrictNameTH))) = UPPER(LTRIM(RTRIM(@DistrictNameTH)))
+			   AND UPPER(LTRIM(RTRIM(MV.SubdistrictNameTH))) = UPPER(LTRIM(RTRIM(@SubdistrictNameTH)))
 		END
 		-- Update Error Status/Message
 		SET @errNum = 0;
