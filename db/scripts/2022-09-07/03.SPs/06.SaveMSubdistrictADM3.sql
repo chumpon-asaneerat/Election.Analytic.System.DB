@@ -27,9 +27,6 @@ CREATE PROCEDURE [dbo].[SaveMSubdistrictADM3] (
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
-DECLARE @ProvinceId nvarchar(10)
-DECLARE @DistrictId nvarchar(10)
-DECLARE @SubdistrictId nvarchar(10)
 	BEGIN TRY
 		IF (   @ProvinceNameTH IS NULL 
 		    OR @ProvinceNameEN IS NULL 
@@ -44,21 +41,7 @@ DECLARE @SubdistrictId nvarchar(10)
 			RETURN
 		END
 
-		SELECT @ProvinceId = ProvinceId
-		     , @DistrictId = DistrictId
-			 , @SubdistrictId = SubdistrictId
-		  FROM MSubdistrictView
-		 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
-		   AND UPPER(LTRIM(RTRIM(DistrictNameTH))) = UPPER(LTRIM(RTRIM(@DistrictNameTH)))
-		   AND UPPER(LTRIM(RTRIM(SubdistrictNameTH))) = UPPER(LTRIM(RTRIM(@SubdistrictNameTH)))
-
-		IF ((@ProvinceId IS NOT NULL)
-            AND
-			(@DistrictId IS NOT NULL)
-			AND
-			(@SubdistrictId IS NOT NULL)
-			AND
-			(@SubdistrictNameEN IS NOT NULL)
+		IF ((@SubdistrictNameEN IS NOT NULL)
 			AND
 			(@ADM3Code IS NOT NULL)
 		   )
