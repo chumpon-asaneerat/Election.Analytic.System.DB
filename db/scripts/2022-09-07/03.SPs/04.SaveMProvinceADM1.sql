@@ -1,3 +1,4 @@
+/****** Object:  StoredProcedure [dbo].[SaveMProvinceADM1]    Script Date: 9/11/2022 5:08:38 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -18,7 +19,7 @@ CREATE PROCEDURE [dbo].[SaveMProvinceADM1] (
   @ProvinceNameTH nvarchar(100)
 , @ProvinceNameEN nvarchar(100)
 , @ADM1Code nvarchar(20)
-, @AreaKm2 decimal(16, 3) = NULL
+, @AreaM2 decimal(16, 3) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
@@ -48,7 +49,7 @@ BEGIN
 			UPDATE MProvince
 			   SET ProvinceNameEN = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameEN, ProvinceNameEN))))
 				 , ADM1Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM1Code, ADM1Code))))
-				 , AreaKm2 = @AreaKm2
+				 , AreaM2 = @AreaM2
 			 WHERE ProvinceNameTH = @ProvinceNameTH
 		END
 		-- Update Error Status/Message
@@ -62,3 +63,4 @@ BEGIN
 END
 
 GO
+

@@ -1,5 +1,5 @@
 ALTER TABLE MSubdistrict 
-  ADD AreaKm2 decimal(16, 3) NULL;
+  ADD AreaM2 decimal(16, 3) NULL;
 GO
 
 ALTER TABLE MSubdistrict 

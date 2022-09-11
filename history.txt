@@ -1,5 +1,14 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-11 #3
+- Update database script (2022-09-07).
+  - Alter Table MProvince - Change AreaKm2 to AreaM2
+  - Alter Table MDistrict - Change AreaKm2 to AreaM2
+  - Alter Table MSubdistrict - Change AreaKm2 to AreaM2
+  - Update SP SaveMProvinceADM1
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-11 #2
 - Update database script (2022-09-07).
   - Alter Table MProvince - Add ContentId
