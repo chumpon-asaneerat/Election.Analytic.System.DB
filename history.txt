@@ -1,5 +1,13 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-11 #8
+- Update database script (2022-09-07).
+  - Update View MProvinceView
+  - Update View MDistrictView
+  - Update View MSubdistrictView
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-11 #7
 - Update Excel files.
 
