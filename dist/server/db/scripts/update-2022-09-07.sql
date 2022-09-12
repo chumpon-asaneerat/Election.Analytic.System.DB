@@ -1,4 +1,34 @@
 /*********** Script Update Date: 2022-09-07  ***********/
+ALTER TABLE MProvince 
+  ADD AreaM2 decimal(16, 3) NULL;
+GO
+
+ALTER TABLE MProvince 
+  ADD ContentId uniqueidentifier NULL;
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
+ALTER TABLE MDistrict 
+  ADD AreaM2 decimal(16, 3) NULL;
+GO
+
+ALTER TABLE MDistrict 
+  ADD ContentId uniqueidentifier NULL;
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
+ALTER TABLE MSubdistrict 
+  ADD AreaM2 decimal(16, 3) NULL;
+GO
+
+ALTER TABLE MSubdistrict 
+  ADD ContentId uniqueidentifier NULL;
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
 /****** Object:  StoredProcedure [dbo].[Parse_FullName_Lv3]    Script Date: 9/1/2022 4:41:27 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -125,6 +155,419 @@ BEGIN
 		SET @errNum = ERROR_NUMBER();
 		SET @errMsg = ERROR_MESSAGE();
 	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
+/****** Object:  StoredProcedure [dbo].[SaveMProvinceADM1]    Script Date: 9/11/2022 5:08:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SaveMProvinceADM1
+-- [== History ==]
+-- <2022-09-11> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- EXEC SaveMProvinceADM1 N'กรุงเทพมหานคร', N'Bangkok', N'TH10'
+-- =============================================
+CREATE PROCEDURE [dbo].[SaveMProvinceADM1] (
+  @ProvinceNameTH nvarchar(100)
+, @ProvinceNameEN nvarchar(100)
+, @ADM1Code nvarchar(20)
+, @AreaM2 decimal(16, 3) = NULL
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+		IF (@ProvinceNameTH IS NULL)
+		BEGIN
+			SET @errNum = 100;
+			SET @errMsg = 'Parameter some parameter(s) is null';
+			RETURN
+		END
+
+		IF ((@ProvinceNameTH IS NOT NULL) 
+		    AND
+		    (@ProvinceNameEN IS NOT NULL)
+		    AND
+		    (@ADM1Code IS NOT NULL)
+            AND
+            EXISTS 
+			(
+				SELECT * 
+				  FROM MProvince
+				 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
+			)
+		   )
+		BEGIN
+			UPDATE MProvince
+			   SET ProvinceNameEN = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameEN, ProvinceNameEN))))
+				 , ADM1Code = UPPER(LTRIM(RTRIM(COALESCE(@ADM1Code, ADM1Code))))
+				 , AreaM2 = @AreaM2
+			 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
+/****** Object:  StoredProcedure [dbo].[SaveMDistrictADM2]    Script Date: 9/11/2022 8:35:29 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SaveMDistrictADM2
+-- [== History ==]
+-- <2022-09-11> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- SaveMDistrictADM2 N'สกลนคร', N'Sakon Nakhon', N'อากาศอำนวย', N'Akat Amnuai', N'TH4711', 661338974.564
+-- =============================================
+ALTER PROCEDURE [dbo].[SaveMDistrictADM2] (
+  @ProvinceNameTH nvarchar(100)
+, @ProvinceNameEN nvarchar(100)
+, @DistrictNameTH nvarchar(100)
+, @DistrictNameEN nvarchar(100)
+, @ADM2Code nvarchar(20)
+, @AreaM2 decimal(16, 3) = NULL
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+		IF (   @ProvinceNameTH IS NULL 
+		    OR @ProvinceNameEN IS NULL 
+			OR @DistrictNameTH IS NULL 
+			OR @DistrictNameEN IS NULL
+			OR @ADM2Code IS NULL)
+		BEGIN
+			SET @errNum = 100;
+			SET @errMsg = 'Parameter some parameter(s) is null';
+			RETURN
+		END
+
+		IF ((@DistrictNameEN IS NOT NULL)
+		    AND 
+			(@ADM2Code IS NOT NULL)
+		   )
+		BEGIN
+			UPDATE MM
+			   SET MM.DistrictNameEN = UPPER(LTRIM(RTRIM(@DistrictNameEN)))
+				 , MM.ADM2Code = UPPER(LTRIM(RTRIM(@ADM2Code)))
+				 , MM.AreaM2 = @AreaM2
+			  FROM MDistrict MM 
+			  JOIN MDistrictView MV ON 
+			       (    
+					    MM.DistrictId = MV.DistrictId 
+				    AND MM.ProvinceId = MV.ProvinceId
+				   )
+			 WHERE UPPER(LTRIM(RTRIM(MV.ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
+			   AND UPPER(LTRIM(RTRIM(MV.DistrictNameTH))) = UPPER(LTRIM(RTRIM(@DistrictNameTH)))
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
+/****** Object:  StoredProcedure [dbo].[SaveMSubdistrictADM3]    Script Date: 9/11/2022 8:35:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SaveMSubdistrictADM3
+-- [== History ==]
+-- <2022-09-11> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- EXEC SaveMSubdistrictADM3 N'ชลบุรี', N'Chon Buri', N'เมืองชลบุรี', N'Mueang Chon Buri', N'อ่างศิลา', N'Ang Sila', N'TH200117', 6568129.19107
+-- =============================================
+ALTER PROCEDURE [dbo].[SaveMSubdistrictADM3] (
+  @ProvinceNameTH nvarchar(100)
+, @ProvinceNameEN nvarchar(100)
+, @DistrictNameTH nvarchar(100)
+, @DistrictNameEN nvarchar(100)
+, @SubdistrictNameTH nvarchar(100)
+, @SubdistrictNameEN nvarchar(100) = NULL
+, @ADM3Code nvarchar(20) = NULL
+, @AreaM2 decimal(16, 3) = NULL
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+		IF (   @ProvinceNameTH IS NULL 
+		    OR @ProvinceNameEN IS NULL 
+			OR @DistrictNameTH IS NULL 
+			OR @DistrictNameEN IS NULL
+			OR @SubdistrictNameTH IS NULL 
+			OR @SubdistrictNameEN IS NULL
+			OR @ADM3Code IS NULL)
+		BEGIN
+			SET @errNum = 100;
+			SET @errMsg = 'Parameter some parameter(s) is null';
+			RETURN
+		END
+
+		IF ((@SubdistrictNameEN IS NOT NULL)
+			AND
+			(@ADM3Code IS NOT NULL)
+		   )
+		BEGIN
+			UPDATE MM
+			   SET SubdistrictNameEN = UPPER(LTRIM(RTRIM(@SubdistrictNameEN)))
+				 , ADM3Code = UPPER(LTRIM(RTRIM(@ADM3Code)))
+				 , AreaM2 = @AreaM2
+		     FROM MSubdistrict MM
+			 JOIN MSubdistrictView MV ON
+				  (
+					    MM.DistrictId = MV.DistrictId 
+				    AND MM.ProvinceId = MV.ProvinceId
+					AND MM.SubdistrictId = MV.SubdistrictId
+				  )
+			 WHERE UPPER(LTRIM(RTRIM(MV.ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
+			   AND UPPER(LTRIM(RTRIM(MV.DistrictNameTH))) = UPPER(LTRIM(RTRIM(@DistrictNameTH)))
+			   AND UPPER(LTRIM(RTRIM(MV.SubdistrictNameTH))) = UPPER(LTRIM(RTRIM(@SubdistrictNameTH)))
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
+/****** Object:  StoredProcedure [dbo].[GetMProvinces]    Script Date: 9/11/2022 5:49:34 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetMProvinces
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+-- <2022-09-11> :
+--	- Get more fields from view.
+--
+-- [== Example ==]
+--
+-- EXEC GetMProvinces NULL, NULL, NULL, NULL, NULL, NULL		-- Gets all
+-- EXEC GetMProvinces NULL, NULL, NULL, N'1', NULL, NULL		-- Search all that RegionName contains '1'
+-- EXEC GetMProvinces NULL, N'ก', NULL, NULL, N'กลาง', NULL		-- Search all that ProvinceNameTH contains 'ก' GeoGroup contains 'กลาง'
+-- =============================================
+ALTER PROCEDURE [dbo].[GetMProvinces]
+(
+  @ProvinceId nvarchar(10) = NULL
+, @ProvinceNameTH nvarchar(100) = NULL
+, @RegionId nvarchar(10) = NULL
+, @RegionName nvarchar(100) = NULL
+, @GeoGroup nvarchar(100) = NULL
+, @GeoSubGroup nvarchar(100) = NULL
+)
+AS
+BEGIN
+	SELECT ProvinceId
+	     , ProvinceNameTH
+	     , ProvinceNameEN
+	     , ADM1Code
+	     , RegionId
+		 , RegionName
+		 , GeoGroup
+		 , GeoSubGroup
+		 , ProvinceAreaM2
+		 , ProvinceContentId
+	  FROM MProvinceView
+	 WHERE UPPER(LTRIM(RTRIM(ProvinceId))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceId, ProvinceId))))
+	   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
+	   AND UPPER(LTRIM(RTRIM(RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, RegionName)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, GeoGroup)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, GeoSubGroup)))) + '%'
+	 ORDER BY ProvinceNameTH
+
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
+/****** Object:  StoredProcedure [dbo].[GetMDistricts]    Script Date: 9/11/2022 8:02:53 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetMDistricts
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+-- <2022-09-11> :
+--	- Get more fields from view.
+--
+-- [== Example ==]
+--
+-- EXEC GetMDistricts NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL	-- Gets all
+-- EXEC GetMDistricts NULL, NULL, NULL, NULL, NULL, N'1', NULL, NULL	-- Search all that RegionName contains '1'
+-- EXEC GetMDistricts NULL, NULL, NULL, N'ก', NULL, NULL, N'กลาง', NULL	-- Search all that ProvinceNameTH contains 'ก' GeoGroup contains 'กลาง'
+-- =============================================
+ALTER PROCEDURE [dbo].[GetMDistricts]
+(
+  @DistrictId nvarchar(10) = NULL
+, @DistrictNameTH nvarchar(100) = NULL
+, @ProvinceId nvarchar(10) = NULL
+, @ProvinceNameTH nvarchar(100) = NULL
+, @RegionId nvarchar(10) = NULL
+, @RegionName nvarchar(100) = NULL
+, @GeoGroup nvarchar(100) = NULL
+, @GeoSubGroup nvarchar(100) = NULL
+)
+AS
+BEGIN
+	SELECT DistrictId
+	     , DistrictNameTH
+	     , DistrictNameEN
+	     , ProvinceId
+	     , ProvinceNameTH
+	     , ProvinceNameEN
+	     , ADM1Code
+	     , ADM2Code
+	     , RegionId
+		 , RegionName
+		 , GeoGroup
+		 , GeoSubGroup
+		 , DistrictAreaM2
+		 , DistrictContentId
+	  FROM MDistrictView
+	 WHERE UPPER(LTRIM(RTRIM(DistrictId))) = UPPER(LTRIM(RTRIM(COALESCE(@DistrictId, DistrictId))))
+	   AND UPPER(LTRIM(RTRIM(DistrictNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(ProvinceId))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceId, ProvinceId))))
+	   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
+	   AND UPPER(LTRIM(RTRIM(RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, RegionName)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, GeoGroup)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, GeoSubGroup)))) + '%'
+	 ORDER BY ProvinceNameTH
+
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
+/****** Object:  StoredProcedure [dbo].[GetMSubdistricts]    Script Date: 9/11/2022 9:24:53 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetMSubdistricts
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+-- <2022-09-11> :
+--	- Get more fields from view.
+--
+-- [== Example ==]
+--
+-- EXEC GetMSubdistricts NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL		-- Gets all
+-- EXEC GetMSubdistricts NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'1', NULL, NULL		-- Search all that RegionName contains '1'
+-- EXEC GetMSubdistricts NULL, NULL, NULL, NULL, NULL, N'ก', NULL, NULL, N'กลาง', NULL	-- Search all that ProvinceNameTH contains 'ก' GeoGroup contains 'กลาง'
+-- =============================================
+ALTER PROCEDURE [dbo].[GetMSubdistricts]
+(
+  @SubdistrictId nvarchar(10) = NULL
+, @SubdistrictNameTH nvarchar(100) = NULL
+, @DistrictId nvarchar(10) = NULL
+, @DistrictNameTH nvarchar(100) = NULL
+, @ProvinceId nvarchar(10) = NULL
+, @ProvinceNameTH nvarchar(100) = NULL
+, @RegionId nvarchar(10) = NULL
+, @RegionName nvarchar(100) = NULL
+, @GeoGroup nvarchar(100) = NULL
+, @GeoSubGroup nvarchar(100) = NULL
+)
+AS
+BEGIN
+	SELECT SubdistrictId
+	     , SubdistrictNameTH
+	     , SubdistrictNameEN
+	     , DistrictId
+	     , DistrictNameTH
+	     , DistrictNameEN
+	     , ProvinceId
+	     , ProvinceNameTH
+	     , ProvinceNameEN
+	     , ADM1Code
+	     , ADM2Code
+	     , ADM3Code
+	     , RegionId
+		 , RegionName
+		 , GeoGroup
+		 , GeoSubGroup
+		 , SubdistrictAreaM2
+		 , SubdistrictContentId
+	  FROM MSubdistrictView
+	 WHERE UPPER(LTRIM(RTRIM(SubdistrictId))) = UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictId, SubdistrictId))))
+	   AND UPPER(LTRIM(RTRIM(SubdistrictNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameTH, SubdistrictNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(DistrictId))) = UPPER(LTRIM(RTRIM(COALESCE(@DistrictId, DistrictId))))
+	   AND UPPER(LTRIM(RTRIM(DistrictNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(ProvinceId))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceId, ProvinceId))))
+	   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
+	   AND UPPER(LTRIM(RTRIM(RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, RegionName)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, GeoGroup)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, GeoSubGroup)))) + '%'
+	 ORDER BY ProvinceNameTH
+
 END
 
 GO
@@ -389,49 +832,124 @@ GO
 
 
 /*********** Script Update Date: 2022-09-07  ***********/
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2721, N'จ่าสิบเอก(พิเศษ)', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2722, N'จ่าสิบเอก (พิเศษ)', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2723, N'จ่าสิบเอก.(พิเศษ)', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2724, N'จ่าสิบเอก.พิเศษ', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2725, N'จ.ส.อ.(พิเศษ)', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2726, N'จ.ส.อ. (พิเศษ)', N'จ.ส.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2727, N'พลเรือ จัตวา', N'พล.ร.จ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2728, N'พล.ร จัตวา', N'พล.ร.จ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2729, N'พล.ร.จัตวา', N'พล.ร.จ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2730, N'พลเรือ จ.', N'พล.ร.จ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2731, N'พลฯ ทหารเรือ', N'พลฯ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2732, N'พลฯ ทร', N'พลฯ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2733, N'พลฯ.ทร', N'พลฯ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2734, N'นาวาเอก(พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2735, N'นาวาเอก (พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2736, N'นาวาเอก.(พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2737, N'น.อ. (พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2738, N'น.อ.(พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2739, N'นาวาอากาศเอก(พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2740, N'นาวาอากาศเอก (พิเศษ)', N'น.อ.พิเศษ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2741, N'พันตำรวจโทหญิง ท่านผู้หญิง', N'พ.ต.ท.หญิง ท่านผู้หญิง', 2)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2742, N'พันตำรวจตรีหญิง ท่านผู้หญิง', N'พ.ต.ต.หญิง ท่านผู้หญิง', 2)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2743, N'พลเอกหญิง คุณหญิง', N'พล.อ.หญิง คุณหญิง', 2)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2744, N'พลโทหญิง คุณหญิง', N'พล.ท.หญิง คุณหญิง', 2)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2746, N'พลฯ ทหารอากาศ', N'พลฯ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2747, N'พลฯ.ทหารอากาศ', N'พลฯ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2748, N'พลฯ ท.อ.', N'พลฯ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2749, N'พลฯ.ท.อ.', N'พลฯ', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2750, N'น.ร.นายเรืออากาศ', N'นนอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2751, N'น.ร. นายเรืออากาศ', N'นนอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2752, N'น.ร. นอ.', N'นนอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2753, N'น.ร.นอ.', N'นนอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2754, N'น.ร. น.อ.', N'นนอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2755, N'น.ร.น.อ.', N'นนอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2756, N'น.ร.จ่าอากาศ', N'นจอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2757, N'น.ร. จ่าอากาศ', N'นจอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2758, N'น.ร. จอ', N'นจอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2759, N'น.ร.จอ', N'นจอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2760, N'น.ร. จ.อ.', N'นจอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2761, N'น.ร.จ.อ', N'นจอ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2762, N'ร้อยตำรวจเอกดอกเตอร์', N'ร.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2763, N'ร้อยตำรวจเอก ดอกเตอร์', N'ร.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2764, N'ร้อยตำรวจเอก ดร.', N'ร.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2765, N'ร.ต.อ. ดอกเตอร์', N'ร.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2766, N'ร.ต.อ.ดอกเตอร์', N'ร.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2767, N'ร.ต.อ. ดร.', N'ร.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2768, N'ร้อยตำรวจโท ดอกเตอร์', N'ร.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2769, N'ร้อยตำรวจโท ดร.', N'ร.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2770, N'ร.ต.ท. ดอกเตอร์', N'ร.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2771, N'ร.ต.ท.ดอกเตอร์', N'ร.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2772, N'ร.ต.ท. ดร.', N'ร.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2773, N'ร้อยตำรวจตรีดอกเตอร์', N'ร.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2774, N'ร้อยตำรวจตรี ดอกเตอร์', N'ร.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2775, N'ร้อยตำรวจตรี ดร.', N'ร.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2776, N'ร.ต.ต. ดอกเตอร์', N'ร.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2777, N'ร.ต.ต.ดอกเตอร์', N'ร.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2778, N'ร.ต.ต. ดร.', N'ร.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2779, N'พันตำรวจเอก ดอกเตอร์', N'พ.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2780, N'พันตำรวจเอก ดร.', N'พ.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2781, N'พ.ต.อ. ดอกเตอร์', N'พ.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2782, N'พ.ต.อ.ดอกเตอร์', N'พ.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2783, N'พ.ต.อ. ดร.', N'พ.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2784, N'พันตำรวจโทดอกเตอร์', N'พ.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2785, N'พันตำรวจโท ดอกเตอร์', N'พ.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2786, N'พันตำรวจโท ดร.', N'พ.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2787, N'พ.ต.ท. ดอกเตอร์', N'พ.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2788, N'พ.ต.ท.ดอกเตอร์', N'พ.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2789, N'พ.ต.ท. ดร.', N'พ.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2790, N'พันตำรวจตรีดอกเตอร์', N'พ.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2791, N'พันตำรวจตรี ดอกเตอร์', N'พ.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2792, N'พันตำรวจตรี ดร.', N'พ.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2793, N'พ.ต.ต. ดอกเตอร์', N'พ.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2794, N'พ.ต.ต.ดอกเตอร์', N'พ.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2795, N'พ.ต.ต. ดร.', N'พ.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2796, N'พลตำรวจเอก ดอกเตอร์', N'พล.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2797, N'พลตำรวจเอก ดร.', N'พล.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2798, N'พล.ต.อ. ดอกเตอร์', N'พล.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2799, N'พล.ต.อ.ดอกเตอร์', N'พล.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2800, N'พล.ต.อ. ดร.', N'พล.ต.อ.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2801, N'พลตำรวจโทดอกเตอร์', N'พล.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2802, N'พลตำรวจโท ดอกเตอร์', N'พล.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2803, N'พลตำรวจโท ดร.', N'พล.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2804, N'พล.ต.ท. ดอกเตอร์', N'พล.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2805, N'พล.ต.ท.ดอกเตอร์', N'พล.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2806, N'พล.ต.ท. ดร.', N'พล.ต.ท.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2807, N'พลตำรวจตรีดอกเตอร์', N'พล.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2808, N'พลตำรวจตรี ดอกเตอร์', N'พล.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2809, N'พลตำรวจตรี ดร.', N'พล.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2810, N'พล.ต.ต. ดอกเตอร์', N'พล.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2811, N'พล.ต.ต.ดอกเตอร์', N'พล.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2812, N'พล.ต.ต. ดร.', N'พล.ต.ต.ดร.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2813, N'นักเรียนพยาบาล ท.อ.', N'น.พ.อ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2814, N'สมาชิก อส.', N'อส.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2815, N'เรืออากาศเอก นายแพทย์', N'ร.อ.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2816, N'เรืออากาศเอก น.พ.', N'ร.อ.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2817, N'ร.อ. นายแพทย์', N'ร.อ.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2820, N'เรืออากาศโทนายแพทย์', N'ร.ท.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2821, N'เรืออากาศโท นายแพทย์', N'ร.ท.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2822, N'เรืออากาศโท น.พ.', N'ร.ท.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2823, N'ร.ท. นายแพทย์', N'ร.ท.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2826, N'เรืออากาศตรีนายแพทย์', N'ร.ต.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2827, N'เรืออากาศตรี นายแพทย์', N'ร.ต.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2828, N'เรืออากาศตรี น.พ.', N'ร.ต.น.พ.', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2829, N'ร.ต. นายแพทย์', N'ร.ต.น.พ.', 1)
 
--- ALREADY INSERTED
-/*
---INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2720, N'ว่าที่. ส.ต.', N'ว่าที่ ส.ต.', 1)
-*/
--- ABOVE IS OK
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (294, N'จ่าสิบเอกพิเศษ', N'จ.ส.อ.พิเศษ', 1)
-
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (506, N'นาวาอากาศเอกพิเศษ', N'น.อ.พิเศษ', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (357, N'นาวาเอกพิเศษ', N'น.อ.พิเศษ', 1)
-
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (377, N'พลฯทหารเรือ', N'พลฯ', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (380, N'พลเรือจัตวา', N'พล.ร.จ.', 1)
-
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (526, N'พลฯทหารอากาศ', N'พลฯ', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (527, N'นักเรียนนายเรืออากาศ', N'นนอ.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (528, N'นักเรียนจ่าอากาศ', N'นจอ.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (529, N'นักเรียนพยาบาลทหารอากาศ', N'น.พ.อ.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (535, N'เรืออากาศเอกนายแพทย์', N'ร.อ.น.พ.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (687, N'สมาชิกอาสารักษาดินแดน', N'อส.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (725, N'ร้อยตำรวจโทดอกเตอร์', N'ร.ต.ท.ดร.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (726, N'พันตำรวจเอกดอกเตอร์', N'พ.ต.อ.ดร.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (729, N'พันตำรวจเอกหญิง ท่านผู้หญิง', N'พ.ต.อ.หญิง ท่านผู้หญิง', 2)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (731, N'พลตรีหญิง คุณหญิง', N'พล.ต.หญิง คุณหญิง', 2)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (733, N'พลตำรวจเอกดอกเตอร์', N'พล.ต.อ.ดร.', 1)
-
-*/
+GO
 
 
 /*********** Script Update Date: 2022-09-07  ***********/
+/*
+-- ALREADY INSERTED
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2829, N'ร.ต. นายแพทย์', N'ร.ต.น.พ.', 1)
+*/
+
+
+
+
+
 /*
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2284, N'พลจัตวาหลวง', N'พล.จ.หลวง', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2285, N'พลตรีหม่อมราชวงศ์', N'พล.ต.ม.ร.ว.', 1)
