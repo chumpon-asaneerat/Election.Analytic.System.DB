@@ -1,4 +1,11 @@
 ----------------------------------------------------------------------------------------------
+Update 2022-09-12 #5
+- Update database script (2022-09-07).
+  - Remove 03.Insert.MTitle3.sql
+- Update database script (2022-09-12).
+  - Add 01.Insert.MTitle1.sql
+
+----------------------------------------------------------------------------------------------
 Update 2022-09-12 #4
 - Update database script (2022-09-07).
   - Update SP -> all old SP used ALTER instead of CREATE
