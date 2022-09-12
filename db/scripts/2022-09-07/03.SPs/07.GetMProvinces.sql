@@ -19,7 +19,7 @@ GO
 -- EXEC GetMProvinces NULL, NULL, NULL, N'1', NULL, NULL		-- Search all that RegionName contains '1'
 -- EXEC GetMProvinces NULL, N'ก', NULL, NULL, N'กลาง', NULL		-- Search all that ProvinceNameTH contains 'ก' GeoGroup contains 'กลาง'
 -- =============================================
-ALTER PROCEDURE [dbo].[GetMProvinces]
+CREATE PROCEDURE [dbo].[GetMProvinces]
 (
   @ProvinceId nvarchar(10) = NULL
 , @ProvinceNameTH nvarchar(100) = NULL

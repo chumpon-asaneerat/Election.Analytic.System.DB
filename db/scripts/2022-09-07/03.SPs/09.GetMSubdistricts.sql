@@ -19,7 +19,7 @@ GO
 -- EXEC GetMSubdistricts NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'1', NULL, NULL		-- Search all that RegionName contains '1'
 -- EXEC GetMSubdistricts NULL, NULL, NULL, NULL, NULL, N'ก', NULL, NULL, N'กลาง', NULL	-- Search all that ProvinceNameTH contains 'ก' GeoGroup contains 'กลาง'
 -- =============================================
-ALTER PROCEDURE [dbo].[GetMSubdistricts]
+CREATE PROCEDURE [dbo].[GetMSubdistricts]
 (
   @SubdistrictId nvarchar(10) = NULL
 , @SubdistrictNameTH nvarchar(100) = NULL

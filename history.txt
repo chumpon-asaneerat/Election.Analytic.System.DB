@@ -1,5 +1,14 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-12 #2
+- Update database script (2022-09-07).
+  - Add missing view update MSubdistrictView
+  - Add missing view update MDistrictView
+  - Add missing view update MSubdistrictView
+  - Update SP -> all new SP used CREATE instead of ALTER
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-12 #1
 - Build merge db scripts
 

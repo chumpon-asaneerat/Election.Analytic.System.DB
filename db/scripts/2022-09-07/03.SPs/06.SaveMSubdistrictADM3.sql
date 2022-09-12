@@ -15,7 +15,7 @@ GO
 --
 -- EXEC SaveMSubdistrictADM3 N'ชลบุรี', N'Chon Buri', N'เมืองชลบุรี', N'Mueang Chon Buri', N'อ่างศิลา', N'Ang Sila', N'TH200117', 6568129.19107
 -- =============================================
-ALTER PROCEDURE [dbo].[SaveMSubdistrictADM3] (
+CREATE PROCEDURE [dbo].[SaveMSubdistrictADM3] (
   @ProvinceNameTH nvarchar(100)
 , @ProvinceNameEN nvarchar(100)
 , @DistrictNameTH nvarchar(100)

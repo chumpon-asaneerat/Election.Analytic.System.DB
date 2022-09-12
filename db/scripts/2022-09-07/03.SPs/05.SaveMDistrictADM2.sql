@@ -15,7 +15,7 @@ GO
 --
 -- SaveMDistrictADM2 N'สกลนคร', N'Sakon Nakhon', N'อากาศอำนวย', N'Akat Amnuai', N'TH4711', 661338974.564
 -- =============================================
-ALTER PROCEDURE [dbo].[SaveMDistrictADM2] (
+CREATE PROCEDURE [dbo].[SaveMDistrictADM2] (
   @ProvinceNameTH nvarchar(100)
 , @ProvinceNameEN nvarchar(100)
 , @DistrictNameTH nvarchar(100)
