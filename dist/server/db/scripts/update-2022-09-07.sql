@@ -29,6 +29,118 @@ GO
 
 
 /*********** Script Update Date: 2022-09-07  ***********/
+/****** Object:  View [dbo].[MProvinceView]    Script Date: 9/12/2022 8:50:33 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER VIEW [dbo].[MProvinceView]
+AS
+	SELECT A.ProvinceId
+	     , A.ProvinceNameTH
+	     , A.ProvinceNameEN
+	     , A.ADM1Code
+		 , A.AreaM2 AS ProvinceAreaM2
+	     , B.RegionId
+		 , B.RegionName
+		 , B.GeoGroup
+		 , B.GeoSubGroup
+         , A.ContentId AS ProvinceContentId
+	  FROM MProvince A
+	     , MRegion B
+	 WHERE A.RegionId = B.RegionId
+
+
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
+/****** Object:  View [dbo].[MDistrictView]    Script Date: 9/12/2022 8:50:38 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER VIEW [dbo].[MDistrictView]
+AS
+	SELECT A.RegionId
+		 , A.ProvinceId
+		 , A.DistrictId
+		 , B.RegionName
+		 , B.GeoGroup
+		 , B.GeoSubGroup
+		 , C.ProvinceNameTH
+		 , A.DistrictNameTH
+		 , C.ProvinceNameEN
+		 , A.DistrictNameEN
+		 , C.ADM1Code
+		 , C.AreaM2 AS ProvinceAreaM2
+         , C.ContentId AS ProvinceContentId
+		 , A.ADM2Code
+		 , A.AreaM2 AS DistrictAreaM2
+         , A.ContentId AS DistrictContentId
+	  FROM MDistrict A
+		 , MRegion B
+		 , MProvince C
+	 WHERE A.RegionId = B.RegionId
+	   AND C.RegionId = B.RegionId
+	   AND A.ProvinceId = C.ProvinceId
+
+
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
+/****** Object:  View [dbo].[MSubdistrictView]    Script Date: 9/12/2022 8:50:43 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER VIEW [dbo].[MSubdistrictView]
+AS
+	SELECT A.RegionId
+		 , A.ProvinceId
+		 , A.DistrictId
+		 , A.SubdistrictId
+		 , B.RegionName
+		 , B.GeoGroup
+		 , B.GeoSubGroup
+		 , C.ProvinceNameTH
+		 , D.DistrictNameTH
+		 , A.SubdistrictNameTH
+		 , C.ProvinceNameEN
+		 , D.DistrictNameEN
+		 , A.SubdistrictNameEN
+		 , C.AreaM2 AS ProvinceAreaM2
+		 , D.AreaM2 AS DistrictAreaM2
+		 , A.AreaM2 AS SubdistrictAreaM2
+		 , C.ContentId AS ProvinceContentId
+		 , D.ContentId AS DistrictContentId
+		 , A.ContentId AS SubdistrictContentId
+		 , C.ADM1Code
+		 , D.ADM2Code
+		 , A.ADM3Code
+	  FROM MSubdistrict A
+		 , MRegion B
+		 , MProvince C
+		 , MDistrict D
+	 WHERE A.RegionId = B.RegionId
+	   AND C.RegionId = B.RegionId
+	   AND D.RegionId = B.RegionId
+	   AND A.ProvinceId = C.ProvinceId
+	   AND D.ProvinceId = C.ProvinceId
+	   AND A.DistrictId = D.DistrictId
+
+
+GO
+
+
+/*********** Script Update Date: 2022-09-07  ***********/
 /****** Object:  StoredProcedure [dbo].[Parse_FullName_Lv3]    Script Date: 9/1/2022 4:41:27 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -246,7 +358,7 @@ GO
 --
 -- SaveMDistrictADM2 N'สกลนคร', N'Sakon Nakhon', N'อากาศอำนวย', N'Akat Amnuai', N'TH4711', 661338974.564
 -- =============================================
-ALTER PROCEDURE [dbo].[SaveMDistrictADM2] (
+CREATE PROCEDURE [dbo].[SaveMDistrictADM2] (
   @ProvinceNameTH nvarchar(100)
 , @ProvinceNameEN nvarchar(100)
 , @DistrictNameTH nvarchar(100)
@@ -318,7 +430,7 @@ GO
 --
 -- EXEC SaveMSubdistrictADM3 N'ชลบุรี', N'Chon Buri', N'เมืองชลบุรี', N'Mueang Chon Buri', N'อ่างศิลา', N'Ang Sila', N'TH200117', 6568129.19107
 -- =============================================
-ALTER PROCEDURE [dbo].[SaveMSubdistrictADM3] (
+CREATE PROCEDURE [dbo].[SaveMSubdistrictADM3] (
   @ProvinceNameTH nvarchar(100)
 , @ProvinceNameEN nvarchar(100)
 , @DistrictNameTH nvarchar(100)
@@ -400,7 +512,7 @@ GO
 -- EXEC GetMProvinces NULL, NULL, NULL, N'1', NULL, NULL		-- Search all that RegionName contains '1'
 -- EXEC GetMProvinces NULL, N'ก', NULL, NULL, N'กลาง', NULL		-- Search all that ProvinceNameTH contains 'ก' GeoGroup contains 'กลาง'
 -- =============================================
-ALTER PROCEDURE [dbo].[GetMProvinces]
+CREATE PROCEDURE [dbo].[GetMProvinces]
 (
   @ProvinceId nvarchar(10) = NULL
 , @ProvinceNameTH nvarchar(100) = NULL
@@ -457,7 +569,7 @@ GO
 -- EXEC GetMDistricts NULL, NULL, NULL, NULL, NULL, N'1', NULL, NULL	-- Search all that RegionName contains '1'
 -- EXEC GetMDistricts NULL, NULL, NULL, N'ก', NULL, NULL, N'กลาง', NULL	-- Search all that ProvinceNameTH contains 'ก' GeoGroup contains 'กลาง'
 -- =============================================
-ALTER PROCEDURE [dbo].[GetMDistricts]
+CREATE PROCEDURE [dbo].[GetMDistricts]
 (
   @DistrictId nvarchar(10) = NULL
 , @DistrictNameTH nvarchar(100) = NULL
@@ -522,7 +634,7 @@ GO
 -- EXEC GetMSubdistricts NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'1', NULL, NULL		-- Search all that RegionName contains '1'
 -- EXEC GetMSubdistricts NULL, NULL, NULL, NULL, NULL, N'ก', NULL, NULL, N'กลาง', NULL	-- Search all that ProvinceNameTH contains 'ก' GeoGroup contains 'กลาง'
 -- =============================================
-ALTER PROCEDURE [dbo].[GetMSubdistricts]
+CREATE PROCEDURE [dbo].[GetMSubdistricts]
 (
   @SubdistrictId nvarchar(10) = NULL
 , @SubdistrictNameTH nvarchar(100) = NULL
