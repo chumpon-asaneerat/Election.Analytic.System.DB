@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-13 #4
+- Update database script (2022-09-12).
+  - Add SP ImportMPD2562PollingUnitAreaRemark
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-13 #3
 - Update database script (2022-09-12).
   - Alter SP SaveMPD2562PollingUnitSummary #2
