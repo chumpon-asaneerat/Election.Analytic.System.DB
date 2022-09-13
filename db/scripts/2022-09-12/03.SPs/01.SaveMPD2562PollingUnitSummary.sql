@@ -10,8 +10,6 @@ GO
 -- [== History ==]
 -- <2022-08-17> :
 --	- Stored Procedure Created.
--- <2022-09-12> :
---	- Add parameter AreaRemark.
 --
 -- [== Example ==]
 --
@@ -20,7 +18,6 @@ ALTER PROCEDURE [dbo].[SaveMPD2562PollingUnitSummary] (
   @ProvinceName nvarchar(100)
 , @PollingUnitNo int
 , @PollingUnitCount int = 0
-, @AreaRemark nvarchar(1000) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
@@ -34,7 +31,6 @@ BEGIN
 			RETURN
 		END
 		IF (@PollingUnitCount IS NULL) SET @PollingUnitCount = 0;
-		IF (dbo.IsNullOrEmpty(@AreaRemark)  = 1) SET @AreaRemark = NULL;
 
 		IF (NOT EXISTS 
 			(
@@ -50,21 +46,18 @@ BEGIN
 				  ProvinceName
 				, PollingUnitNo
 				, PollingUnitCount
-				, AreaRemark
 			)
 			VALUES
 			(
 				  @ProvinceName
 				, @PollingUnitNo
 				, @PollingUnitCount
-				, @AreaRemark
 			);
 		END
 		ELSE
 		BEGIN
 			UPDATE MPD2562PollingUnitSummary
 			   SET PollingUnitCount = @PollingUnitCount
-			     , AreaRemark = @AreaRemark
 			 WHERE ProvinceName = @ProvinceName
 			   AND PollingUnitNo = @PollingUnitNo
 		END

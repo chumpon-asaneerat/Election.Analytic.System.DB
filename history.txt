@@ -1,5 +1,17 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-13 #3
+- Update database script (2022-09-12).
+  - Alter SP SaveMPD2562PollingUnitSummary #2
+
+----------------------------------------------------------------------------------------------
+[commited]
+Update 2022-09-13 #2
+- Update database script (2022-09-12).
+  - Alter SP SaveMPD2562PollingUnitSummary
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-13 #1
 - Update database script (2022-09-12).
   - Alter Table MPD2562PollingUnitSummary
