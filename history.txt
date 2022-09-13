@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-13 #1
+- Update database script (2022-09-12).
+  - Alter Table MPD2562PollingUnitSummary
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-12 #8
 - Update database script (2022-09-12).
   - test build db script
