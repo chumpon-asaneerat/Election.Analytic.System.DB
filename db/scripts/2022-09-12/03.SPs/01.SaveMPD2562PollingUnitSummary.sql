@@ -27,7 +27,7 @@ BEGIN
 		 OR @PollingUnitNo IS NULL)
 		BEGIN
 			SET @errNum = 100;
-			SET @errMsg = 'Parameter RegionId or ProvinceId is null';
+			SET @errMsg = 'Parameter(s)) is null';
 			RETURN
 		END
 		IF (@PollingUnitCount IS NULL) SET @PollingUnitCount = 0;
