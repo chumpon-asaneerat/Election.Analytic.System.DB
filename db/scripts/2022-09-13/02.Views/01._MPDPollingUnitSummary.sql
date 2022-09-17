@@ -4,7 +4,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE VIEW [dbo].[MPDPollingUnitSummary]
+CREATE VIEW [dbo].[_MPDPollingUnitSummary]
 AS
 	SELECT ThaiYear = 2562, A.* 
 	  FROM MPD2562PollingUnitSummary A
