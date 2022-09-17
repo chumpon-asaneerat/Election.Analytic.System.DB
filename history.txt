@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-17 #6
+- Generate merge db script.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-17 #5
   - Add View _MPDPollingUnitSummary  
   - Update View MPDPollingUnitSummary  
