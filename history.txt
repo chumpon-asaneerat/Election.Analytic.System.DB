@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-17 #7
+  - Update Table MPD2566PollingUnitSummary  
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-17 #6
 - Generate merge db script.
 
@@ -29,7 +34,7 @@ Update 2022-09-17 #2
 [commited]
 Update 2022-09-17 #1
 - Update database script (2022-09-13).
-  - Add Table MPD2562PollingUnitSummary
+  - Add Table MPD2566PollingUnitSummary
 
 ----------------------------------------------------------------------------------------------
 [commited]

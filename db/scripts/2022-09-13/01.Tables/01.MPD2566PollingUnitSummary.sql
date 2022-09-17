@@ -4,12 +4,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[MPD2562PollingUnitSummary](
+CREATE TABLE [dbo].[MPD2566PollingUnitSummary](
 	[ProvinceName] [nvarchar](100) NOT NULL,
 	[PollingUnitNo] [int] NOT NULL,
 	[PollingUnitCount] [int] NOT NULL,
 	[AreaRemark] [nvarchar](1000) NULL,
- CONSTRAINT [PK_MPD2562PollingUnitSummary] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_MPD2566PollingUnitSummary] PRIMARY KEY CLUSTERED 
 (
 	[ProvinceName] ASC,
 	[PollingUnitNo] ASC
@@ -18,5 +18,5 @@ CREATE TABLE [dbo].[MPD2562PollingUnitSummary](
 
 GO
 
-ALTER TABLE [dbo].[MPD2562PollingUnitSummary] ADD  CONSTRAINT [DF_MPD2562PollingUnitSummary_PollingUnitCount]  DEFAULT ((0)) FOR [PollingUnitCount]
+ALTER TABLE [dbo].[MPD2566PollingUnitSummary] ADD  CONSTRAINT [DF_MPD2566PollingUnitSummary_PollingUnitCount]  DEFAULT ((0)) FOR [PollingUnitCount]
 GO
