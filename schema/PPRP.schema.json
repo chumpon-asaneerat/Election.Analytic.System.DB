@@ -412,9 +412,556 @@
             ]
         }
     },
+    "FindRegionId": {
+        "type": "FUNCTION",
+        "updated": "2022-08-30T10:03:30.390Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "RegionName",
+                    "type": "nvarchar(100)"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "__ret",
+                    "type": "nvarchar(10)"
+                }
+            ]
+        }
+    },
+    "ImportPollingStation": {
+        "type": "PROCEDURE",
+        "updated": "2022-08-30T10:03:30.390Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "YearThai",
+                    "type": "int"
+                },
+                {
+                    "name": "RegionName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "GeoSubGroup",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "ProvinceId",
+                    "type": "nvarchar(10)"
+                },
+                {
+                    "name": "ProvinceNameTH",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "DistrictId",
+                    "type": "nvarchar(10)"
+                },
+                {
+                    "name": "DistrictNameTH",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "SubdistrictId",
+                    "type": "nvarchar(10)"
+                },
+                {
+                    "name": "SubdistrictNameTH",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "PollingUnitNo",
+                    "type": "int"
+                },
+                {
+                    "name": "PollingSubUnitNo",
+                    "type": "int"
+                },
+                {
+                    "name": "VillageCount",
+                    "type": "int"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "SaveMPD2562VoteSummary": {
+        "type": "PROCEDURE",
+        "updated": "2022-08-30T10:03:30.397Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "PollingUnitNo",
+                    "type": "int"
+                },
+                {
+                    "name": "FullName",
+                    "type": "nvarchar(200)"
+                },
+                {
+                    "name": "VoteNo",
+                    "type": "int"
+                },
+                {
+                    "name": "PartyName",
+                    "type": "nvarchar(200)"
+                },
+                {
+                    "name": "VoteCount",
+                    "type": "int",
+                    "default": "0"
+                },
+                {
+                    "name": "RevoteNo",
+                    "type": "int",
+                    "default": "0"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "SaveMProvince": {
+        "type": "PROCEDURE",
+        "updated": "2022-08-30T10:12:25.543Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceId",
+                    "type": "nvarchar(10)"
+                },
+                {
+                    "name": "RegionId",
+                    "type": "nvarchar(10)"
+                },
+                {
+                    "name": "ProvinceNameTH",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "ProvinceNameEN",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "ADM1Code",
+                    "type": "nvarchar(20)",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "Parse_FullName_Lv1": {
+        "type": "PROCEDURE",
+        "updated": "2022-09-01T17:19:31.263Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "fullName",
+                    "type": "nvarchar(4000)"
+                },
+                {
+                    "name": "el",
+                    "type": "nvarchar(100)"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "prefix",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "firstName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "lastName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "Parse_FullName_Lv2": {
+        "type": "PROCEDURE",
+        "updated": "2022-09-01T17:25:32.467Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "fullName",
+                    "type": "nvarchar(4000)"
+                },
+                {
+                    "name": "el1",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "el2",
+                    "type": "nvarchar(100)"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "prefix",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "firstName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "lastName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "Parse_FullName_Lv3": {
+        "type": "PROCEDURE",
+        "updated": "2022-09-07T02:13:00.147Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "fullName",
+                    "type": "nvarchar(4000)"
+                },
+                {
+                    "name": "el1",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "el2",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "el3",
+                    "type": "nvarchar(100)"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "prefix",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "firstName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "lastName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "Parse_FullName_Lv4": {
+        "type": "PROCEDURE",
+        "updated": "2022-09-07T02:13:11.670Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "fullName",
+                    "type": "nvarchar(4000)"
+                },
+                {
+                    "name": "el1",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "el2",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "el3",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "el4",
+                    "type": "nvarchar(100)"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "prefix",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "firstName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "lastName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "Parse_FullName_Lv5": {
+        "type": "PROCEDURE",
+        "updated": "2022-09-07T02:13:25.943Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "fullName",
+                    "type": "nvarchar(4000)"
+                },
+                {
+                    "name": "el1",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "el2",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "el3",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "el4",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "el5",
+                    "type": "nvarchar(100)"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "prefix",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "firstName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "lastName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "SaveMPDC2566": {
+        "type": "PROCEDURE",
+        "updated": "2022-09-07T08:19:51.280Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "PollingUnitNo",
+                    "type": "int"
+                },
+                {
+                    "name": "CandidateNo",
+                    "type": "int"
+                },
+                {
+                    "name": "FullName",
+                    "type": "nvarchar(200)"
+                },
+                {
+                    "name": "PrevPartyName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "EducationLevel",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "SubGroup",
+                    "type": "nvarchar(200)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "Remark",
+                    "type": "nvarchar(200)",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "SaveMPD2562x350UnitSummary": {
+        "type": "PROCEDURE",
+        "updated": "2022-09-07T10:14:17.880Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "PollingUnitNo",
+                    "type": "int"
+                },
+                {
+                    "name": "RightCount",
+                    "type": "int",
+                    "default": "0"
+                },
+                {
+                    "name": "ExerciseCount",
+                    "type": "int",
+                    "default": "0"
+                },
+                {
+                    "name": "InvalidCount",
+                    "type": "int",
+                    "default": "0"
+                },
+                {
+                    "name": "NoVoteCount",
+                    "type": "int",
+                    "default": "0"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "SaveMProvinceADM1": {
+        "type": "PROCEDURE",
+        "updated": "2022-09-11T17:32:28.220Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceNameTH",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "ProvinceNameEN",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "ADM1Code",
+                    "type": "nvarchar(20)"
+                },
+                {
+                    "name": "AreaM2",
+                    "type": "decimal(16, 3)",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
     "GetMProvinces": {
         "type": "PROCEDURE",
-        "updated": "2022-08-30T10:03:30.377Z",
+        "updated": "2022-09-11T18:11:22.033Z",
         "parameter": {
             "inputs": [
                 {
@@ -453,7 +1000,7 @@
     },
     "GetMDistricts": {
         "type": "PROCEDURE",
-        "updated": "2022-08-30T10:03:30.380Z",
+        "updated": "2022-09-11T20:05:16.227Z",
         "parameter": {
             "inputs": [
                 {
@@ -500,9 +1047,105 @@
             "outputs": []
         }
     },
+    "SaveMDistrictADM2": {
+        "type": "PROCEDURE",
+        "updated": "2022-09-11T21:17:45.240Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceNameTH",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "ProvinceNameEN",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "DistrictNameTH",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "DistrictNameEN",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "ADM2Code",
+                    "type": "nvarchar(20)"
+                },
+                {
+                    "name": "AreaM2",
+                    "type": "decimal(16, 3)",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "SaveMSubdistrictADM3": {
+        "type": "PROCEDURE",
+        "updated": "2022-09-11T21:23:29.733Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceNameTH",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "ProvinceNameEN",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "DistrictNameTH",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "DistrictNameEN",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "SubdistrictNameTH",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "SubdistrictNameEN",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "ADM3Code",
+                    "type": "nvarchar(20)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "AreaM2",
+                    "type": "decimal(16, 3)",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
     "GetMSubdistricts": {
         "type": "PROCEDURE",
-        "updated": "2022-08-30T10:03:30.380Z",
+        "updated": "2022-09-11T21:27:06.057Z",
         "parameter": {
             "inputs": [
                 {
@@ -557,27 +1200,9 @@
             "outputs": []
         }
     },
-    "FindRegionId": {
-        "type": "FUNCTION",
-        "updated": "2022-08-30T10:03:30.390Z",
-        "parameter": {
-            "inputs": [
-                {
-                    "name": "RegionName",
-                    "type": "nvarchar(100)"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "__ret",
-                    "type": "nvarchar(10)"
-                }
-            ]
-        }
-    },
-    "SaveMPD2562VoteSummary": {
+    "SaveMPD2562PollingUnitSummary": {
         "type": "PROCEDURE",
-        "updated": "2022-08-30T10:03:30.397Z",
+        "updated": "2022-09-13T14:17:05.967Z",
         "parameter": {
             "inputs": [
                 {
@@ -589,24 +1214,7 @@
                     "type": "int"
                 },
                 {
-                    "name": "FullName",
-                    "type": "nvarchar(200)"
-                },
-                {
-                    "name": "VoteNo",
-                    "type": "int"
-                },
-                {
-                    "name": "PartyName",
-                    "type": "nvarchar(200)"
-                },
-                {
-                    "name": "VoteCount",
-                    "type": "int",
-                    "default": "0"
-                },
-                {
-                    "name": "RevoteNo",
+                    "name": "PollingUnitCount",
                     "type": "int",
                     "default": "0"
                 }
@@ -623,9 +1231,9 @@
             ]
         }
     },
-    "SaveMPDC2566": {
+    "ImportMPD2562PollingUnitAreaRemark": {
         "type": "PROCEDURE",
-        "updated": "2022-08-30T10:03:30.400Z",
+        "updated": "2022-09-13T14:20:23.730Z",
         "parameter": {
             "inputs": [
                 {
@@ -637,26 +1245,8 @@
                     "type": "int"
                 },
                 {
-                    "name": "CandidateNo",
-                    "type": "int"
-                },
-                {
-                    "name": "FullName",
-                    "type": "nvarchar(200)"
-                },
-                {
-                    "name": "PrevPartyName",
-                    "type": "nvarchar(100)",
-                    "default": "NULL"
-                },
-                {
-                    "name": "EducationLevel",
-                    "type": "nvarchar(100)",
-                    "default": "NULL"
-                },
-                {
-                    "name": "Remark",
-                    "type": "nvarchar(200)",
+                    "name": "AreaRemark",
+                    "type": "nvarchar(1000)",
                     "default": "NULL"
                 }
             ],
@@ -672,32 +1262,23 @@
             ]
         }
     },
-    "SaveMProvince": {
+    "SaveMPD2566PollingUnitSummary": {
         "type": "PROCEDURE",
-        "updated": "2022-08-30T10:12:25.543Z",
+        "updated": "2022-09-17T15:45:14.450Z",
         "parameter": {
             "inputs": [
                 {
-                    "name": "ProvinceId",
-                    "type": "nvarchar(10)"
-                },
-                {
-                    "name": "RegionId",
-                    "type": "nvarchar(10)"
-                },
-                {
-                    "name": "ProvinceNameTH",
+                    "name": "ProvinceName",
                     "type": "nvarchar(100)"
                 },
                 {
-                    "name": "ProvinceNameEN",
-                    "type": "nvarchar(100)",
-                    "default": "NULL"
+                    "name": "PollingUnitNo",
+                    "type": "int"
                 },
                 {
-                    "name": "ADM1Code",
-                    "type": "nvarchar(20)",
-                    "default": "NULL"
+                    "name": "PollingUnitCount",
+                    "type": "int",
+                    "default": "0"
                 }
             ],
             "outputs": [
