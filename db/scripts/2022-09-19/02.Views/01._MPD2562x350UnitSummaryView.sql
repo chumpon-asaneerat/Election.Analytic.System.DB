@@ -15,11 +15,17 @@ AS
 		 , B.FullName
 		 , B.PartyName
 		 , B.VoteCount
+		 , C.PollingUnitCount
 	  FROM MPD2562x350UnitSummary A 
 	  JOIN MPD2562VoteSummary B
 		ON (
 				B.ProvinceName = A.ProvinceName
 			AND B.PollingUnitNo = A.PollingUnitNo
+		   )
+	  JOIN MPD2562PollingUnitSummary C
+		ON (
+				C.ProvinceName = A.ProvinceName
+			AND C.PollingUnitNo = A.PollingUnitNo
 		   )
 
 GO

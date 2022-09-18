@@ -15,6 +15,7 @@ AS
 		 , A.FullName
 		 , A.PartyName
 		 , A.VoteCount
+		 , A.PollingUnitCount
 	  FROM _MPD2562x350UnitSummaryView A
 	 WHERE VoteCount = (
 						SELECT MAX(VoteCount) AS VoteCount 

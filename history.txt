@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-19 #7
+- Update database script (2022-09-19).
+  - Update View _MPD2562x350UnitSummaryView
+  - Update View MPD2562x350UnitSummaryView
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-19 #6
 - Build schema files and js file.
 
