@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-19 #8
+- Update database script (2022-09-19).
+  - Generate db merge script.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-19 #7
 - Update database script (2022-09-19).
   - Update View _MPD2562x350UnitSummaryView
