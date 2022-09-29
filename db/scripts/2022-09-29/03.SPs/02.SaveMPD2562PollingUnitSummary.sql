@@ -18,6 +18,7 @@ ALTER PROCEDURE [dbo].[SaveMPD2562PollingUnitSummary] (
   @ProvinceName nvarchar(100)
 , @PollingUnitNo int
 , @PollingUnitCount int = 0
+, @AreaRemark nvarchar(1000) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
@@ -46,18 +47,21 @@ BEGIN
 				  ProvinceName
 				, PollingUnitNo
 				, PollingUnitCount
+                , AreaRemark
 			)
 			VALUES
 			(
 				  @ProvinceName
 				, @PollingUnitNo
 				, @PollingUnitCount
+                , @AreaRemark
 			);
 		END
 		ELSE
 		BEGIN
 			UPDATE MPD2562PollingUnitSummary
 			   SET PollingUnitCount = @PollingUnitCount
+                 , AreaRemark = @AreaRemark
 			 WHERE ProvinceName = @ProvinceName
 			   AND PollingUnitNo = @PollingUnitNo
 		END
