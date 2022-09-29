@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-29 #8
+- Update database script (2022-09-29).
+  - Update SP ImportMPD2566PollingUnitSummary
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-29 #7
 - Update database script (2022-09-29).
   - Update SP ImportMPD2562PollingUnitSummary
