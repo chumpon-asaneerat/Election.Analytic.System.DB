@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-29 #6
+- Update database script (2022-09-29).
+  - Add SP ImportMPD2566PollingUnitSummary.
+  - Update SP SaveMPD2566PollingUnitSummary (nothing change).
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-29 #5
 - Update database script (2022-09-29).
   - Add SP GetMPD2566PollingUnitSummary.
