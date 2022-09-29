@@ -14,16 +14,17 @@ GO
 -- [== Example ==]
 --
 -- =============================================
-CREATE PROCEDURE [dbo].[GetMPD2562PollingUnitSummaries]
+CREATE PROCEDURE [dbo].[GetMPD2562PollingUnitSummary]
 (
-  @ProvinceName nvarchar(100) = NULL
+  @ProvinceName nvarchar(100)
+, @PollingUnitNo int
 )
 AS
 BEGIN
     SELECT * 
 	  FROM MPD2562PollingUnitSummary
-	 WHERE UPPER(LTRIM(RTRIM(ProvinceName))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, ProvinceName))))
-	 ORDER BY ProvinceName, PollingUnitNo
+	 WHERE ProvinceName = @ProvinceName
+	   AND PollingUnitNo = @PollingUnitNo
 END
 
 GO
