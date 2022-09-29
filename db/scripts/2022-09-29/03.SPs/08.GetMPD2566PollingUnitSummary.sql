@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[GetMPD2562PollingUnitSummary]    Script Date: 9/29/2022 8:54:30 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetMPD2566PollingUnitSummary]    Script Date: 9/29/2022 8:54:30 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6,7 +6,7 @@ GO
 
 -- =============================================
 -- Author: Chumpon Asaneerat
--- Description:	GetMPD2562PollingUnitSummary
+-- Description:	GetMPD2566PollingUnitSummary
 -- [== History ==]
 -- <2022-09-29> :
 --	- Stored Procedure Created.
@@ -14,7 +14,7 @@ GO
 -- [== Example ==]
 --
 -- =============================================
-CREATE PROCEDURE [dbo].[GetMPD2562PollingUnitSummary]
+CREATE PROCEDURE [dbo].[GetMPD2566PollingUnitSummary]
 (
   @ProvinceName nvarchar(100)
 , @PollingUnitNo int
@@ -22,7 +22,7 @@ CREATE PROCEDURE [dbo].[GetMPD2562PollingUnitSummary]
 AS
 BEGIN
     SELECT * 
-	  FROM MPD2562PollingUnitSummary
+	  FROM MPD2566PollingUnitSummary
 	 WHERE ProvinceName = @ProvinceName
 	   AND PollingUnitNo = @PollingUnitNo
 END
