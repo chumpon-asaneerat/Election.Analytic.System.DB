@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-29 #2
+- Update database script (2022-09-29).
+  - Add SP ImportPersonImage
+  - Update SP SavePersonImage (nothing change).
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-29 #1
 - Update database script (2022-09-29).
   - Add SP ImportMPD2562PollingUnitSummary
