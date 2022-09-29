@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-29 #1
+- Update database script (2022-09-29).
+  - Add SP ImportMPD2562PollingUnitSummary
+  - Update SP SaveMPD2562PollingUnitSummary (nothing change).
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-27 #1
 - Change db script folders.
 - Update Gulpfile.
