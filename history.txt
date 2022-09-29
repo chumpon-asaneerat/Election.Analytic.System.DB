@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-29 #10
+- Update database script (2022-09-29).
+  - Add SP SavePollingStation
+  - Update SP ImportPollingStation
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-29 #9
 - Update database script (2022-09-29).
   - Update SP SaveMPD2562PollingUnitSummary
