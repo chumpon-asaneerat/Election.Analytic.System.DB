@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-29 #3
+- Update database script (2022-09-29).
+  - Add SP GetMPD2562PollingUnitSummaries.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-29 #2
 - Update database script (2022-09-29).
   - Add SP ImportPersonImage
