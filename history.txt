@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-30 #7
+- Update database script (2022-09-29).
+  - Add DROP SP SaveMProvinceADM1
+  - Add SP ImportMProvinceADM1
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-30 #6
 - Update database script (2022-09-29).
   - Add SP ImportMPDC2566
