@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-30 #6
+- Update database script (2022-09-29).
+  - Add SP ImportMPDC2566
+  - Update SP SaveMPDC2566
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-30 #5
 - Update database script (2022-09-29).
   - Add SP ImportMPD2562x350UnitSummary
