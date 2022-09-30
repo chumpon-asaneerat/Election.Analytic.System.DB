@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-30 #5
+- Update database script (2022-09-29).
+  - Add SP ImportMPD2562x350UnitSummary
+  - Update SP SaveMPD2562x350UnitSummary
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-30 #4
 - Update database script (2022-09-29).
   - Add SP GetPersonImages
