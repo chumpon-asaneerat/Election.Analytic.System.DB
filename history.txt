@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-30 #3
+- Update database script (2022-09-29).
+  - Add SP GetMPD2562VoteSummaryByFullName
+  - Update SP GetMPD2562VoteSummaries
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-30 #2
 - Update database script (2022-09-29).
   - Add SP GetMPD2562VoteSummaries

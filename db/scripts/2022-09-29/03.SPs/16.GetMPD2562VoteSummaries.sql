@@ -26,8 +26,8 @@ BEGIN
     (
         SELECT ROW_NUMBER() OVER(ORDER BY ProvinceName, PollingUnitNo, VoteCount DESC) AS RowNo
                 , * 
-            FROM MPD2562VoteSummary
-            WHERE UPPER(LTRIM(RTRIM(ProvinceName))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, ProvinceName))))
+          FROM MPD2562VoteSummary
+         WHERE UPPER(LTRIM(RTRIM(ProvinceName))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, ProvinceName))))
     )
     SELECT * 
       FROM MPD2562VoteSum62 
