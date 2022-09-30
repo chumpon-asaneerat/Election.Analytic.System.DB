@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-30 #4
+- Update database script (2022-09-29).
+  - Add SP GetPersonImages
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-30 #3
 - Update database script (2022-09-29).
   - Add SP GetMPD2562VoteSummaryByFullName
