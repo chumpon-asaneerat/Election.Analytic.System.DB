@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-30 #8
+- Update database script (2022-09-29).
+  - Add DROP SP SaveMDistrictADM2
+  - Add SP ImportMDistrictADM2
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-30 #7
 - Update database script (2022-09-29).
   - Add DROP SP SaveMProvinceADM1
