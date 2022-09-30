@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-09-30 #1
+- Update database script (2022-09-29).
+  - Update SP SaveMPD2562VoteSummary
+  - Add SP ImportMPD2562VoteSummary
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-29 #11
 - Update database script (2022-09-29).
   - Add SP GetPollingStations
