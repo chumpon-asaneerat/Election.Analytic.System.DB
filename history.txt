@@ -2,6 +2,12 @@
 [commited]
 Update 2022-10-01 #11
 - Update database script (2022-09-29).
+  - Update Table MPDC2566 -> change Remark Size from 200 to 4000 (max)
+
+----------------------------------------------------------------------------------------------
+[commited]
+Update 2022-10-01 #11
+- Update database script (2022-09-29).
   - Add SP GetPollingUnitMenuItems
 
 ----------------------------------------------------------------------------------------------
