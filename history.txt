@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-10-01 #20
+- Update gulpfile.
+- Generate Schema related files.
+- Generate js database access file.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-10-01 #19
 - Update database script (2022-09-29).
   - Generate merge script

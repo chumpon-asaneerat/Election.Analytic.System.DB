@@ -105,12 +105,6 @@ const PPRP = class extends SqlServer {
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
 
-    async SaveMPD2562VoteSummary(pObj) {
-        let name = 'SaveMPD2562VoteSummary';
-        let proc = schema[name];
-        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
-    }
-
     async SaveMProvince(pObj) {
         let name = 'SaveMProvince';
         let proc = schema[name];
@@ -147,24 +141,6 @@ const PPRP = class extends SqlServer {
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
 
-    async SaveMPDC2566(pObj) {
-        let name = 'SaveMPDC2566';
-        let proc = schema[name];
-        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
-    }
-
-    async SaveMPD2562x350UnitSummary(pObj) {
-        let name = 'SaveMPD2562x350UnitSummary';
-        let proc = schema[name];
-        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
-    }
-
-    async SaveMProvinceADM1(pObj) {
-        let name = 'SaveMProvinceADM1';
-        let proc = schema[name];
-        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
-    }
-
     async GetMProvinces(pObj) {
         let name = 'GetMProvinces';
         let proc = schema[name];
@@ -177,26 +153,188 @@ const PPRP = class extends SqlServer {
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
 
-    async SaveMDistrictADM2(pObj) {
-        let name = 'SaveMDistrictADM2';
-        let proc = schema[name];
-        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
-    }
-
-    async SaveMSubdistrictADM3(pObj) {
-        let name = 'SaveMSubdistrictADM3';
-        let proc = schema[name];
-        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
-    }
-
     async GetMSubdistricts(pObj) {
         let name = 'GetMSubdistricts';
         let proc = schema[name];
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
 
-    async SaveMPD2562PollingUnitSummary(pObj) {
-        let name = 'SaveMPD2562PollingUnitSummary';
+    async ImportPersonImage(pObj) {
+        let name = 'ImportPersonImage';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2562PollingUnitSummary(pObj) {
+        let name = 'GetMPD2562PollingUnitSummary';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2562PollingUnitSummaries(pObj) {
+        let name = 'GetMPD2562PollingUnitSummaries';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2566PollingUnitSummary(pObj) {
+        let name = 'GetMPD2566PollingUnitSummary';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2566PollingUnitSummaries(pObj) {
+        let name = 'GetMPD2566PollingUnitSummaries';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async SavePollingStation(pObj) {
+        let name = 'SavePollingStation';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetPollingStations(pObj) {
+        let name = 'GetPollingStations';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async ImportMPD2562VoteSummary(pObj) {
+        let name = 'ImportMPD2562VoteSummary';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async SaveMPD2562VoteSummary(pObj) {
+        let name = 'SaveMPD2562VoteSummary';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2562VoteSummaries(pObj) {
+        let name = 'GetMPD2562VoteSummaries';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2562VoteSummaryByFullName(pObj) {
+        let name = 'GetMPD2562VoteSummaryByFullName';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetPersonImages(pObj) {
+        let name = 'GetPersonImages';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async SaveMPD2562x350UnitSummary(pObj) {
+        let name = 'SaveMPD2562x350UnitSummary';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async ImportMPD2562x350UnitSummary(pObj) {
+        let name = 'ImportMPD2562x350UnitSummary';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async ImportMProvinceADM1(pObj) {
+        let name = 'ImportMProvinceADM1';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async ImportMDistrictADM2(pObj) {
+        let name = 'ImportMDistrictADM2';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async ImportMSubdistrictADM3(pObj) {
+        let name = 'ImportMSubdistrictADM3';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2562TopVoteSummaries(pObj) {
+        let name = 'GetMPD2562TopVoteSummaries';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2562TotalVotes(pObj) {
+        let name = 'GetMPD2562TotalVotes';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2562x350UnitSummaries(pObj) {
+        let name = 'GetMPD2562x350UnitSummaries';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2562x350UnitSummary(pObj) {
+        let name = 'GetMPD2562x350UnitSummary';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2562x350UnitFullSummaries(pObj) {
+        let name = 'GetMPD2562x350UnitFullSummaries';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPDC2566s(pObj) {
+        let name = 'GetMPDC2566s';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPDC2566Summaries(pObj) {
+        let name = 'GetMPDC2566Summaries';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetRegionMenuItems(pObj) {
+        let name = 'GetRegionMenuItems';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetProvinceMenuItems(pObj) {
+        let name = 'GetProvinceMenuItems';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetPollingUnitMenuItems(pObj) {
+        let name = 'GetPollingUnitMenuItems';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async ImportMPDC2566(pObj) {
+        let name = 'ImportMPDC2566';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async SaveMPDC2566(pObj) {
+        let name = 'SaveMPDC2566';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async ImportMPD2562PollingUnitSummary(pObj) {
+        let name = 'ImportMPD2562PollingUnitSummary';
         let proc = schema[name];
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
@@ -207,8 +345,38 @@ const PPRP = class extends SqlServer {
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
 
+    async ImportMPD2566PollingUnitSummary(pObj) {
+        let name = 'ImportMPD2566PollingUnitSummary';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async SaveMPD2562PollingUnitSummary(pObj) {
+        let name = 'SaveMPD2562PollingUnitSummary';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
     async SaveMPD2566PollingUnitSummary(pObj) {
         let name = 'SaveMPD2566PollingUnitSummary';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async DeletePersonImage(pObj) {
+        let name = 'DeletePersonImage';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async DeleteMParty(pObj) {
+        let name = 'DeleteMParty';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMParties(pObj) {
+        let name = 'GetMParties';
         let proc = schema[name];
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
