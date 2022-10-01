@@ -1,5 +1,13 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-10-01 #19
+- Update database script (2022-09-29).
+  - Generate merge script
+- Update database script (2022-10-01).
+  - Prepare files.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-10-01 #18
 - Update database script (2022-09-29).
   - Add SP GetMParties
