@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-10-01 #8
+- Update database script (2022-09-29).
+  - Prepare file -> GetRegionMenuItems
+  - Prepare file -> GetProvinceMenuItems
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-10-01 #7
 - Update database script (2022-09-29).
   - Add SP GetMPDC2566Summaries
