@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[ImportMPD2562PollingUnitSummary]    Script Date: 9/29/2022 8:37:20 AM ******/
+/****** Object:  StoredProcedure [dbo].[ImportMPD2562PollingUnitAreaRemark]    Script Date: 10/1/2022 10:20:10 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6,19 +6,17 @@ GO
 
 -- =============================================
 -- Author: Chumpon Asaneerat
--- Description:	ImportMPD2562PollingUnitSummary
+-- Description:	ImportMPD2562PollingUnitAreaRemark
 -- [== History ==]
--- <2022-09-29> :
+-- <2022-09-12> :
 --	- Stored Procedure Created.
---  - 
---  
+--
 -- [== Example ==]
 --
 -- =============================================
-CREATE PROCEDURE [dbo].[ImportMPD2562PollingUnitSummary] (
+ALTER PROCEDURE [dbo].[ImportMPD2562PollingUnitAreaRemark] (
   @ProvinceName nvarchar(100)
 , @PollingUnitNo int
-, @PollingUnitCount int = 0
 , @AreaRemark nvarchar(4000) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
@@ -29,10 +27,10 @@ BEGIN
 		 OR @PollingUnitNo IS NULL)
 		BEGIN
 			SET @errNum = 100;
-			SET @errMsg = 'Parameter(s)) is null';
+			SET @errMsg = 'Parameter(s)  is null';
 			RETURN
 		END
-		IF (@PollingUnitCount IS NULL) SET @PollingUnitCount = 0;
+		IF (dbo.IsNullOrEmpty(@AreaRemark) = 1) SET @AreaRemark = NULL;
 
 		IF (NOT EXISTS 
 			(
@@ -47,22 +45,19 @@ BEGIN
 			(
 				  ProvinceName
 				, PollingUnitNo
-				, PollingUnitCount
 				, AreaRemark
 			)
 			VALUES
 			(
 				  @ProvinceName
 				, @PollingUnitNo
-				, @PollingUnitCount
 				, @AreaRemark
 			);
 		END
 		ELSE
 		BEGIN
 			UPDATE MPD2562PollingUnitSummary
-			   SET PollingUnitCount = @PollingUnitCount
-			     , AreaRemark = @AreaRemark
+			   SET AreaRemark = @AreaRemark
 			 WHERE ProvinceName = @ProvinceName
 			   AND PollingUnitNo = @PollingUnitNo
 		END

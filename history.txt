@@ -1,5 +1,13 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-10-01 #12
+- Update database script (2022-09-29).
+  - Update Table MPD2562PollingUnitSummary -> change AreaRemark Size from 200 to 4000 (max)
+  - Update Table MPD2566PollingUnitSummary -> change AreaRemark Size from 200 to 4000 (max)
+  - Update related SPs parameter size.
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-10-01 #11
 - Update database script (2022-09-29).
   - Update Table MPDC2566 -> change Remark Size from 200 to 4000 (max)

@@ -18,7 +18,7 @@ ALTER PROCEDURE [dbo].[SaveMPD2566PollingUnitSummary] (
   @ProvinceName nvarchar(100)
 , @PollingUnitNo int
 , @PollingUnitCount int = 0
-, @AreaRemark nvarchar(1000) = NULL
+, @AreaRemark nvarchar(4000) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS

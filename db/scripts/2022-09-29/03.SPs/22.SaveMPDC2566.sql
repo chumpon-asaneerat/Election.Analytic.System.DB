@@ -24,7 +24,7 @@ ALTER PROCEDURE [dbo].[SaveMPDC2566] (
 , @PrevPartyName nvarchar(100) = NULL
 , @EducationLevel nvarchar(100) = NULL
 , @SubGroup nvarchar(200) = NULL
-, @Remark nvarchar(200) = NULL
+, @Remark nvarchar(4000) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
