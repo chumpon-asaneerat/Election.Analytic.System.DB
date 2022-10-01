@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-10-01 #11
+- Update database script (2022-09-29).
+  - Add SP GetPollingUnitMenuItems
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-10-01 #10
 - Update database script (2022-09-29).
   - Add SP GetProvinceMenuItems
