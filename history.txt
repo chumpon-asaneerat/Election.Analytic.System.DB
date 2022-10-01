@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-10-01 #1
+- Update database script (2022-09-29).
+  - Add SP GetMPD2562TopVoteSummaries
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-09-30 #9
 - Update database script (2022-09-29).
   - Add DROP SP SaveMSubdistrictADM3
