@@ -16,18 +16,22 @@ GO
 -- =============================================
 CREATE PROCEDURE [dbo].[GetProvinceMenuItems]
 (
-  @ProvinceId nvarchar(10)
-, @PollingUnitNo int
-, @Top int = 6
+  @RegionId nvarchar(10)
 )
 AS
 BEGIN
-    SELECT SUM(A.VoteCount) AS TotalVotes
-      FROM MPD2562VoteSummary A
-         , MProvince B 
-     WHERE UPPER(LTRIM(RTRIM(A.ProvinceName))) = UPPER(LTRIM(RTRIM(B.ProvinceNameTH)))
-       AND B.ProvinceId = @ProvinceId
-       AND A.PollingUnitNo = @PollingUnitNo
+    SELECT A.RegionId
+         , A.ProvinceId
+         , A.ProvinceNameTH
+         , COUNT(A.PollingUnitNo) AS UnitCount
+      FROM MPDPollingUnitSummary A 
+     WHERE A.RegionId = @RegionId
+       AND A.RegionId IS NOT NULL
+     GROUP BY A.RegionId
+            , A.ProvinceId
+            , A.ProvinceNameTH
+     ORDER BY A.RegionId
+            , A.ProvinceNameTH
 END
 
 GO

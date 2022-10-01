@@ -1,5 +1,17 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-10-01 #10
+- Update database script (2022-09-29).
+  - Add SP GetProvinceMenuItems
+
+----------------------------------------------------------------------------------------------
+[commited]
+Update 2022-10-01 #9
+- Update database script (2022-09-29).
+  - Add SP GetRegionMenuItems
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-10-01 #8
 - Update database script (2022-09-29).
   - Prepare file -> GetRegionMenuItems
