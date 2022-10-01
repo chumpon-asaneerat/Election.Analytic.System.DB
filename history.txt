@@ -1,23 +1,28 @@
 ----------------------------------------------------------------------------------------------
 [commited]
-Update 2022-10-01 #15
+Update 2022-10-01 #17
+- Update history.txt (fixed incorrect comment).
+
+----------------------------------------------------------------------------------------------
+[commited]
+Update 2022-10-01 #16
 - Update database script (2022-09-29).
   - Add SP DeleteMParty
 
 ----------------------------------------------------------------------------------------------
 [commited]
-Update 2022-10-01 #14
+Update 2022-10-01 #15
 - Update database script (2022-09-29).
   - Add SP DeletePersonImage
 
 ----------------------------------------------------------------------------------------------
 [commited]
-Update 2022-10-01 #13
+Update 2022-10-01 #14
 - Update history.txt (fixed incorrect comment).
 
 ----------------------------------------------------------------------------------------------
 [commited]
-Update 2022-10-01 #12
+Update 2022-10-01 #13
 - Update database script (2022-09-29).
   - Update Table MPD2562PollingUnitSummary -> change AreaRemark Size from 1000 to 4000 (max)
   - Update Table MPD2566PollingUnitSummary -> change AreaRemark Size from 1000 to 4000 (max)
@@ -25,7 +30,7 @@ Update 2022-10-01 #12
 
 ----------------------------------------------------------------------------------------------
 [commited]
-Update 2022-10-01 #11
+Update 2022-10-01 #12
 - Update database script (2022-09-29).
   - Update Table MPDC2566 -> change Remark Size from 200 to 4000 (max)
 
