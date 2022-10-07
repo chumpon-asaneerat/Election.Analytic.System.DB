@@ -67,6 +67,10 @@ DECLARE @sFullName nvarchar(200)
 			 , A.Remark
 			 , A.SubGroup
 			 , IMG.Data
+             , A.ProvinceName AS ProvinceNameOri
+             , A.PollingUnitNo AS PollingUnitNoOri
+             , A.CandidateNo AS CandidateNoOri
+             , A.FullName AS FullNameOri
 		  FROM SQLPaging M WITH (NOLOCK)
 		     , MPDC2566 A 
 			   LEFT OUTER JOIN PersonImage IMG
