@@ -45,6 +45,7 @@ BEGIN
 	BEGIN TRY
 		IF (@ProvinceName IS NULL 
 		 OR @PollingUnitNo IS NULL 
+		 OR @PollingUnitNo < 1 
 		 OR @CandidateNo IS NULL
 		 OR @FullName IS NULL)
 		BEGIN
@@ -54,8 +55,8 @@ BEGIN
 		END
 
 		IF (dbo.IsNullOrEmpty(@ProvinceNameOri) = 1 AND
-		    @PollingUnitNoOri IS NULL AND
-			@CandidateNoOri IS NULL AND 
+		    (@PollingUnitNoOri IS NULL OR @PollingUnitNoOri < 1) AND
+			(@CandidateNoOri IS NULL OR @CandidateNoOri < 1) AND 
 			dbo.IsNullOrEmpty(@FullNameOri) = 1)
 		BEGIN
 			-- NO PREVIOUS DATA
@@ -108,10 +109,12 @@ BEGIN
 		END
 		ELSE
 		BEGIN
-			IF (@ProvinceNameOri IS NOT NULL AND
+			IF (dbo.IsNullOrEmpty(@ProvinceNameOri) = 0 AND
 			    @PollingUnitNoOri IS NOT NULL AND
+				@PollingUnitNoOri >= 1 AND 
 			    @CandidateNoOri IS NOT NULL AND 
-			    @FullNameOri IS NOT NULL)
+				@CandidateNoOri >= 1 AND 
+			    dbo.IsNullOrEmpty(@FullNameOri) = 0)
 			BEGIN
 				-- CANDIDATE ORDER CHANGE SO DELETE PREVIOUS
 				DELETE FROM MPDC2566 
@@ -168,8 +171,7 @@ BEGIN
 		END
 		ELSE
 		BEGIN
-			INSERT INTO PersonImage (FullName, Data)
-			                 VALUES (@FullName, @Data)
+			EXEC SavePersonImage @FullName, @Data
 		END
 
 		-- Update Error Status/Message
