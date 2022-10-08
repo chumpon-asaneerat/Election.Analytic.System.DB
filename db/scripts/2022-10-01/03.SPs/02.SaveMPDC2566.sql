@@ -53,10 +53,10 @@ BEGIN
 			RETURN
 		END
 
-		IF (@ProvinceNameOri IS NULL AND
+		IF (dbo.IsNullOrEmpty(@ProvinceNameOri) = 1 AND
 		    @PollingUnitNoOri IS NULL AND
 			@CandidateNoOri IS NULL AND 
-			@FullNameOri IS NULL)
+			dbo.IsNullOrEmpty(@FullNameOri) = 1)
 		BEGIN
 			-- NO PREVIOUS DATA
 			IF (NOT EXISTS 
