@@ -98,6 +98,23 @@ BEGIN
 			   AND CandidateNo = @CandidateNo
 			   AND FullName = @FullName
 		END
+
+		-- Update Image
+		IF ((@ImageFullNameOri IS NOT NULL)
+		    AND
+			(EXISTS (SELECT * FROM PersonImage WHERE FullName = @ImageFullNameOri)))
+		BEGIN
+			UPDATE PersonImage
+			   SET FullName = @FullName
+			     , Data = @Data
+			 WHERE FullName = @ImageFullNameOri
+		END
+		ELSE
+		BEGIN
+			INSERT INTO PersonImage (FullName, Data)
+			                 VALUES (@FullName, @Data)
+		END
+
 		-- Update Error Status/Message
 		SET @errNum = 0;
 		SET @errMsg = 'Success';
