@@ -44,6 +44,8 @@ BEGIN
 		-- Update Error Status/Message
 		SET @errNum = 0;
 		SET @errMsg = 'Success';
+
+		EXEC ReorderMPDC2566 @ProvinceName, @PollingUnitNo, @errNum out, @errMsg out
 	END TRY
 	BEGIN CATCH
 		SET @errNum = ERROR_NUMBER();
