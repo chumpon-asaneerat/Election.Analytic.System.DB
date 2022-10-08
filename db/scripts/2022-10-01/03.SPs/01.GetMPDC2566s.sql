@@ -66,6 +66,7 @@ DECLARE @sFullName nvarchar(200)
 			 , A.EducationLevel
 			 , A.Remark
 			 , A.SubGroup
+			 , IMG.FullName AS ImageFullName
 			 , IMG.Data
              , A.ProvinceName AS ProvinceNameOri
              , A.PollingUnitNo AS PollingUnitNoOri

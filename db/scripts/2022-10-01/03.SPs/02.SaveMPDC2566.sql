@@ -36,6 +36,7 @@ ALTER PROCEDURE [dbo].[SaveMPDC2566] (
 , @PollingUnitNoOri int = NULL
 , @CandidateNoOri int = NULL
 , @FullNameOri nvarchar(200) = NULL
+, @ImageFullNameOri nvarchar(200) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
