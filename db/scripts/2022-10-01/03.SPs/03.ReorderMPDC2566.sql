@@ -17,6 +17,7 @@ GO
 CREATE PROCEDURE [dbo].[ReorderMPDC2566] (
   @ProvinceName nvarchar(100)
 , @PollingUnitNo int
+, @SkipCandidateNo int = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
@@ -61,7 +62,14 @@ BEGIN
 		OPEN MPDC2566_CURSOR  
 		FETCH NEXT FROM MPDC2566_CURSOR INTO @CandidateNo, @FullName
 		WHILE @@FETCH_STATUS = 0  
-		BEGIN  		
+		BEGIN
+			IF (@SkipCandidateNo IS NOT NULL)
+			BEGIN
+				IF (@iCnt = @SkipCandidateNo)
+				BEGIN
+					SET @iCnt = @iCnt + 1
+				END
+			END
 			-- UPDATE RUNNING NO
 			UPDATE MPDC2566
 			   SET CandidateNo = @iCnt

@@ -18,6 +18,7 @@ GO
 --	- Add PollingUnitNoOri parameter.
 --	- Add CandidateNoOri parameter.
 --	- Add FullNameOri parameter.
+--  - Add @ImageFullNameOri parameter
 --
 -- [== Example ==]
 --
@@ -52,51 +53,107 @@ BEGIN
 			RETURN
 		END
 
-		IF (NOT EXISTS 
-			(
-				SELECT * 
-				  FROM MPDC2566
+		IF (@ProvinceNameOri IS NULL AND
+		    @PollingUnitNoOri IS NULL AND
+			@CandidateNoOri IS NULL AND 
+			@FullNameOri IS NULL)
+		BEGIN
+			-- NO PREVIOUS DATA
+			IF (NOT EXISTS 
+				(
+					SELECT * 
+					  FROM MPDC2566
+					 WHERE ProvinceName = @ProvinceName
+					   AND PollingUnitNo = @PollingUnitNo
+					   AND CandidateNo = @CandidateNo
+					   AND FullName = @FullName
+				)
+			   )
+			BEGIN
+				INSERT INTO MPDC2566
+				(
+					  ProvinceName
+					, PollingUnitNo
+					, CandidateNo 
+					, FullName
+					, PrevPartyName
+					, EducationLevel
+					, SubGroup
+					, [Remark]
+				)
+				VALUES
+				(
+					  @ProvinceName
+					, @PollingUnitNo
+					, @CandidateNo
+					, @FullName
+					, @PrevPartyName
+					, @EducationLevel
+					, @SubGroup
+					, @Remark
+				);
+			END
+			ELSE
+			BEGIN
+				UPDATE MPDC2566
+				   SET PrevPartyName = @PrevPartyName
+					 , EducationLevel = @EducationLevel
+					 , [Remark] = @Remark
+					 , SubGroup = @SubGroup
 				 WHERE ProvinceName = @ProvinceName
 				   AND PollingUnitNo = @PollingUnitNo
 				   AND CandidateNo = @CandidateNo
 				   AND FullName = @FullName
-			)
-		   )
-		BEGIN
-			INSERT INTO MPDC2566
-			(
-				  ProvinceName
-				, PollingUnitNo
-				, CandidateNo 
-				, FullName
-				, PrevPartyName
-				, EducationLevel
-				, SubGroup
-				, [Remark]
-			)
-			VALUES
-			(
-				  @ProvinceName
-				, @PollingUnitNo
-				, @CandidateNo
-				, @FullName
-				, @PrevPartyName
-				, @EducationLevel
-				, @SubGroup
-				, @Remark
-			);
+			END
 		END
 		ELSE
 		BEGIN
-			UPDATE MPDC2566
-			   SET PrevPartyName = @PrevPartyName
-				 , EducationLevel = @EducationLevel
-				 , [Remark] = @Remark
-				 , SubGroup = @SubGroup
-			 WHERE ProvinceName = @ProvinceName
-			   AND PollingUnitNo = @PollingUnitNo
-			   AND CandidateNo = @CandidateNo
-			   AND FullName = @FullName
+			IF (@ProvinceNameOri IS NOT NULL AND
+			    @PollingUnitNoOri IS NOT NULL AND
+			    @CandidateNoOri IS NOT NULL AND 
+			    @FullNameOri IS NOT NULL)
+			BEGIN
+				-- CANDIDATE ORDER CHANGE SO DELETE PREVIOUS
+				DELETE FROM MPDC2566 
+				 WHERE ProvinceName = @ProvinceNameOri
+				   AND PollingUnitNo = @PollingUnitNoOri
+				   AND CandidateNo = @CandidateNoOri
+				   AND FullName = @FullNameOri
+				-- REORDER PREVIOUS PROVINCE + POLLING UNIT
+				EXEC ReorderMPDC2566 @ProvinceNameOri, @PollingUnitNoOri
+				-- REORDER NEW PROVINCE + POLLING UNIT WITH ALLOCATE SLOT FOR NEW CANDIDATE NO
+				EXEC ReorderMPDC2566 @ProvinceName, @PollingUnitNo, @CandidateNo
+				-- INSERT DATA TO NEW PROVINCE + POLLING UNIT
+				INSERT INTO MPDC2566
+				(
+					  ProvinceName
+					, PollingUnitNo
+					, CandidateNo 
+					, FullName
+					, PrevPartyName
+					, EducationLevel
+					, SubGroup
+					, [Remark]
+				)
+				VALUES
+				(
+					  @ProvinceName
+					, @PollingUnitNo
+					, @CandidateNo
+					, @FullName
+					, @PrevPartyName
+					, @EducationLevel
+					, @SubGroup
+					, @Remark
+				);
+			END
+			ELSE
+			BEGIN
+				-- MISSING REQUIRED DATA
+				SET @errNum = 200;
+				SET @errMsg = 'Some previous parameter(s) is null.';
+				RETURN
+			END
 		END
 
 		-- Update Image
