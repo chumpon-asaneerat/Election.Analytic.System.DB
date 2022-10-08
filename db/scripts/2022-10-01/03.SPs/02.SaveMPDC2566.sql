@@ -18,7 +18,7 @@ GO
 --	- Add PollingUnitNoOri parameter.
 --	- Add CandidateNoOri parameter.
 --	- Add FullNameOri parameter.
---  - Add @ImageFullNameOri parameter
+--  - Add ImageFullNameOri parameter
 --
 -- [== Example ==]
 --
