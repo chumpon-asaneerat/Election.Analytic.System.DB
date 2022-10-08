@@ -2,6 +2,12 @@
 [commited]
 Update 2022-10-08 #11
 - Update database script (2022-10-01).
+  - Build Merge SQL Script.
+
+----------------------------------------------------------------------------------------------
+[commited]
+Update 2022-10-08 #11
+- Update database script (2022-10-01).
   - Remove InitData folder
 - Update database script (2022-10-09).
   - Prepare database script folders
