@@ -126,42 +126,6 @@
             "outputs": []
         }
     },
-    "SaveMContent": {
-        "type": "PROCEDURE",
-        "updated": "2022-08-30T09:46:04.380Z",
-        "parameter": {
-            "inputs": [
-                {
-                    "name": "Data",
-                    "type": "varbinary(max)"
-                },
-                {
-                    "name": "FileTypeId",
-                    "type": "int",
-                    "default": "NULL"
-                },
-                {
-                    "name": "FileSubTypeId",
-                    "type": "int",
-                    "default": "NULL"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "ContentId",
-                    "type": "uniqueidentifier"
-                },
-                {
-                    "name": "errNum",
-                    "type": "int"
-                },
-                {
-                    "name": "errMsg",
-                    "type": "nvarchar(max)"
-                }
-            ]
-        }
-    },
     "GetMContents": {
         "type": "PROCEDURE",
         "updated": "2022-08-30T09:46:04.380Z",
@@ -229,6 +193,42 @@
                 }
             ],
             "outputs": []
+        }
+    },
+    "SaveMContent": {
+        "type": "PROCEDURE",
+        "updated": "2022-08-30T09:46:04.380Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "Data",
+                    "type": "varbinary(max)"
+                },
+                {
+                    "name": "FileTypeId",
+                    "type": "int",
+                    "default": "NULL"
+                },
+                {
+                    "name": "FileSubTypeId",
+                    "type": "int",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "ContentId",
+                    "type": "uniqueidentifier"
+                },
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
         }
     },
     "SaveUser": {
@@ -1189,20 +1189,6 @@
             ]
         }
     },
-    "GetMPD2562VoteSummaries": {
-        "type": "PROCEDURE",
-        "updated": "2022-09-30T19:23:07.943Z",
-        "parameter": {
-            "inputs": [
-                {
-                    "name": "ProvinceName",
-                    "type": "nvarchar(100)",
-                    "default": "NULL"
-                }
-            ],
-            "outputs": []
-        }
-    },
     "GetMPD2562VoteSummaryByFullName": {
         "type": "PROCEDURE",
         "updated": "2022-09-30T19:24:34.000Z",
@@ -1568,20 +1554,6 @@
             "outputs": []
         }
     },
-    "GetMPDC2566s": {
-        "type": "PROCEDURE",
-        "updated": "2022-10-01T09:10:22.197Z",
-        "parameter": {
-            "inputs": [
-                {
-                    "name": "ProvinceName",
-                    "type": "nvarchar(100)",
-                    "default": "NULL"
-                }
-            ],
-            "outputs": []
-        }
-    },
     "GetMPDC2566Summaries": {
         "type": "PROCEDURE",
         "updated": "2022-10-01T09:19:14.240Z",
@@ -1645,60 +1617,6 @@
     "ImportMPDC2566": {
         "type": "PROCEDURE",
         "updated": "2022-10-01T10:15:11.503Z",
-        "parameter": {
-            "inputs": [
-                {
-                    "name": "ProvinceName",
-                    "type": "nvarchar(100)"
-                },
-                {
-                    "name": "PollingUnitNo",
-                    "type": "int"
-                },
-                {
-                    "name": "CandidateNo",
-                    "type": "int"
-                },
-                {
-                    "name": "FullName",
-                    "type": "nvarchar(200)"
-                },
-                {
-                    "name": "PrevPartyName",
-                    "type": "nvarchar(100)",
-                    "default": "NULL"
-                },
-                {
-                    "name": "EducationLevel",
-                    "type": "nvarchar(100)",
-                    "default": "NULL"
-                },
-                {
-                    "name": "SubGroup",
-                    "type": "nvarchar(200)",
-                    "default": "NULL"
-                },
-                {
-                    "name": "Remark",
-                    "type": "nvarchar(4000)",
-                    "default": "NULL"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "errNum",
-                    "type": "int"
-                },
-                {
-                    "name": "errMsg",
-                    "type": "nvarchar(max)"
-                }
-            ]
-        }
-    },
-    "SaveMPDC2566": {
-        "type": "PROCEDURE",
-        "updated": "2022-10-01T10:17:46.120Z",
         "parameter": {
             "inputs": [
                 {
@@ -1987,6 +1905,255 @@
                 },
                 {
                     "name": "rowsPerPage",
+                    "type": "int"
+                },
+                {
+                    "name": "totalRecords",
+                    "type": "int"
+                },
+                {
+                    "name": "maxPage",
+                    "type": "int"
+                },
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "DeleteMPDC2566": {
+        "type": "PROCEDURE",
+        "updated": "2022-10-08T07:46:37.823Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "PollingUnitNo",
+                    "type": "int"
+                },
+                {
+                    "name": "CandidateNo",
+                    "type": "int"
+                },
+                {
+                    "name": "FullName",
+                    "type": "nvarchar(200)"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "ReorderMPDC2566": {
+        "type": "PROCEDURE",
+        "updated": "2022-10-08T10:43:16.317Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "PollingUnitNo",
+                    "type": "int"
+                },
+                {
+                    "name": "SkipCandidateNo",
+                    "type": "int",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "SaveMPDC2566": {
+        "type": "PROCEDURE",
+        "updated": "2022-10-08T11:46:37.617Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceName",
+                    "type": "nvarchar(100)"
+                },
+                {
+                    "name": "PollingUnitNo",
+                    "type": "int"
+                },
+                {
+                    "name": "CandidateNo",
+                    "type": "int"
+                },
+                {
+                    "name": "FullName",
+                    "type": "nvarchar(200)"
+                },
+                {
+                    "name": "PrevPartyName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "EducationLevel",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "SubGroup",
+                    "type": "nvarchar(200)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "Remark",
+                    "type": "nvarchar(4000)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "Data",
+                    "type": "varbinary(max)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "ProvinceNameOri",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "PollingUnitNoOri",
+                    "type": "int",
+                    "default": "NULL"
+                },
+                {
+                    "name": "CandidateNoOri",
+                    "type": "int",
+                    "default": "NULL"
+                },
+                {
+                    "name": "FullNameOri",
+                    "type": "nvarchar(200)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "ImageFullNameOri",
+                    "type": "nvarchar(200)",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "errNum",
+                    "type": "int"
+                },
+                {
+                    "name": "errMsg",
+                    "type": "nvarchar(max)"
+                }
+            ]
+        }
+    },
+    "SearchPersonImage": {
+        "type": "PROCEDURE",
+        "updated": "2022-10-26T12:11:43.020Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "FullName",
+                    "type": "nvarchar(200)"
+                }
+            ],
+            "outputs": []
+        }
+    },
+    "GetMPD2562VoteSummaries": {
+        "type": "PROCEDURE",
+        "updated": "2022-10-26T13:46:13.527Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "PartyName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "FullName",
+                    "type": "nvarchar(200)",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": []
+        }
+    },
+    "GetMPDC2566FullSummaries": {
+        "type": "PROCEDURE",
+        "updated": "2022-10-26T13:50:43.743Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "FullName",
+                    "type": "nvarchar(200)",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": []
+        }
+    },
+    "GetMPDC2566s": {
+        "type": "PROCEDURE",
+        "updated": "2022-10-26T13:51:41.110Z",
+        "parameter": {
+            "inputs": [
+                {
+                    "name": "ProvinceName",
+                    "type": "nvarchar(100)",
+                    "default": "NULL"
+                },
+                {
+                    "name": "FullName",
+                    "type": "nvarchar(200)",
+                    "default": "NULL"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "pageNum",
+                    "type": "int"
+                },
+                {
+                    "name": "pollingUnitPerPage",
                     "type": "int"
                 },
                 {

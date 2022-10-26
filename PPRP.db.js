@@ -39,12 +39,6 @@ const PPRP = class extends SqlServer {
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
 
-    async SaveMContent(pObj) {
-        let name = 'SaveMContent';
-        let proc = schema[name];
-        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
-    }
-
     async GetMContents(pObj) {
         let name = 'GetMContents';
         let proc = schema[name];
@@ -59,6 +53,12 @@ const PPRP = class extends SqlServer {
 
     async GetUserRoles(pObj) {
         let name = 'GetUserRoles';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async SaveMContent(pObj) {
+        let name = 'SaveMContent';
         let proc = schema[name];
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
@@ -213,12 +213,6 @@ const PPRP = class extends SqlServer {
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
 
-    async GetMPD2562VoteSummaries(pObj) {
-        let name = 'GetMPD2562VoteSummaries';
-        let proc = schema[name];
-        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
-    }
-
     async GetMPD2562VoteSummaryByFullName(pObj) {
         let name = 'GetMPD2562VoteSummaryByFullName';
         let proc = schema[name];
@@ -291,12 +285,6 @@ const PPRP = class extends SqlServer {
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
 
-    async GetMPDC2566s(pObj) {
-        let name = 'GetMPDC2566s';
-        let proc = schema[name];
-        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
-    }
-
     async GetMPDC2566Summaries(pObj) {
         let name = 'GetMPDC2566Summaries';
         let proc = schema[name];
@@ -323,12 +311,6 @@ const PPRP = class extends SqlServer {
 
     async ImportMPDC2566(pObj) {
         let name = 'ImportMPDC2566';
-        let proc = schema[name];
-        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
-    }
-
-    async SaveMPDC2566(pObj) {
-        let name = 'SaveMPDC2566';
         let proc = schema[name];
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }
@@ -377,6 +359,48 @@ const PPRP = class extends SqlServer {
 
     async GetMParties(pObj) {
         let name = 'GetMParties';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async DeleteMPDC2566(pObj) {
+        let name = 'DeleteMPDC2566';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async ReorderMPDC2566(pObj) {
+        let name = 'ReorderMPDC2566';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async SaveMPDC2566(pObj) {
+        let name = 'SaveMPDC2566';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async SearchPersonImage(pObj) {
+        let name = 'SearchPersonImage';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPD2562VoteSummaries(pObj) {
+        let name = 'GetMPD2562VoteSummaries';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPDC2566FullSummaries(pObj) {
+        let name = 'GetMPDC2566FullSummaries';
+        let proc = schema[name];
+        return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
+    }
+
+    async GetMPDC2566s(pObj) {
+        let name = 'GetMPDC2566s';
         let proc = schema[name];
         return await this.execute(name, pObj, proc.parameter.inputs, proc.parameter.outputs);
     }

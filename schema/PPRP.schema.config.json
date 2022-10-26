@@ -66,5 +66,9 @@
     "ImportMPD2566PollingUnitSummary": true,
     "DeletePersonImage": true,
     "DeleteMParty": true,
-    "GetMParties": true
+    "GetMParties": true,
+    "DeleteMPDC2566": true,
+    "ReorderMPDC2566": true,
+    "SearchPersonImage": true,
+    "GetMPDC2566FullSummaries": true
 }
