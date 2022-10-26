@@ -10,6 +10,9 @@ GO
 -- [== History ==]
 -- <2022-09-29> :
 --	- Stored Procedure Created.
+-- <2022-10-09> :
+--	- Add PartyNamne parameter.
+--	- Add FullNamne parameter.
 --
 -- [== Example ==]
 --
