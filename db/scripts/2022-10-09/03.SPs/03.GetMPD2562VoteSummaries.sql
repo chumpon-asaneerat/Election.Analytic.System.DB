@@ -17,6 +17,8 @@ GO
 ALTER PROCEDURE [dbo].[GetMPD2562VoteSummaries]
 (
   @ProvinceName nvarchar(100) = NULL
+, @PartyName nvarchar(100) = NULL
+, @FullName nvarchar(200) = NULL
 )
 AS
 BEGIN
@@ -27,6 +29,8 @@ BEGIN
         SELECT * 
           FROM MPD2562VoteSummaryView
          WHERE UPPER(LTRIM(RTRIM(ProvinceName))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, ProvinceName))))
+		   AND UPPER(LTRIM(RTRIM(PartyName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@PartyName, PartyName)))) + '%'
+		   AND UPPER(LTRIM(RTRIM(FullName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@FullName, FullName)))) + '%'
     )
     SELECT * 
       FROM MPD2562VoteSum62 
