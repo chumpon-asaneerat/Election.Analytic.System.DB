@@ -14,53 +14,24 @@ GO
 --	- Supports Paging.
 -- <2022-10-09> :
 --	- Add FullNamne parameter.
+-- <2022-10-30> :
+--	- Change logic.
+--	- Remove Paging.
 --
 -- [== Example ==]
 --
 -- =============================================
 ALTER PROCEDURE [dbo].[GetMPDC2566s]
 (
-  @ProvinceName nvarchar(100) = NULL
+  @ProvinceName nvarchar(100)
+, @PollingUnitNo as int
 , @FullName nvarchar(200) = NULL
-, @pageNum as int = 1 out
-, @pollingUnitPerPage as int = 4 out
-, @totalRecords as int = 0 out
-, @maxPage as int = 0 out
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out
 )
 AS
 BEGIN
-DECLARE @iTotalUnits int;
-DECLARE @sFullName nvarchar(200)
 	BEGIN TRY
-		-- calculate total polling units and max pages
-		SELECT @iTotalUnits = COUNT(*) 
-		  FROM MPDPollingUnitSummary
-		 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, ProvinceNameTH))))
-
-		SELECT @maxPage = 
-			CASE WHEN (@iTotalUnits % @pollingUnitPerPage > 0) THEN 
-				(@iTotalUnits / @pollingUnitPerPage) + 1
-			ELSE 
-				(@iTotalUnits / @pollingUnitPerPage)
-			END;
-
-		;WITH PollUnits AS
-		(
-			SELECT DISTINCT 
-			       ProvinceName
-			     , PollingUnitNo 
-			  FROM MPDC2566
-		), SQLPaging AS
-		(
-			SELECT TOP(@pollingUnitPerPage * @pageNum) ROW_NUMBER() OVER (ORDER BY A.ProvinceName, A.PollingUnitNo) AS RowNo
-			     , A.ProvinceName
-				 , A.PollingUnitNo
-			  FROM PollUnits A 
-			 WHERE UPPER(LTRIM(RTRIM(A.ProvinceName))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, A.ProvinceName))))
-		)
-
 		SELECT A.ProvinceName
 			 , A.PollingUnitNo
 			 , A.CandidateNo
@@ -75,8 +46,7 @@ DECLARE @sFullName nvarchar(200)
              , A.PollingUnitNo AS PollingUnitNoOri
              , A.CandidateNo AS CandidateNoOri
              , A.FullName AS FullNameOri
-		  FROM SQLPaging M WITH (NOLOCK)
-		     , MPDC2566 A 
+		  FROM MPDC2566 A 
 			   LEFT OUTER JOIN PersonImage IMG
                ON 
                (   
@@ -84,9 +54,9 @@ DECLARE @sFullName nvarchar(200)
                 OR (IMG.FullName LIKE '%' + A.FullName + '%')
                 OR (A.FullName LIKE '%' + IMG.FullName + '%')
                )
-		 WHERE RowNo > ((@pageNum - 1) * @pollingUnitPerPage)
-		   AND A.ProvinceName = M.ProvinceName
-		   AND A.PollingUnitNo = M.PollingUnitNo
+		 WHERE A.ProvinceName = @ProvinceName
+		   AND A.PollingUnitNo = @PollingUnitNo
+		   AND A.FullName LIKE '%' + @FullName + '%'
 
 		-- Update Error Status/Message
 		SET @errNum = 0;

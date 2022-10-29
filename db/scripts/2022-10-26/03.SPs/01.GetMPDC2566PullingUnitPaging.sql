@@ -28,7 +28,6 @@ CREATE PROCEDURE [dbo].[GetMPDC2566PullingUnitsPaging]
 AS
 BEGIN
 DECLARE @iTotalUnits int;
-DECLARE @sFullName nvarchar(200)
 	BEGIN TRY
 		-- calculate total polling units and max pages
 		IF (@ProvinceName IS NULL AND @FullName IS NULL)
@@ -62,6 +61,7 @@ DECLARE @sFullName nvarchar(200)
 			SELECT M.ProvinceName
 				 , M.PollingUnitNo
 				 , COUNT(A.CandidateNo) AS TotalCandidates
+				 , @FullName AS FullNameFilter
 			  FROM SQLPaging M WITH (NOLOCK)
 				   LEFT OUTER JOIN MPDC2566 A ON 
 				   (
@@ -104,6 +104,7 @@ DECLARE @sFullName nvarchar(200)
 				SELECT M.ProvinceName
 					 , M.PollingUnitNo
 					 , COUNT(A.CandidateNo) AS TotalCandidates
+					 , @FullName AS FullNameFilter
 				  FROM SQLPaging M WITH (NOLOCK)
 					   LEFT OUTER JOIN MPDC2566 A ON 
 					   (
@@ -145,6 +146,7 @@ DECLARE @sFullName nvarchar(200)
 				SELECT M.ProvinceName
 					 , M.PollingUnitNo
 					 , COUNT(A.CandidateNo) AS TotalCandidates
+					 , @FullName AS FullNameFilter
 				  FROM SQLPaging M WITH (NOLOCK)
 					   LEFT OUTER JOIN MPDC2566 A ON 
 					   (
