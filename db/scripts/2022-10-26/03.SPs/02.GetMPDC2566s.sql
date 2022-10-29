@@ -31,7 +31,17 @@ ALTER PROCEDURE [dbo].[GetMPDC2566s]
 )
 AS
 BEGIN
+DECLARE @sFullName nvarchar(200)
 	BEGIN TRY
+	    IF (@FullName IS NULL)
+		BEGIN
+			SET @sFullName = N'';
+		END
+		ELSE 
+		BEGIN
+			SET @sFullName = @FullName;
+		END
+
 		SELECT A.ProvinceName
 			 , A.PollingUnitNo
 			 , A.CandidateNo
@@ -56,7 +66,7 @@ BEGIN
                )
 		 WHERE A.ProvinceName = @ProvinceName
 		   AND A.PollingUnitNo = @PollingUnitNo
-		   AND A.FullName LIKE '%' + @FullName + '%'
+		   AND A.FullName LIKE '%' + @sFullName + '%'
 
 		-- Update Error Status/Message
 		SET @errNum = 0;
