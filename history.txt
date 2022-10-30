@@ -1,3 +1,10 @@
+[commited]
+Update 2022-10-30 #7
+- Prepare db script folder 2020-11-01
+- Update SP DeleteMPDC2566
+- Update SP SaveMPDC2566
+- Generate db script 2020-10-30
+
 ----------------------------------------------------------------------------------------------
 [commited]
 Update 2022-10-30 #6
