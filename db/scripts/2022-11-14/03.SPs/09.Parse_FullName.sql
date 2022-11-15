@@ -29,7 +29,8 @@ DECLARE @deli nvarchar(20) = N' ';
 DECLARE @iRow int;
 DECLARE @isRemove int; -- 0: Not Removed, 1: Removed
 DECLARE @el nvarchar(MAX) = NULL;
-DECLARE @sTest nvarchar(MAX);
+DECLARE @sTest1 nvarchar(MAX);
+DECLARE @sTest2 nvarchar(MAX);
 DECLARE @sRemain nvarchar(MAX); -- Remain Text
 
 DECLARE @fullTitle nvarchar(MAX);
@@ -47,19 +48,22 @@ DECLARE @shotTitle nvarchar(MAX);
 		END
 
 		SET @sFullName = REPLACE(@fullName, N' ', N'') -- FullName that remove all spaces
+		--SET @sFullName = @fullName
 
 		SELECT TOP 1 
 		       @fullTitle = [Description]
 			 , @shotTitle = ShortName
 		  FROM MTitleView
-		 WHERE @sFullName LIKE [Description] + N'%'
+		 --WHERE @sFullName LIKE [Description] + N'%'
+		 WHERE @sFullName LIKE REPLACE([Description], N' ', N'') + N'%'
 		 ORDER BY DLen DESC
 
 		IF (@fullTitle IS NOT NULL)
 		BEGIN
 			SET @prefix = @fullTitle
 			SET @isRemove = 0
-			SET @sTest = N''
+			SET @sTest1 = N''
+			SET @sTest2 = N''
 		END
 
 		DECLARE SPLIT_STR_CURSOR CURSOR 
@@ -75,13 +79,25 @@ DECLARE @shotTitle nvarchar(MAX);
 		BEGIN
 			IF ((@prefix IS NOT NULL) AND (@isRemove = 0))
 			BEGIN
-				IF (@sTest IS NULL) SET @sTest = N''
-				SET @sTest = LTRIM(RTRIM(@sTest + @el))
-				IF (@sTest LIKE @prefix + N'%')
+				IF (@sTest1 IS NULL) SET @sTest1 = N''
+				IF (@sTest2 IS NULL) SET @sTest2 = N''
+				SET @sTest1 = LTRIM(RTRIM(@sTest1 + @el))
+				SET @sTest2 = LTRIM(RTRIM(@sTest2 + N' ' + @el))
+				--SET @sTest = @sTest + @el
+				IF (@sTest1 LIKE @prefix + N'%')
 				BEGIN
-					SET @sRemain = REPLACE(@sTest, @prefix, N'')
+					SET @sRemain = REPLACE(@sTest1, @prefix, N'')
 					IF (LEN(@sRemain) > 0) SET @firstName = @sRemain
 					SET @isRemove = 1 -- MARK AS REMOVED
+				END
+				ELSE
+				BEGIN
+					IF (@sTest2 LIKE @prefix + N'%')
+					BEGIN
+						SET @sRemain = REPLACE(@sTest2, @prefix, N'')
+						IF (LEN(@sRemain) > 0) SET @firstName = @sRemain
+						SET @isRemove = 1 -- MARK AS REMOVED
+					END
 				END
 			END
 			ELSE
