@@ -48,7 +48,7 @@ DECLARE @matchTitle nvarchar(MAX);
 
 		IF (@fullTitle IS NOT NULL)
 		BEGIN
-			-- MATCH SHORT TITLE
+			-- MATCH TITLE
 			SET @title = @fullTitle
 			-- Keep it to used later for substring function
 			SET @matchTitle = @fullTitle

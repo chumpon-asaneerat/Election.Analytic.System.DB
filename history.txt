@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-11-15 #2
+- Update SP Parse_FullName_Lv1
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-11-15 #1
 - Update Function SplitStringT.
 - Add Function CountSplitStringT.
