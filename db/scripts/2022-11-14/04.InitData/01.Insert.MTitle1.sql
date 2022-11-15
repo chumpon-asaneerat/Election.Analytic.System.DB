@@ -1,3 +1,4 @@
+DELETE FROM MTitle WHERE [Description] LIKE 'ขุน%'
 /*
 -- ALREADY INSERTED
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2829, N'ร.ต. นายแพทย์', N'ร.ต.น.พ.', 1)
