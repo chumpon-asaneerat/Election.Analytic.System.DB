@@ -14,7 +14,7 @@ GO
 -- [== Example ==]
 --
 -- =============================================
-CREATE PROCEDURE [dbo].[Parse_FullName] (
+ALTER PROCEDURE [dbo].[Parse_FullName] (
   @fullName nvarchar(MAX)
 , @prefix nvarchar(MAX) = NULL out
 , @firstName nvarchar(MAX) = NULL out
@@ -24,17 +24,13 @@ CREATE PROCEDURE [dbo].[Parse_FullName] (
 AS
 BEGIN
 DECLARE @sFullName nvarchar(MAX);
-
 DECLARE @deli nvarchar(20) = N' ';
-DECLARE @iRow int;
 DECLARE @isRemove int; -- 0: Not Removed, 1: Removed
 DECLARE @el nvarchar(MAX) = NULL;
-DECLARE @sTest1 nvarchar(MAX);
-DECLARE @sTest2 nvarchar(MAX);
+DECLARE @sTest nvarchar(MAX);
 DECLARE @sRemain nvarchar(MAX); -- Remain Text
-
 DECLARE @fullTitle nvarchar(MAX);
-DECLARE @shotTitle nvarchar(MAX);
+DECLARE @matchTitle nvarchar(MAX);
 	BEGIN TRY
 		SET @prefix = NULL
 		SET @firstName = NULL
@@ -48,13 +44,11 @@ DECLARE @shotTitle nvarchar(MAX);
 		END
 
 		SET @sFullName = REPLACE(@fullName, N' ', N'') -- FullName that remove all spaces
-		--SET @sFullName = @fullName
 
 		SELECT TOP 1 
 		       @fullTitle = [Description]
-			 , @shotTitle = ShortName
+			 , @matchTitle = REPLACE([Description], N' ', N'')
 		  FROM MTitleView
-		 --WHERE @sFullName LIKE [Description] + N'%'
 		 WHERE @sFullName LIKE REPLACE([Description], N' ', N'') + N'%'
 		 ORDER BY DLen DESC
 
@@ -62,42 +56,32 @@ DECLARE @shotTitle nvarchar(MAX);
 		BEGIN
 			SET @prefix = @fullTitle
 			SET @isRemove = 0
-			SET @sTest1 = N''
-			SET @sTest2 = N''
+			SET @sTest = N''
 		END
 
 		DECLARE SPLIT_STR_CURSOR CURSOR 
 		  LOCAL FORWARD_ONLY READ_ONLY FAST_FORWARD 
 		FOR  
-		  SELECT RowId, Item FROM dbo.SplitStringT(@fullName, @deli)
+		  SELECT Item FROM dbo.SplitStringT(@fullName, @deli)
 
 		OPEN SPLIT_STR_CURSOR  
 		-- FETCH FIRST
-		FETCH NEXT FROM SPLIT_STR_CURSOR INTO @iRow, @el
+		FETCH NEXT FROM SPLIT_STR_CURSOR INTO @el
 
 		WHILE @@FETCH_STATUS = 0  
 		BEGIN
-			IF ((@prefix IS NOT NULL) AND (@isRemove = 0))
+			IF ((@matchTitle IS NOT NULL) AND (@isRemove = 0))
 			BEGIN
-				IF (@sTest1 IS NULL) SET @sTest1 = N''
-				IF (@sTest2 IS NULL) SET @sTest2 = N''
-				SET @sTest1 = LTRIM(RTRIM(@sTest1 + @el))
-				SET @sTest2 = LTRIM(RTRIM(@sTest2 + N' ' + @el))
-				--SET @sTest = @sTest + @el
-				IF (@sTest1 LIKE @prefix + N'%')
+				-- @matchTitle is Title that remove all spaces.
+				-- and @sTest also remove all spaces.
+				IF (@sTest IS NULL) SET @sTest = N''
+				SET @sTest = LTRIM(RTRIM(@sTest + @el))
+
+				IF (@sTest LIKE @matchTitle + N'%')
 				BEGIN
-					SET @sRemain = REPLACE(@sTest1, @prefix, N'')
+					SET @sRemain = REPLACE(@sTest, @matchTitle, N'')
 					IF (LEN(@sRemain) > 0) SET @firstName = @sRemain
 					SET @isRemove = 1 -- MARK AS REMOVED
-				END
-				ELSE
-				BEGIN
-					IF (@sTest2 LIKE @prefix + N'%')
-					BEGIN
-						SET @sRemain = REPLACE(@sTest2, @prefix, N'')
-						IF (LEN(@sRemain) > 0) SET @firstName = @sRemain
-						SET @isRemove = 1 -- MARK AS REMOVED
-					END
 				END
 			END
 			ELSE
@@ -115,9 +99,8 @@ DECLARE @shotTitle nvarchar(MAX);
 					SET @lastName = LTRIM(RTRIM(@lastName + ' ' + @el))
 				END
 			END
-
 			-- FETCH NEXT
-			FETCH NEXT FROM SPLIT_STR_CURSOR INTO @iRow, @el
+			FETCH NEXT FROM SPLIT_STR_CURSOR INTO @el
 		END
 
 		CLOSE SPLIT_STR_CURSOR  
