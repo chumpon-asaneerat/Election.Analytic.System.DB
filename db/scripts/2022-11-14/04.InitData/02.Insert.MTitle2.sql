@@ -1,6 +1,6 @@
 /*
 -- ALREADY INSERTED
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2947, N'ว่าที่พัน.ต.ต หญิง', N'ว่าที่ พ.ต.ต.หญิง', 1)
+INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2987, N'ว่าที่ ร.ต. หญิง', N'ว่าที่ ร.ต.หญิง', 1)
 */
 
 
@@ -36,7 +36,6 @@ INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2054
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2055, N'ว่าที่ พันตรี', N'ว่าที่ พ.ต.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2056, N'ว่าที่ ร้อยเอก', N'ว่าที่ ร.อ.', 1)
 INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2057, N'ว่าที่ ร้อยโท', N'ว่าที่ ร.ท.', 1)
-INSERT [MTitle] ([TitleId], [Description], [ShortName], [GenderId]) VALUES (2058, N'ว่าที่ ร้อยตรี', N'ว่าที่ ร.ต.', 1)
 
 
 
