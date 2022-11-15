@@ -14,7 +14,7 @@ GO
 -- [== Example ==]
 --
 -- =============================================
-ALTER PROCEDURE [dbo].[Parse_FullName] (
+CREATE PROCEDURE [dbo].[Parse_FullName] (
   @fullName nvarchar(MAX)
 , @prefix nvarchar(MAX) = NULL out
 , @firstName nvarchar(MAX) = NULL out
