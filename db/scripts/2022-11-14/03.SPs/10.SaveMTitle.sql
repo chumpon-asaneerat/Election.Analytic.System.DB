@@ -10,6 +10,8 @@ GO
 -- [== History ==]
 -- <2022-08-20> :
 --	- Stored Procedure Created.
+-- <2022-11-15> :
+--	- Update Stored Procedure due to change PK to auto identity.
 --
 -- [== Example ==]
 --
