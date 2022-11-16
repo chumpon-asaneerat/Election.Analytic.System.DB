@@ -1,5 +1,14 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+Update 2022-11-11 #1
+- Change MTitle table #1
+  - Update SP GetMTitles #1.
+  - Update SP SaveMTitle #1.
+  - Update View MTitleView #1.
+  - Update script to change MTitle table #1. 
+
+----------------------------------------------------------------------------------------------
+[commited]
 Update 2022-11-15 #10
 - Update SP Parse_FullName #4
 
