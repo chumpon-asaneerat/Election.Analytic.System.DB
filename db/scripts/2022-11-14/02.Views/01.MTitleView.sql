@@ -7,22 +7,10 @@ GO
 
 ALTER VIEW [dbo].[MTitleView]
 AS
-	(
-		SELECT [Description]
-			 , ShortName
-			 , GenderId
-			 , LEN([Description]) AS DLen
-			 , LEN(ShortName) AS SLen
-		  FROM MTitle
-	)
-	UNION
-	(
-		SELECT DISTINCT ShortName AS [Description]
-			 , ShortName
-			 , GenderId
-			 , LEN(ShortName) AS DLen
-			 , LEN(ShortName) AS SLen
-		  FROM MTitle
-	 )
+	SELECT TitleId
+         , [Description]
+	     , GenderId
+		 , LEN([Description]) AS DLen
+	  FROM MTitle
 
 GO
