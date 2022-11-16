@@ -1,6 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
 - Change MTitle table #6
+  - Add script DROP Function CountSplitStringT
+
+----------------------------------------------------------------------------------------------
+[commited]
+- Change MTitle table #6
   - Update script to change MTitle table #3.
   - Update SP Parse_FullName
 

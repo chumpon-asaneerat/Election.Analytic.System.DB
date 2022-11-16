@@ -12,3 +12,6 @@ GO
 
 DROP PROCEDURE Parse_FullName_Lv1
 GO
+
+DROP FUNCTION dbo.CountSplitStringT
+GO
