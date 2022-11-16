@@ -31,7 +31,6 @@ BEGIN
 	     , A.DLen
 	  FROM MTitleView A, MGender B
 	 WHERE A.GenderId = B.GenderId
-	   AND A.TitleId = COALESCE(@TitleId, A.TitleId)
 	   AND UPPER(LTRIM(RTRIM(A.[Description]))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@description, A.[Description])))) + '%'
 	   AND A.GenderId = COALESCE(@genderId, A.GenderId)
 	 ORDER BY A.DLen DESC
