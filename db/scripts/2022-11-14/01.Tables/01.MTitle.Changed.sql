@@ -1,8 +1,11 @@
-/****** Object:  Table [dbo].[MTitle2]    Script Date: 11/16/2022 2:35:19 PM ******/
+--- 1. Create MTitle2 (Temporary)
+
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 CREATE TABLE [dbo].[MTitle2](
 	[TitleId] [int] IDENTITY(1,1) NOT NULL,
 	[Description] [nvarchar](100) NULL,
@@ -12,15 +15,52 @@ CREATE TABLE [dbo].[MTitle2](
 	[TitleId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
-
 GO
-SET ANSI_PADDING ON
 
-GO
-/****** Object:  Index [IX_MTitle2_Description]    Script Date: 11/16/2022 2:35:19 PM ******/
 CREATE UNIQUE NONCLUSTERED INDEX [IX_MTitle2_Description] ON [dbo].[MTitle2]
 (
 	[Description] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 
+--- 2. MOVE DATE FROM MTitle to MTitle2
+INSERT INTO MTitle2 ([Description], GenderId)
+(
+    SELECT [Description], GenderId FROM MTitle
+    UNION
+    SELECT DISTINCT ShortName, GenderId FROM MTitle
+)
+GO
+
+--- 3. DROP MTitle
+DROP INDEX IX_MTitle_Description ON MTitle
+DROP INDEX IX_MTitle_ShortName ON MTitle
+DROP TABLE MTitle
+GO
+
+--- 4. CREATE MTitle (same structure as MTitle2)
+CREATE TABLE [dbo].[MTitle](
+	[TitleId] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [nvarchar](100) NULL,
+	[GenderId] [int] NULL,
+ CONSTRAINT [PK_MTitle] PRIMARY KEY CLUSTERED 
+(
+	[TitleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX [IX_MTitle_Description] ON [dbo].[MTitle]
+(
+	[Description] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+--- 5. Move data MTitle2 to MTitle
+INSERT INTO MTitle([Description], GenderId) SELECT [Description], GenderId FROM MTitle2;
+GO
+
+--- 6. DROP MTitle2
+DROP INDEX IX_MTitle2_Description ON MTitle2
+DROP TABLE MTitle2
+GO
