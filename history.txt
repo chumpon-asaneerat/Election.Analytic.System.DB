@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- Change MTitle table #7
+  - Fixed script bug.
+  - Generate db script 2022-11-14
+
+----------------------------------------------------------------------------------------------
+[commited]
 - Change MTitle table #6
   - Add script DROP Function CountSplitStringT
 
