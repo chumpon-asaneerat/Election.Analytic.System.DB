@@ -10,11 +10,13 @@ GO
 -- [== History ==]
 -- <2022-11-15> :
 --	- Stored Procedure Created.
+-- <2022-11-16> :
+--	- Recheck after change MTitle structure.
 --
 -- [== Example ==]
 --
 -- =============================================
-CREATE PROCEDURE [dbo].[Parse_FullName] (
+ALTER PROCEDURE [dbo].[Parse_FullName] (
   @fullName nvarchar(MAX)
 , @prefix nvarchar(MAX) = NULL out
 , @firstName nvarchar(MAX) = NULL out
@@ -116,4 +118,3 @@ DECLARE @matchTitle nvarchar(MAX);
 END
 
 GO
-
