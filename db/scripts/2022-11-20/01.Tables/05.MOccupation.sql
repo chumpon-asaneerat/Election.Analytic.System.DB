@@ -1,7 +1,7 @@
 /****** MOccupation ******/ 
 CREATE TABLE MOccupation(
 	OccupationId int NOT NULL,
-	[Description] nvarchar(100) NOT NULL,
+	[Description] nvarchar(200) NOT NULL,
 	SortOrder int NOT NULL,
 	Active int NOT NULL,
 	CONSTRAINT PK_MOccupation PRIMARY KEY (OccupationId ASC)
