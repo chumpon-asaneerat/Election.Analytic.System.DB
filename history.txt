@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #1
+  - Add Table UserRole
+  - Add Table UserInfo
+
+----------------------------------------------------------------------------------------------
+[commited]
 - Change MTitle table #7
   - Fixed script bug.
   - Generate db script 2022-11-14
