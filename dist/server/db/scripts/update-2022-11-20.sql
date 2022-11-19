@@ -78,6 +78,9 @@ CREATE TABLE MOccupation(
 )
 GO
 
+CREATE UNIQUE INDEX IX_MOccupation_Description ON MOccupation([Description] ASC)
+GO
+
 ALTER TABLE MOccupation ADD  CONSTRAINT DF_MOccupation_SortOrder  DEFAULT 0 FOR SortOrder
 GO
 
@@ -96,10 +99,36 @@ CREATE TABLE MEducation(
 )
 GO
 
+CREATE UNIQUE INDEX IX_MEducation_Description ON MEducation([Description] ASC)
+GO
+
 ALTER TABLE MEducation ADD  CONSTRAINT DF_MEducation_SortOrder  DEFAULT 0 FOR SortOrder
 GO
 
 ALTER TABLE MEducation ADD  CONSTRAINT DF_MEducation_Active  DEFAULT 1 FOR Active
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+/****** MAge ******/ 
+CREATE TABLE MAge(
+	AgeId int NOT NULL,
+    AgeMin int NOT NULL,
+    AgeMax int NOT NULL,
+	[Description] nvarchar(200) NOT NULL,
+	SortOrder int NOT NULL,
+	Active int NOT NULL,
+	CONSTRAINT PK_MAge PRIMARY KEY (AgeId ASC)
+)
+GO
+
+CREATE UNIQUE INDEX IX_MAge_Description ON MAge([Description] ASC)
+GO
+
+ALTER TABLE MAge ADD  CONSTRAINT DF_MAge_SortOrder  DEFAULT 0 FOR SortOrder
+GO
+
+ALTER TABLE MAge ADD  CONSTRAINT DF_MAge_Active  DEFAULT 1 FOR Active
 GO
 
 
@@ -1827,5 +1856,52 @@ INSERT INTO MTitle ([Description], GenderId) VALUES
 	 (N'อส.ทพ.', 1), 
 	 (N'อาสาสมัครทหารพราน', 1), 
 	 (N'เอกอัครราชฑูต', 1);
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+INSERT INTO MGender(GenderId, [Description]) VALUES(0, N'ไม่ระบุ');
+INSERT INTO MGender(GenderId, [Description]) VALUES(1, N'ชาย');
+INSERT INTO MGender(GenderId, [Description]) VALUES(2, N'หญิง');
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+INSERT INTO MEducation(EducationId, [Description], SortOrder, Active) VALUES(0, N'ไม่ระบุ', 0, 1);
+INSERT INTO MEducation(EducationId, [Description], SortOrder, Active) VALUES(1, N'ต่ำกว่าปริญญาตรี', 1, 1);
+INSERT INTO MEducation(EducationId, [Description], SortOrder, Active) VALUES(2, N'ปริญญาตรี', 2, 1);
+INSERT INTO MEducation(EducationId, [Description], SortOrder, Active) VALUES(3, N'ปริญญาโท', 3, 1);
+INSERT INTO MEducation(EducationId, [Description], SortOrder, Active) VALUES(4, N'ปริญญาเอก', 4, 1);
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(1, N'ข้าราชการ/พนักงาน/เจ้าหน้าที่ ของรัฐ', 1, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(2, N'ข้าราชการการเมือง/นักการเมือง', 2, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(3, N'ข้าราชการส่วนท้องถิ่น', 3, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(4, N'ข้าราชการบำนาญ', 4, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(5, N'ครู/อาจารย์/นักวิชาการ', 5, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(6, N'แพทย์', 6, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(7, N'ทนายความ/นักกฎหมาย', 7, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(8, N'ธุรกิจส่วนตัว/ค้าขาย', 8, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(9, N'ผู้บริหาร/พนักงาน/ลูกจ้าง ภาคเอกชน', 9, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(10, N'รัฐวิสาหกิจ', 10, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(11, N'เกษตรกร', 11, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(12, N'รับจ้างอิสระ', 12, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(13, N'วิชาชีพ', 13, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(14, N'ที่ปรึกษา', 14, 1);
+INSERT INTO MOccupation(OccupationId, [Description], SortOrder, Active) VALUES(15, N'อื่นๆ', 15, 1);
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES(1, 15, 24,  N'ต่ำกว่า 25 ปี',  1, 0);
+INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES(2, 25, 30,  N'25 - 30 ปี',   2, 1);
+INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES(3, 31, 40,  N'31 - 40 ปี',   3, 1);
+INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES(4, 41, 50,  N'41 - 50 ปี',   4, 1);
+INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES(5, 51, 60,  N'51 - 60 ปี',   5, 1);
+INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES(6, 61, 70,  N'61 - 70 ปี',   6, 1);
+INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES(7, 71, 80,  N'71 - 80 ปี',   7, 1);
+INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES(8, 81, 150, N'มากกว่า 80 ปี', 8, 1);
 GO
 
