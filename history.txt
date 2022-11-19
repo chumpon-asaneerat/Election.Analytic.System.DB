@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #2
+  - Add Init Data for UserRole, UserInfo.
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #1
   - Add Table UserRole
   - Add Table UserInfo
