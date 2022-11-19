@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #5
+  - Update gulpfile.
+  - Test Generate merge db script file.
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #4
   - Add Init Data for MTitle.
 
