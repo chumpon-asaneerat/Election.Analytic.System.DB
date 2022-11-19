@@ -8,6 +8,9 @@ CREATE TABLE MEducation(
 )
 GO
 
+CREATE UNIQUE INDEX IX_MEducation_Description ON MEducation([Description] ASC)
+GO
+
 ALTER TABLE MEducation ADD  CONSTRAINT DF_MEducation_SortOrder  DEFAULT 0 FOR SortOrder
 GO
 

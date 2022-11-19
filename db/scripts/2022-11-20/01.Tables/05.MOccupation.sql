@@ -8,6 +8,9 @@ CREATE TABLE MOccupation(
 )
 GO
 
+CREATE UNIQUE INDEX IX_MOccupation_Description ON MOccupation([Description] ASC)
+GO
+
 ALTER TABLE MOccupation ADD  CONSTRAINT DF_MOccupation_SortOrder  DEFAULT 0 FOR SortOrder
 GO
 
