@@ -57,6 +57,90 @@ GO
 
 
 /*********** Script Update Date: 2022-11-20  ***********/
+/****** MGender ******/ 
+CREATE TABLE MGender(
+	GenderId int NOT NULL,
+	[Description] nvarchar(100) NULL,
+	CONSTRAINT PK_MGender PRIMARY KEY (GenderId ASC)
+)
+
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+/****** MOccupation ******/ 
+CREATE TABLE MOccupation(
+	OccupationId int NOT NULL,
+	[Description] nvarchar(200) NOT NULL,
+	SortOrder int NOT NULL,
+	Active int NOT NULL,
+	CONSTRAINT PK_MOccupation PRIMARY KEY (OccupationId ASC)
+)
+GO
+
+ALTER TABLE MOccupation ADD  CONSTRAINT DF_MOccupation_SortOrder  DEFAULT 0 FOR SortOrder
+GO
+
+ALTER TABLE MOccupation ADD  CONSTRAINT DF_MOccupation_Active  DEFAULT 1 FOR Active
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+/****** MEducation ******/ 
+CREATE TABLE MEducation(
+	EducationId int NOT NULL,
+	[Description] nvarchar(200) NOT NULL,
+	SortOrder int NOT NULL,
+	Active int NOT NULL,
+	CONSTRAINT PK_MEducation PRIMARY KEY (EducationId ASC)
+)
+GO
+
+ALTER TABLE MEducation ADD  CONSTRAINT DF_MEducation_SortOrder  DEFAULT 0 FOR SortOrder
+GO
+
+ALTER TABLE MEducation ADD  CONSTRAINT DF_MEducation_Active  DEFAULT 1 FOR Active
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+/****** MPerson ******/ 
+CREATE TABLE MPerson(
+	PersonId int IDENTITY(1,1) NOT NULL,
+	Prefix nvarchar(100) NULL,
+	FirstName nvarchar(200) NOT NULL,
+	LastName nvarchar(200) NOT NULL,
+	DOB datetime NULL,
+	GenderId int NULL,
+	EducationId int NULL,
+	OccupationId int NULL,
+	[Remark] nvarchar(max) NULL,
+	Data varbinary(max) NULL,
+	CONSTRAINT PK_MPerson PRIMARY KEY (PersonId ASC)
+)
+GO
+
+GO
+CREATE NONCLUSTERED INDEX IX_MPerson_FirstName ON MPerson(FirstName ASC)
+GO
+
+CREATE NONCLUSTERED INDEX IX_MPerson_LastName ON MPerson(LastName ASC)
+GO
+
+ALTER TABLE MPerson
+  ADD CONSTRAINT DF_MPerson_GenderId DEFAULT 0 FOR GenderId
+GO
+
+ALTER TABLE MPerson
+  ADD CONSTRAINT DF_MPerson_EducationId DEFAULT 0 FOR EducationId
+GO
+
+ALTER TABLE MPerson
+  ADD CONSTRAINT DF_MPerson_OccupationId DEFAULT 0 FOR OccupationId
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
 -- CREATE DEFAULT USER ROLES
 INSERT INTO UserRole(RoleId, RoleName) VALUES(1, N'Admistrator');
 INSERT INTO UserRole(RoleId, RoleName) VALUES(10, N'Supervisor');
