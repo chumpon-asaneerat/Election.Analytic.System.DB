@@ -14,7 +14,6 @@ CREATE TABLE MPerson(
 )
 GO
 
-GO
 CREATE NONCLUSTERED INDEX IX_MPerson_FirstName ON MPerson(FirstName ASC)
 GO
 
