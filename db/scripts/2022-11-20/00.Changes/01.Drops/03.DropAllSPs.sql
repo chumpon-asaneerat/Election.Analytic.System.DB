@@ -33,11 +33,13 @@ DECLARE @dropSPCursor CURSOR;
     SELECT name
       FROM sys.objects 
 	 WHERE type = 'P' 
-	   AND (   NAME <> 'DropAll' 
-	        OR NAME <> 'DropAllSPs'
-			OR NAME <> 'DropAllFNs'
-			OR NAME <> 'DropAllViews'
-			OR NAME <> 'DropTables') -- ignore all drop procedures.
+	   AND NAME NOT IN (
+             'DropAll'
+           , 'DropAllSPs'
+           , 'DropAllFNs'
+           , 'DropAllViews'
+           , 'DropTable'
+           , 'DropAllTables') -- ignore
 	 ORDER BY modify_date DESC
 
     SET @dropSPCursor = CURSOR LOCAL FAST_FORWARD 

@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[DropTables]    Script Date: 11/20/2022 12:21:50 PM ******/
+/****** Object:  StoredProcedure [dbo].[DropAllTables]    Script Date: 11/20/2022 12:21:50 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -14,9 +14,9 @@ GO
 --
 -- [== Example ==]
 --
---EXEC DropTables
+--EXEC DropAllTables
 -- =============================================
-CREATE PROCEDURE [dbo].[DropTables]
+CREATE PROCEDURE [dbo].[DropAllTables]
 AS
 BEGIN
 CREATE TABLE #TABLE_NAMES

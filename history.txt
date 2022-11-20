@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #21
+  - Fixed some login in dropXX all SPs.
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #20
   - Add SP DropTables (all code comment out).
 
