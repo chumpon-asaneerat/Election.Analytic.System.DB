@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #18
+  - Add SP DropAllViews, DropAllFNs, DropAllSPs.
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #17
   ** WARNING **
   - PPRP database on production must be backup from 2020-10-31
