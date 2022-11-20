@@ -31,8 +31,8 @@ DECLARE @sqlDropTable nvarchar(MAX)
 	  FROM SYS.OBJECTS
 	 WHERE TYPE_DESC LIKE '%CONSTRAINT' AND OBJECT_NAME(PARENT_OBJECT_ID) = @tableName;
 
-	PRINT 'DROP CONSTRAINS (PK, FK)'
-	PRINT @sqlDropConstrains
+	--PRINT 'DROP CONSTRAINS (PK, FK)'
+	--PRINT @sqlDropConstrains
 	EXECUTE SP_EXECUTESQL @sqlDropConstrains
 
 	-- DROP INDEXES
@@ -46,8 +46,8 @@ DECLARE @sqlDropTable nvarchar(MAX)
 		   AND OBJECT_NAME(object_id) = COALESCE(@tableName, OBJECT_NAME(object_id))
 		   FOR XML PATH(''))
 
-	PRINT 'DROP INDEXES'
-	PRINT @sqlDropIndexes
+	--PRINT 'DROP INDEXES'
+	--PRINT @sqlDropIndexes
 	EXEC SP_EXECUTESQL @sqlDropIndexes
 
 	-- DROP TABLE (Identity Property should be remove when table is drop.
@@ -55,7 +55,7 @@ DECLARE @sqlDropTable nvarchar(MAX)
 	--SELECT object_name(object_id) as TableName, name as ColumnName FROM sys.columns WHERE is_identity = 1
 
 	SET @sqlDropTable = 'DROP TABLE ' + @tableName
-	PRINT 'DROP TABLE'
+	--PRINT 'DROP TABLE'
 	EXEC SP_EXECUTESQL @sqlDropTable
 END
 
