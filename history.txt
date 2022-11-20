@@ -1,5 +1,13 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #17
+  ** WARNING **
+  - PPRP database on production must be backup from 2020-10-31
+  - Retore db scripts 2020-11-14 back (need to run on production).
+  - New db scripts 2020-11-20 will change a lot of database structures be sure backup first.
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #16
   - Test Generate merge db script file.
 
