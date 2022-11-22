@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #28
+  - Add SP SaveMRegion
+  - Add SP GetMRegions
+  - Add script to Init MRegion data.
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #27
   - Add Table MSubdistrict
 
