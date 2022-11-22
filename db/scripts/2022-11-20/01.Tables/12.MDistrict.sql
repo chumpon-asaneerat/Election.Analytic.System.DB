@@ -1,3 +1,4 @@
+/****** MDistrict ******/ 
 CREATE TABLE MDistrict(
 	ADM2Code nvarchar(20) NOT NULL,
 	DistrictNameTH nvarchar(200) NOT NULL,
@@ -5,6 +6,7 @@ CREATE TABLE MDistrict(
 	ADM1Code nvarchar(20) NULL,
 	RegionId nvarchar(20)  NULL,
 	ProvinceId nvarchar(20)  NULL,
+	DistrictId nvarchar(20)  NULL,
 	AreaM2 decimal(16, 3) NULL,
 	CONSTRAINT PK_MDistrict PRIMARY KEY (ADM2Code ASC)
 )
@@ -23,6 +25,12 @@ CREATE UNIQUE INDEX IX_MDistrict_DistrictNameEN ON MDistrict(DistrictNameEN ASC)
 GO
 
 CREATE INDEX IX_MDistrict_RegionId ON MDistrict(RegionId ASC)
+GO
+
+CREATE INDEX IX_MDistrict_ProvinceId ON MDistrict(ProvinceId ASC)
+GO
+
+CREATE INDEX IX_MDistrict_DistrictId ON MDistrict(DistrictId ASC)
 GO
 
 ALTER TABLE MDistrict ADD  CONSTRAINT DF_MDistrict_AreaM2  DEFAULT 0.0 FOR AreaM2

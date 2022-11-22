@@ -4,6 +4,7 @@ CREATE TABLE MProvince(
 	ProvinceNameTH nvarchar(200) NOT NULL,
 	ProvinceNameEN nvarchar(200) NULL,
 	RegionId nvarchar(20)  NULL,
+	ProvinceId nvarchar(20)  NULL,
 	AreaM2 decimal(16, 3) NULL,
 	CONSTRAINT PK_MProvince PRIMARY KEY (ADM1Code ASC)
 )
@@ -19,6 +20,9 @@ CREATE UNIQUE INDEX IX_MProvince_ProvinceNameEN ON MProvince(ProvinceNameEN ASC)
 GO
 
 CREATE INDEX IX_MProvince_RegionId ON MProvince(RegionId ASC)
+GO
+
+CREATE INDEX IX_MProvince_ProvinceId ON MProvince(ProvinceId ASC)
 GO
 
 ALTER TABLE MProvince ADD  CONSTRAINT DF_MProvince_AreaM2  DEFAULT 0.0 FOR AreaM2
