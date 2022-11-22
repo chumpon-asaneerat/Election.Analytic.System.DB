@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #29
+  - Move db script 2022-11-04 to Backup (no need to run on new db)
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #28
   - Add SP SaveMRegion
   - Add SP GetMRegions
