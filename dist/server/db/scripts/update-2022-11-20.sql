@@ -452,6 +452,152 @@ GO
 
 
 /*********** Script Update Date: 2022-11-20  ***********/
+/****** MRegion ******/ 
+CREATE TABLE MRegion(
+	RegionId nvarchar(20) NOT NULL,
+	RegionName nvarchar(200) NOT NULL,
+	GeoGroup nvarchar(200) NULL,
+	GeoSubGroup nvarchar(200) NULL,
+	CONSTRAINT PK_MRegion PRIMARY KEY (RegionId ASC)
+)
+GO
+
+CREATE INDEX IX_MRegion ON MRegion(RegionId ASC)
+GO
+
+CREATE UNIQUE INDEX IX_MRegion_RegionName ON MRegion(RegionName ASC)
+GO
+
+CREATE INDEX IX_MRegion_GeoGroup ON MRegion(GeoGroup ASC)
+GO
+
+CREATE INDEX IX_MRegion_GeoSubGroup ON MRegion(GeoSubGroup ASC)
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+/****** MProvince ******/ 
+CREATE TABLE MProvince(
+	ADM1Code nvarchar(20) NOT NULL,
+	ProvinceNameTH nvarchar(200) NOT NULL,
+	ProvinceNameEN nvarchar(200) NULL,
+	RegionId nvarchar(20)  NULL,
+	ProvinceId nvarchar(20)  NULL,
+	AreaM2 decimal(16, 3) NULL,
+	CONSTRAINT PK_MProvince PRIMARY KEY (ADM1Code ASC)
+)
+GO
+
+CREATE INDEX IX_MProvince ON MProvince(ADM1Code ASC)
+GO
+
+CREATE UNIQUE INDEX IX_MProvince_ProvinceNameTH ON MProvince(ProvinceNameTH ASC)
+GO
+
+CREATE UNIQUE INDEX IX_MProvince_ProvinceNameEN ON MProvince(ProvinceNameEN ASC)
+GO
+
+CREATE INDEX IX_MProvince_RegionId ON MProvince(RegionId ASC)
+GO
+
+CREATE INDEX IX_MProvince_ProvinceId ON MProvince(ProvinceId ASC)
+GO
+
+ALTER TABLE MProvince ADD  CONSTRAINT DF_MProvince_AreaM2  DEFAULT 0.0 FOR AreaM2
+GO
+
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+/****** MDistrict ******/ 
+CREATE TABLE MDistrict(
+	ADM2Code nvarchar(20) NOT NULL,
+	DistrictNameTH nvarchar(200) NOT NULL,
+	DistrictNameEN nvarchar(200) NULL,
+	ADM1Code nvarchar(20) NULL,
+	RegionId nvarchar(20)  NULL,
+	ProvinceId nvarchar(20)  NULL,
+	DistrictId nvarchar(20)  NULL,
+	AreaM2 decimal(16, 3) NULL,
+	CONSTRAINT PK_MDistrict PRIMARY KEY (ADM2Code ASC)
+)
+GO
+
+CREATE INDEX IX_MDistrict ON MDistrict(ADM2Code ASC)
+GO
+
+CREATE INDEX IX_MDistrict_ADM1Code ON MDistrict(ADM1Code ASC)
+GO
+
+CREATE UNIQUE INDEX IX_MDistrict_DistrictNameTH ON MDistrict(DistrictNameTH ASC)
+GO
+
+CREATE UNIQUE INDEX IX_MDistrict_DistrictNameEN ON MDistrict(DistrictNameEN ASC)
+GO
+
+CREATE INDEX IX_MDistrict_RegionId ON MDistrict(RegionId ASC)
+GO
+
+CREATE INDEX IX_MDistrict_ProvinceId ON MDistrict(ProvinceId ASC)
+GO
+
+CREATE INDEX IX_MDistrict_DistrictId ON MDistrict(DistrictId ASC)
+GO
+
+ALTER TABLE MDistrict ADD  CONSTRAINT DF_MDistrict_AreaM2  DEFAULT 0.0 FOR AreaM2
+GO
+
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+/****** MSubdistrict ******/ 
+CREATE TABLE MSubdistrict(
+	ADM3Code nvarchar(20) NOT NULL,
+	SubdistrictNameTH nvarchar(200) NOT NULL,
+	SubdistrictNameEN nvarchar(200) NULL,
+	ADM1Code nvarchar(20) NULL,
+	ADM2Code nvarchar(20) NULL,
+	RegionId nvarchar(20)  NULL,
+	ProvinceId nvarchar(20)  NULL,
+	DistrictId nvarchar(20)  NULL,
+	SubdistrictId nvarchar(20)  NULL,
+	AreaM2 decimal(16, 3) NULL,
+	CONSTRAINT PK_MSubdistrict PRIMARY KEY (ADM3Code ASC)
+)
+GO
+
+CREATE INDEX IX_MSubdistrict ON MSubdistrict(ADM3Code ASC)
+GO
+
+CREATE INDEX IX_MSubdistrict_ADM1Code ON MSubdistrict(ADM1Code ASC)
+GO
+
+CREATE INDEX IX_MSubdistrict_ADM2Code ON MSubdistrict(ADM2Code ASC)
+GO
+
+CREATE UNIQUE INDEX IX_MSubdistrict_SubdistrictNameTH ON MSubdistrict(SubdistrictNameTH ASC)
+GO
+
+CREATE UNIQUE INDEX IX_MSubdistrict_SubdistrictNameEN ON MSubdistrict(SubdistrictNameEN ASC)
+GO
+
+CREATE INDEX IX_MSubdistrict_RegionId ON MSubdistrict(RegionId ASC)
+GO
+
+CREATE INDEX IX_MSubdistrict_ProvinceId ON MSubdistrict(ProvinceId ASC)
+GO
+
+CREATE INDEX IX_MSubdistrict_DistrictId ON MSubdistrict(DistrictId ASC)
+GO
+
+CREATE INDEX IX_MSubdistrict_SubdistrictId ON MSubdistrict(SubdistrictId ASC)
+GO
+
+ALTER TABLE MSubdistrict ADD  CONSTRAINT DF_MSubdistrict_AreaM2  DEFAULT 0.0 FOR AreaM2
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
 /****** MPerson ******/ 
 CREATE TABLE MPerson(
 	PersonId int IDENTITY(1,1) NOT NULL,
@@ -484,6 +630,135 @@ GO
 
 ALTER TABLE MPerson
   ADD CONSTRAINT DF_MPerson_OccupationId DEFAULT 0 FOR OccupationId
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	SaveMRegion
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+--exec SaveMRegion N'01', N'ภาค 1', N'กลาง', N'กลาง';
+--exec SaveMRegion N'02', N'ภาค 2', N'ตะวันออก', N'ตะวันออก';
+--exec SaveMRegion N'03', N'ภาค 3', N'ตะวันออกเฉียงเหนือ', N'ตะวันออกเฉียงเหนือตอนล่าง';
+--exec SaveMRegion N'04', N'ภาค 4', N'ตะวันออกเฉียงเหนือ', N'ตะวันออกเฉียงเหนือตอนบน';
+--exec SaveMRegion N'05', N'ภาค 5', N'เหนือ', N'เหนือตอนบน';
+--exec SaveMRegion N'06', N'ภาค 6', N'เหนือ', N'เหนือตอนล่าง';
+--exec SaveMRegion N'07', N'ภาค 7', N'ตะวันตก', N'ตะวันตก';
+--exec SaveMRegion N'08', N'ภาค 8', N'ใต้', N'ใต้ตอนบน';
+--exec SaveMRegion N'09', N'ภาค 9', N'ใต้', N'ใต้ตอนล่าง';
+--exec SaveMRegion N'10', N'ภาค 10', N'กลาง', N'กรุงเทพมหานคร';
+-- =============================================
+CREATE PROCEDURE SaveMRegion (
+  @RegionId nvarchar(10)
+, @RegionName nvarchar(100)
+, @GeoGroup nvarchar(100)
+, @GeoSubGroup nvarchar(100)
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+		IF ((@RegionId IS NULL)
+            OR
+            NOT EXISTS 
+			(
+				SELECT * 
+				  FROM MRegion
+				 WHERE RegionId = @RegionId
+			)
+		   )
+		BEGIN
+			INSERT INTO MRegion
+			(
+				  RegionId
+				, RegionName 
+				, GeoGroup
+				, GeoSubGroup
+			)
+			VALUES
+			(
+				  @RegionId
+				, @RegionName
+				, @GeoGroup
+				, @GeoSubGroup
+			);
+		END
+		ELSE
+		BEGIN
+			UPDATE MRegion
+			   SET RegionName = @RegionName
+				 , GeoGroup = @GeoGroup
+				 , GeoSubGroup = @GeoSubGroup
+			 WHERE RegionId = @RegionId
+		END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetMRegions
+-- [== History ==]
+-- <2022-08-17> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- EXEC GetMRegions NULL, NULL, NULL, NULL      -- Gets all
+-- EXEC GetMRegions NULL, N'1', NULL, NULL      -- Search all that RegionName contains '1'
+-- EXEC GetMRegions NULL, NULL, N'เหนือ', NULL   -- Search all that GeoGroup contains 'เหนือ'
+-- EXEC GetMRegions NULL, NULL, NULL, N'ตอนบน'  -- Search all that GeoSubGroup contains 'ตอนบน'
+-- =============================================
+CREATE PROCEDURE GetMRegions
+(
+  @RegionId nvarchar(10) = NULL
+, @RegionName nvarchar(100) = NULL
+, @GeoGroup nvarchar(100) = NULL
+, @GeoSubGroup nvarchar(100) = NULL
+)
+AS
+BEGIN
+	SELECT RegionId
+		 , RegionName
+		 , GeoGroup
+		 , GeoSubGroup
+	  FROM MRegion
+	 WHERE UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
+	   AND UPPER(LTRIM(RTRIM(RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, RegionName)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, GeoGroup)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, GeoSubGroup)))) + '%'
+	 ORDER BY RegionId
+END
+
 GO
 
 
@@ -2221,5 +2496,19 @@ INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES
 INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES(6, 61, 70,  N'61 - 70 ปี',   6, 1);
 INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES(7, 71, 80,  N'71 - 80 ปี',   7, 1);
 INSERT INTO MAge(AgeId, AgeMin, AgeMax, [Description], SortOrder, Active) VALUES(8, 81, 150, N'มากกว่า 80 ปี', 8, 1);
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+EXEC SaveMRegion N'01', N'ภาค 1', N'กลาง', N'กลาง';
+EXEC SaveMRegion N'02', N'ภาค 2', N'ตะวันออก', N'ตะวันออก';
+EXEC SaveMRegion N'03', N'ภาค 3', N'ตะวันออกเฉียงเหนือ', N'ตะวันออกเฉียงเหนือตอนล่าง';
+EXEC SaveMRegion N'04', N'ภาค 4', N'ตะวันออกเฉียงเหนือ', N'ตะวันออกเฉียงเหนือตอนบน';
+EXEC SaveMRegion N'05', N'ภาค 5', N'เหนือ', N'เหนือตอนบน';
+EXEC SaveMRegion N'06', N'ภาค 6', N'เหนือ', N'เหนือตอนล่าง';
+EXEC SaveMRegion N'07', N'ภาค 7', N'ตะวันตก', N'ตะวันตก';
+EXEC SaveMRegion N'08', N'ภาค 8', N'ใต้', N'ใต้ตอนบน';
+EXEC SaveMRegion N'09', N'ภาค 9', N'ใต้', N'ใต้ตอนล่าง';
+EXEC SaveMRegion N'10', N'ภาค 10', N'กลาง', N'กรุงเทพมหานคร';
 GO
 
