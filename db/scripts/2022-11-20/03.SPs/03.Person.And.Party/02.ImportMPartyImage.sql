@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[ImportMParty]    Script Date: 11/26/2022 1:17:52 PM ******/
+/****** Object:  StoredProcedure [dbo].[ImportMPartyImage]    Script Date: 11/26/2022 1:17:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6,7 +6,7 @@ GO
 
 -- =============================================
 -- Author: Chumpon Asaneerat
--- Description:	ImportMParty
+-- Description:	ImportMPartyImage
 -- [== History ==]
 -- <2022-08-20> :
 --	- Stored Procedure Created.
@@ -21,14 +21,14 @@ GO
 -- DECLARE @data VARBINARY(MAX) = CONVERT(VARBINARY(MAX), @jsonData)
 -- 
 -- SET @partyName = N'พลังประชารัฐ';
--- EXEC ImportMParty @partyName, @data, @errNum out, @errMsg out
+-- EXEC ImportMPartyImage @partyName, @data, @errNum out, @errMsg out
 -- 
 -- SELECT @errNum AS ErrNum, @errMsg AS ErrMsg
 -- 
 -- SELECT * FROM MParty
 -- 
 -- =============================================
-CREATE PROCEDURE [dbo].[ImportMParty] (
+CREATE PROCEDURE [dbo].[ImportMPartyImage] (
   @partyName nvarchar(100)
 , @Data varbinary(MAX) = NULL
 , @errNum as int = 0 out

@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[ImportPerson]    Script Date: 11/26/2022 1:41:56 PM ******/
+/****** Object:  StoredProcedure [dbo].[ImportMPersonImage]    Script Date: 11/26/2022 1:41:56 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6,7 +6,7 @@ GO
 
 -- =============================================
 -- Author: Chumpon Asaneerat
--- Description:	ImportPerson
+-- Description:	ImportMPersonImage
 -- [== History ==]
 -- <2022-09-29> :
 --	- Stored Procedure Created.
@@ -14,7 +14,7 @@ GO
 -- [== Example ==]
 --
 -- =============================================
-CREATE PROCEDURE [dbo].[ImportPerson] (
+CREATE PROCEDURE [dbo].[ImportMPersonImage] (
   @FullName nvarchar(MAX)
 , @Data varbinary(MAX) = NULL
 , @errNum as int = 0 out
