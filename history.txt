@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #49
+  - Add SP GetMDistricts
+  - Update SP GetMProvinces (resize paramter size).
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #48
   - Add SP GetMProvinces
 
