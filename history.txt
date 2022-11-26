@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #44
+  - Update SP GetMPersons #1.
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #43
   - Rename SP ImportMParty to ImportMPartyImage
   - Rename SP ImportPerson to ImportMPersonImage

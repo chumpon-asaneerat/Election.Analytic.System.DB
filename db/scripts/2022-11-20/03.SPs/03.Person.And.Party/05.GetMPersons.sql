@@ -41,8 +41,8 @@ BEGIN
 		SELECT @totalRecords = COUNT(*) 
 		  FROM MPerson
 		 WHERE UPPER(RTRIM(LTRIM(Prefix))) LIKE '%' + COALESCE(@Prefix, Prefix) + '%'
-           AND UPPER(RTRIM(LTRIM(FirstName))) LIKE '%' + COALESCE(@FirstName, LastName) + '%'
-           AND UPPER(RTRIM(LTRIM(LastName))) LIKE '%' + COALESCE(@LastName, LastName) + '%'
+            OR UPPER(RTRIM(LTRIM(FirstName))) LIKE '%' + COALESCE(@FirstName, LastName) + '%'
+            OR UPPER(RTRIM(LTRIM(LastName))) LIKE '%' + COALESCE(@LastName, LastName) + '%'
 
 		SELECT @maxPage = 
 			CASE WHEN (@totalRecords % @rowsPerPage > 0) THEN 
@@ -67,8 +67,8 @@ BEGIN
 				 , Data
 			  FROM MPerson
 		     WHERE UPPER(RTRIM(LTRIM(Prefix))) LIKE '%' + COALESCE(@Prefix, Prefix) + '%'
-               AND UPPER(RTRIM(LTRIM(FirstName))) LIKE '%' + COALESCE(@FirstName, LastName) + '%'
-               AND UPPER(RTRIM(LTRIM(LastName))) LIKE '%' + COALESCE(@LastName, LastName) + '%'
+                OR UPPER(RTRIM(LTRIM(FirstName))) LIKE '%' + COALESCE(@FirstName, LastName) + '%'
+                OR UPPER(RTRIM(LTRIM(LastName))) LIKE '%' + COALESCE(@LastName, LastName) + '%'
 		)
 		SELECT * FROM SQLPaging WITH (NOLOCK) 
 			WHERE RowNo > ((@pageNum - 1) * @rowsPerPage);
