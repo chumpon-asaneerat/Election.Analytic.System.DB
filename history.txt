@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #42
+  - Implements SP ImportPerson #3
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #41
   - Implements SP ImportPerson #2
   - Update InitMTitle.sql

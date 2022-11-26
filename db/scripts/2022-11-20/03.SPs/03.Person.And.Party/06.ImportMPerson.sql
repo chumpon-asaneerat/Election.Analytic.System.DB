@@ -66,7 +66,7 @@ DECLARE @LastName nvarchar(200)
 		BEGIN
 			UPDATE MPerson
 			   SET [Data] = @Data
-                 , Prefix = LTRIM(RTRIM(@Prefix))
+                 , Prefix = LTRIM(RTRIM(COALESCE(@Prefix, Prefix)))
 			 WHERE LTRIM(RTRIM(FirstName)) = LTRIM(RTRIM(@FirstName))
                AND LTRIM(RTRIM(LastName)) = LTRIM(RTRIM(@LastName))
 		END
