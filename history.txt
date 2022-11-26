@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #40
+  - Add SP Parse_FullName
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #39
   - Add Function IsNullOrEmpty
   - Add Function SplitStringT
