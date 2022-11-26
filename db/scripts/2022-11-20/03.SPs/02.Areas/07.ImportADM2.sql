@@ -43,8 +43,8 @@ BEGIN
            ))
 		BEGIN
 			UPDATE MDistrict
-			   SET DistrictNameEN = UPPER(LTRIM(RTRIM(@DistrictNameEN)))
-				 , DistrictNameTH = UPPER(LTRIM(RTRIM(@DistrictNameTH)))
+			   SET DistrictNameEN = LTRIM(RTRIM(COALESCE(@DistrictNameEN, DistrictNameEN)))
+				 , DistrictNameTH = LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH)))
 				 , ADM1Code = UPPER(LTRIM(RTRIM(@ADM1Code)))
 				 , AreaM2 = @AreaM2
 			  FROM MDistrict
