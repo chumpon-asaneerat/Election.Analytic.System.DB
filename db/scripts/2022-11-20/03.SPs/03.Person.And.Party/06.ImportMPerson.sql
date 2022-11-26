@@ -15,8 +15,8 @@ GO
 --
 -- =============================================
 CREATE PROCEDURE [dbo].[ImportPerson] (
-  @FullName nvarchar(200)
-, @Data varbinary(MAX)
+  @FullName nvarchar(MAX)
+, @Data varbinary(MAX) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
@@ -26,6 +26,16 @@ DECLARE @Prefix nvarchar(100)
 DECLARE @FirstName nvarchar(200)
 DECLARE @LastName nvarchar(200)
 	BEGIN TRY
+        -- Parse Full Name into Prefix, FirstName, LastName
+        EXEC Parse_FullName @FullName, @Prefix out, @FirstName out, @LastName out
+
+        IF (@FirstName IS NULL AND @LastName IS NULL)
+        BEGIN
+		    SET @errNum = 100;
+		    SET @errMsg = 'Parser cannot extract firstname and lastname.';
+            RETURN
+        END
+
 		IF (NOT EXISTS 
 			(
 				SELECT * 
