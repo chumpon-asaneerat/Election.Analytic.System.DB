@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #39
+  - Add Function IsNullOrEmpty
+  - Add Function SplitStringT
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #38
   - Add View MTitleView
 
