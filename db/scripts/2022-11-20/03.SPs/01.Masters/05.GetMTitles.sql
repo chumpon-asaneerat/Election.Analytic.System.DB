@@ -19,7 +19,7 @@ GO
 -- =============================================
 CREATE PROCEDURE [dbo].[GetMTitles]
 (
-  @description nvarchar(100) = NULL
+  @description nvarchar(200) = NULL
 , @genderId int = NULL
 )
 AS

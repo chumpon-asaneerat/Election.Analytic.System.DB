@@ -17,8 +17,8 @@ GO
 -- =============================================
 CREATE PROCEDURE [dbo].[GetUser]
 (
-  @UserName nvarchar(50)
-, @Password nvarchar(50)
+  @UserName nvarchar(100)
+, @Password nvarchar(100)
 )
 AS
 BEGIN

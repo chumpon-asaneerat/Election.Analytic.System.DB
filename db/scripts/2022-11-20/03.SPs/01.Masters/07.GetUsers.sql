@@ -22,8 +22,8 @@ GO
 -- =============================================
 CREATE PROCEDURE [dbo].[GetUsers]
 (
-  @FullName nvarchar(100) = NULL
-, @UserName nvarchar(50) = NULL
+  @FullName nvarchar(200) = NULL
+, @UserName nvarchar(100) = NULL
 , @RoleName nvarchar(100) = NULL
 , @RoleId int = NULL
 , @Active int = 1
