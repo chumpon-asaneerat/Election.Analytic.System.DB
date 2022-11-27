@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #64
+  - Add SP GetMGenders.
+  - Update SP GetMAges.
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #63
   - Update SP GetMTitle
   - Update SP GetUsers
