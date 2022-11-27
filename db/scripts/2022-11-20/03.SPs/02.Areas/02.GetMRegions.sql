@@ -20,9 +20,9 @@ GO
 CREATE PROCEDURE GetMRegions
 (
   @RegionId nvarchar(10) = NULL
-, @RegionName nvarchar(100) = NULL
-, @GeoGroup nvarchar(100) = NULL
-, @GeoSubGroup nvarchar(100) = NULL
+, @RegionName nvarchar(200) = NULL
+, @GeoGroup nvarchar(200) = NULL
+, @GeoSubGroup nvarchar(200) = NULL
 )
 AS
 BEGIN
