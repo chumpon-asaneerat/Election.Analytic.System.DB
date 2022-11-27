@@ -26,6 +26,6 @@ AS
 		 , MProvince C
 	 WHERE A.RegionId = B.RegionId
 	   AND C.RegionId = B.RegionId
-	   AND A.ProvinceId = C.ProvinceId
+	   AND A.ADM1Code = C.ADM1Code
 
 GO
