@@ -10,6 +10,7 @@ AS
 	SELECT A.ADM3Code
 		 , A.SubdistrictNameTH
 		 , A.SubdistrictNameEN
+		 , A.AreaM2 AS SubdistrictAreaM2
 		 , C.ADM1Code
 		 , D.ADM2Code
 		 , A.RegionId
