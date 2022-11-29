@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[ImportADM2]    Script Date: 11/26/2022 3:33:16 PM ******/
+/****** Object:  StoredProcedure [dbo].[ImportADM2]    Script Date: 11/29/2022 7:02:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -13,26 +13,41 @@ GO
 --
 -- [== Example ==]
 --
--- ImportADM2 N'TH4711', N'อากาศอำนวย', N'Akat Amnuai', N'TH47', 661338974.564
+-- ImportADM2 N'TH4711', N'อากาศอำนวย', N'Akat Amnuai', N'สกลนคร', N'Sakon Nakhon', 661338974.564
 -- =============================================
 CREATE PROCEDURE [dbo].[ImportADM2] (
   @ADM2Code nvarchar(20)
 , @DistrictNameTH nvarchar(200)
 , @DistrictNameEN nvarchar(200)
-, @ADM1Code nvarchar(20)
+, @ProvinceNameTH nvarchar(200)
+, @ProvinceNameEN nvarchar(200)
 , @AreaM2 decimal(16, 3) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
+DECLARE @ADM1Code nvarchar(20)
 	BEGIN TRY
-		IF (   @ADM2Code IS NULL 
+		IF (   @ProvinceNameTH IS NULL 
+			OR @ProvinceNameEN IS NULL 
 		    OR @DistrictNameTH IS NULL 
 			OR @DistrictNameEN IS NULL 
-			OR @ADM1Code IS NULL)
+			OR @ADM2Code IS NULL)
 		BEGIN
 			SET @errNum = 100;
 			SET @errMsg = 'Some parameter(s) is null';
+			RETURN
+		END
+
+		SELECT @ADM1Code = ADM1Code 
+		  FROM MProvince
+		 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
+		   AND UPPER(LTRIM(RTRIM(ProvinceNameEN))) = UPPER(LTRIM(RTRIM(@ProvinceNameEN)))
+
+		IF (@ADM1Code IS NULL)
+		BEGIN
+			SET @errNum = 101;
+			SET @errMsg = 'ADM1Code is null';
 			RETURN
 		END
 
