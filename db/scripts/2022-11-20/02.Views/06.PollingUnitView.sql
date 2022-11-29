@@ -11,6 +11,7 @@ AS
          , A.ADM1Code
 	     , A.PollingUnitNo
 	     , A.PollingUnitCount
+	     , A.AreaRemark
 		 , B.RegionId
 		 , B.RegionName
 		 , B.GeoGroup

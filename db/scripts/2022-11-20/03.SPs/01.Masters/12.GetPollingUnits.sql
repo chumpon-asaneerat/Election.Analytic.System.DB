@@ -37,6 +37,7 @@ BEGIN
          , ProvinceId
 	     , ProvinceNameTH
 	     , ProvinceNameEN
+         , AreaRemark
 	  FROM PollingUnitView
 	 WHERE ThaiYear = COALESCE(@ThaiYear, ThaiYear)
        AND UPPER(LTRIM(RTRIM(ADM1Code))) = UPPER(LTRIM(RTRIM(COALESCE(@ADM1Code, ADM1Code))))

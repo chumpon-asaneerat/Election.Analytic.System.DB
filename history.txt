@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #82
+  - Update View PollingUnitView #1.
+  - Update SP GetPollingUnits.
+  - Drop SP GetCombinePollingUnits.
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #81
   - Add SP GetCombinePollingUnits.
 
