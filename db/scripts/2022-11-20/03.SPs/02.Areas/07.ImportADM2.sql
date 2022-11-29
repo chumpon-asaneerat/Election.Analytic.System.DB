@@ -62,7 +62,6 @@ DECLARE @ADM1Code nvarchar(20)
 				 , DistrictNameTH = LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH)))
 				 , ADM1Code = UPPER(LTRIM(RTRIM(@ADM1Code)))
 				 , AreaM2 = @AreaM2
-			  FROM MDistrict
 			 WHERE UPPER(LTRIM(RTRIM(ADM2Code))) = UPPER(LTRIM(RTRIM(@ADM2Code)))
 		END
         ELSE

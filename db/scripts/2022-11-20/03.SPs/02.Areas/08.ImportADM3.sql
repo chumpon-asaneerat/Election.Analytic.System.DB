@@ -73,7 +73,6 @@ DECLARE @ADM2Code nvarchar(20)
 				 , ADM1Code = UPPER(LTRIM(RTRIM(@ADM1Code)))
 				 , ADM2Code = UPPER(LTRIM(RTRIM(@ADM2Code)))
 				 , AreaM2 = @AreaM2
-		     FROM MSubdistrict
 			 WHERE UPPER(LTRIM(RTRIM(ADM3Code))) = UPPER(LTRIM(RTRIM(@ADM3Code)))
 		END
         ELSE
