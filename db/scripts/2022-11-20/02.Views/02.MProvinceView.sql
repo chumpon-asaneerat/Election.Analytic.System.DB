@@ -16,8 +16,6 @@ AS
 		 , B.RegionName
 		 , B.GeoGroup
 		 , B.GeoSubGroup
-	  FROM MProvince A
-	     , MRegion B
-	 WHERE A.RegionId = B.RegionId
+	  FROM MProvince A LEFT OUTER JOIN MRegion B ON B.RegionId = A.RegionId
 
 GO
