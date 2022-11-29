@@ -1,4 +1,4 @@
-/****** Object:  View [dbo].[MDistrictView]    Script Date: 11/26/2022 2:52:30 PM ******/
+/****** Object:  View [dbo].[MDistrictView]    Script Date: 11/29/2022 7:38:49 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -22,10 +22,7 @@ AS
 		 , C.ProvinceNameEN
 		 , C.AreaM2 AS ProvinceAreaM2
 	  FROM MDistrict A
-		 , MRegion B
-		 , MProvince C
-	 WHERE A.RegionId = B.RegionId
-	   AND C.RegionId = B.RegionId
-	   AND A.ADM1Code = C.ADM1Code
+		 , MProvince C LEFT OUTER JOIN MRegion B ON B.RegionId = C.RegionId
+	 WHERE A.ADM1Code = C.ADM1Code
 
 GO
