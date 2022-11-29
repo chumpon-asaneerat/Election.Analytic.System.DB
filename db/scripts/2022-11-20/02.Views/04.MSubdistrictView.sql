@@ -30,7 +30,6 @@ AS
 		 , MDistrict D 
 		 , MProvince C LEFT OUTER JOIN MRegion B ON B.RegionId = C.RegionId
 	 WHERE A.ADM1Code = C.ADM1Code
-	   AND D.ADM1Code = C.ADM1Code
 	   AND A.ADM2Code = D.ADM2Code
 
 GO
