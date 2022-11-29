@@ -27,13 +27,9 @@ AS
 		 , C.AreaM2 AS ProvinceAreaM2
 		 , D.AreaM2 AS DistrictAreaM2
 	  FROM MSubdistrict A
-		 , MRegion B
-		 , MProvince C
-		 , MDistrict D
-	 WHERE A.RegionId = B.RegionId
-	   AND C.RegionId = B.RegionId
-	   AND D.RegionId = B.RegionId
-	   AND A.ADM1Code = C.ADM1Code
+		 , MDistrict D 
+		 , MProvince C LEFT OUTER JOIN MRegion B ON B.RegionId = C.RegionId
+	 WHERE A.ADM1Code = C.ADM1Code
 	   AND D.ADM1Code = C.ADM1Code
 	   AND A.ADM2Code = D.ADM2Code
 
