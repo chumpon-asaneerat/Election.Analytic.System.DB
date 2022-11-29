@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #83
+  - Add SP GetRegionMenuItems
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #82
   - Update View PollingUnitView #1.
   - Update SP GetPollingUnits.
