@@ -60,6 +60,7 @@ DECLARE @ADM3Code nvarchar(20)
 		  FROM MSubdistrict
 		 WHERE UPPER(LTRIM(RTRIM(SubdistrictNameTH))) = UPPER(LTRIM(RTRIM(@SubdistrictNameTH)))
 
+        /*
 		IF (   @RegionId IS NULL
 		    OR @ADM1Code IS NULL 
 			OR @ADM2Code IS NULL
@@ -69,6 +70,7 @@ DECLARE @ADM3Code nvarchar(20)
 			SET @errMsg = 'RegionId or ADM1Code or ADM2Code or ADM3Code is null';
 			RETURN
 		END
+        */
 
 		-- Province
         IF (EXISTS(
