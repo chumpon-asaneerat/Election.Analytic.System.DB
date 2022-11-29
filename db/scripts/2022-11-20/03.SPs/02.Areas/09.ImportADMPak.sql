@@ -15,18 +15,18 @@ GO
 --
 -- =============================================
 CREATE PROCEDURE [dbo].[ImportADMPak] (
-  @RegionName nvarchar(100)
+  @RegionName nvarchar(200)
 , @ProvinceId nvarchar(20)
 , @ProvinceNameTH nvarchar(200)
 , @DistrictId nvarchar(20)
 , @DistrictNameTH nvarchar(200)
 , @SubdistrictId nvarchar(20)
-, @SubdistrictNameTH nvarchar(100)
+, @SubdistrictNameTH nvarchar(200)
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
-DECLARE @RegionId nvarchar(10)
+DECLARE @RegionId nvarchar(20)
 DECLARE @ADM1Code nvarchar(20)
 DECLARE @ADM2Code nvarchar(20)
 DECLARE @ADM3Code nvarchar(20)

@@ -17,8 +17,8 @@ GO
 -- =============================================
 CREATE PROCEDURE [dbo].[ImportADM3] (
   @ADM3Code nvarchar(20)
-, @SubdistrictNameTH nvarchar(100)
-, @SubdistrictNameEN nvarchar(100) = NULL
+, @SubdistrictNameTH nvarchar(200)
+, @SubdistrictNameEN nvarchar(200) = NULL
 , @DistrictNameTH nvarchar(200)
 , @DistrictNameEN nvarchar(200)
 , @ProvinceNameTH nvarchar(200)
