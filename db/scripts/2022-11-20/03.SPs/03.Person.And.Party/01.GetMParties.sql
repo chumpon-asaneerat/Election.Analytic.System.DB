@@ -61,7 +61,7 @@ DECLARE @sPartyName nvarchar(100)
 		(
 			SELECT TOP(@rowsPerPage * @pageNum) ROW_NUMBER() OVER (ORDER BY PartyName) AS RowNo
 			     , PartyName
-				 , Data
+				 , [Data]
 			  FROM MParty
 			 WHERE UPPER(RTRIM(LTRIM(PartyName))) LIKE '%' + @sPartyName + '%'
 			 ORDER BY PartyName

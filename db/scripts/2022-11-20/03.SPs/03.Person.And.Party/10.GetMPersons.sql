@@ -64,7 +64,7 @@ BEGIN
                  , EducationId
                  , OccupationId
                  , [Remark]
-				 , Data
+				 , [Data]
 			  FROM MPerson
 		     WHERE UPPER(RTRIM(LTRIM(Prefix))) LIKE '%' + COALESCE(@Prefix, Prefix) + '%'
                AND UPPER(RTRIM(LTRIM(FirstName))) LIKE '%' + COALESCE(@FirstName, FirstName) + '%'
