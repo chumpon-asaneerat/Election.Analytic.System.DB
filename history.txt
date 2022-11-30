@@ -1,5 +1,14 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #107 (recommit)
+
+----------------------------------------------------------------------------------------------
+[commited]
+- PPRPv1 Rework #106
+  - Update View MPDVoteSummaryView #1
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #105
   - Prepare View MPDVoteSummaryView
   - Prepare View MPDStatVoterView
