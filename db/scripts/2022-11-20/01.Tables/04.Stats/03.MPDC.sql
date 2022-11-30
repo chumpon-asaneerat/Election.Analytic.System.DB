@@ -9,7 +9,7 @@ CREATE TABLE MPDC (
 	EducationId int NULL,
     [Remark] nvarchar(max) NULL,
     SubGroup nvarchar(max) NULL,
-    CONSTRAINT PK_MPDVoteStatistic PRIMARY KEY 
+    CONSTRAINT PK_MPDC PRIMARY KEY 
     (
         ThaiYear ASC
       , ADM1Code ASC
