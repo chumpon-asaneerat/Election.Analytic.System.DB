@@ -1,17 +1,22 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #102
+  - Add Table MPDC.
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #101
-  - Update MPDVoteStatistic Table #2.
+  - Update Table MPDVoteStatistic #2.
 
 ----------------------------------------------------------------------------------------------
 [commited]
 - PPRPv1 Rework #100
-  - Update MPDVoteStatistic Table #1.
+  - Update Table MPDVoteStatistic #1.
 
 ----------------------------------------------------------------------------------------------
 [commited]
 - PPRPv1 Rework #99
-  - Add MPDVoteStatistic Table.
+  - Add Table MPDVoteStatistic.
 
 ----------------------------------------------------------------------------------------------
 [commited]
