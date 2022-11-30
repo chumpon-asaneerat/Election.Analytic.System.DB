@@ -1,5 +1,14 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #89
+  - Update SP SaveMParty - OK
+  - Update SP GetMParty - OK
+  - Add SP SaveMPartyImage - OK
+  - Add SP GetMPartyImage - OK
+  - Update SP DeleteMParty - OK
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #88
   - Add SP ImportMPDVoteSummary
 

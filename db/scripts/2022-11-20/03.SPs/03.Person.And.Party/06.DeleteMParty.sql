@@ -13,27 +13,23 @@ GO
 --
 -- [== Example ==]
 --
+-- DECLARE @errNum int
+-- DECLARE @errMsg nvarchar(MAX)
+-- 
+-- EXEC DeleteMParty 4, @errNum out, @errMsg out
+--  
+-- SELECT @errNum AS ErrNum, @errMsg AS ErrMsg
+-- 
+-- SELECT * FROM MParty
+-- 
 -- =============================================
 CREATE PROCEDURE [dbo].[DeleteMParty] (
-  @partyName nvarchar(100)
+  @PartyId int
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
-DECLARE @PartyId int
-DECLARE @ContentId uniqueidentifier
 	BEGIN TRY
-        IF (@partyName IS NULL)
-        BEGIN
-			SET @errNum = 100;
-			SET @errMsg = 'Some parameter(s) is null';
-			RETURN
-        END
-
-        SELECT @PartyId = PartyId 
-          FROM MParty
-         WHERE UPPER(LTRIM(RTRIM(PartyName))) = UPPER(LTRIM(RTRIM(@partyName)))
-
         IF (@PartyId IS NOT NULL)
         BEGIN
             DELETE 

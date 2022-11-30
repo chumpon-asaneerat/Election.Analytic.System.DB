@@ -15,7 +15,7 @@ GO
 --
 -- DECLARE @errNum int
 -- DECLARE @errMsg nvarchar(MAX)
--- DECLARE @partyName nvarchar(100)
+-- DECLARE @partyName nvarchar(200)
 -- 
 -- DECLARE @jsonData NVARCHAR(MAX) = N'{"age":1,"name":"sample"}'
 -- DECLARE @data VARBINARY(MAX) = CONVERT(VARBINARY(MAX), @jsonData)
@@ -37,7 +37,9 @@ AS
 BEGIN
 DECLARE @PartyId int;
 	BEGIN TRY
-        -- CHECKS PartyId
+        -- Gets PartyId
+        EXEC SaveMParty @PartyName, @PartyId out
+
 		SELECT @PartyId = PartyId
 		  FROM MParty
 		 WHERE UPPER(LTRIM(RTRIM(PartyName))) = UPPER(LTRIM(RTRIM(@PartyName)))
