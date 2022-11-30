@@ -1,4 +1,4 @@
-/****** MPDVoteSummary ******/ 
+/****** MPDVoteStatistic ******/ 
 CREATE TABLE MPDVoteStatistic (
 	ThaiYear int NOT NULL,
 	ADM1Code nvarchar(20) NOT NULL,
