@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #105
+  - Prepare View MPDVoteSummaryView
+  - Prepare View MPDStatVoterView
+  - Prepare View MPDCView
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #104
   - Remoe Table MPDVoteStatistic.
   - Add Table MPDStatVoter
