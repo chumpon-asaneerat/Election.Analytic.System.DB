@@ -29,7 +29,7 @@ GO
 -- 
 -- =============================================
 CREATE PROCEDURE [dbo].[ImportMPartyImage] (
-  @partyName nvarchar(100)
+  @partyName nvarchar(200)
 , @Data varbinary(MAX) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)

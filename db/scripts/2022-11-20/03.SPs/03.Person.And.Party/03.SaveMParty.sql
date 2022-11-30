@@ -30,7 +30,7 @@ GO
 -- 
 -- =============================================
 CREATE PROCEDURE [dbo].[SaveMParty] (
-  @partyName nvarchar(100)
+  @partyName nvarchar(200)
 , @Data varbinary(MAX) = NULL
 , @PartyId int = NULL out
 , @errNum as int = 0 out
