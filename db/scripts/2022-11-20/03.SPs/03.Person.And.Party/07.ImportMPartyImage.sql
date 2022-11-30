@@ -29,7 +29,7 @@ GO
 -- 
 -- =============================================
 CREATE PROCEDURE [dbo].[ImportMPartyImage] (
-  @partyName nvarchar(200)
+  @PartyName nvarchar(200)
 , @Data varbinary(MAX) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
@@ -37,30 +37,16 @@ AS
 BEGIN
 DECLARE @PartyId int;
 	BEGIN TRY
-        -- Gets PartyId
-        EXEC SaveMParty @PartyName, @PartyId out
+        -- Call Save to get PartyId
+        EXEC SaveMParty @PartyName, @PartyId out, @errNum out, @errMsg out
 
-		SELECT @PartyId = PartyId
-		  FROM MParty
-		 WHERE UPPER(LTRIM(RTRIM(PartyName))) = UPPER(LTRIM(RTRIM(@PartyName)))
-
-		IF (@PartyId IS NULL)
-		BEGIN
-			INSERT INTO MParty
-			(
-				  PartyName 
-                , [Data]
-			)
-			VALUES
-			(
-				  @PartyName
-                , @Data
-			);
-
-			SET @PartyId = @@IDENTITY;
-		END
-        ELSE
+        IF (@errNum <> 0)
         BEGIN
+            RETURN
+        END
+
+		IF (@PartyId IS NOT NULL)
+		BEGIN
             UPDATE MParty
                SET [Data] = @Data
              WHERE PartyId = @PartyId;

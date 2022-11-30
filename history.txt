@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #90
+  - Update SP SaveMParty - OK
+  - Update SP ImportMPartyImage - OK
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #89
   - Update SP SaveMParty - OK
   - Update SP GetMParty - OK

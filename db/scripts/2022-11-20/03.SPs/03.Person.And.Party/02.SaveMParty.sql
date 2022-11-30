@@ -34,12 +34,19 @@ CREATE PROCEDURE [dbo].[SaveMParty] (
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
+DECLARE @matchId int
 	BEGIN TRY
-		IF (NOT EXISTS (
-            SELECT PartyId 
+        -- FIND ID
+        IF (@PartyId IS NULL OR @PartyId <= 0)
+        BEGIN
+            SELECT @matchId = PartyId 
               FROM MParty 
              WHERE UPPER(LTRIM(RTRIM(PartyName))) = UPPER(LTRIM(RTRIM(@PartyName)))
-           ))
+            -- REPLACE ID IN CASE PartyName is EXISTS but not specificed Id when call this SP
+            SET @PartyId = @matchId
+        END
+
+		IF (@PartyId IS NULL)
 		BEGIN
 			INSERT INTO MParty
 			(
