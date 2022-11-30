@@ -3,20 +3,15 @@ CREATE TABLE MPDVoteStatistic (
 	ThaiYear int NOT NULL,
 	ADM1Code nvarchar(20) NOT NULL,
 	PollingUnitNo int NOT NULL,
-	CandidateNo int NOT NULL,
-	RevoteNo int NOT NULL,
-	PartyId int NOT NULL,
-	PersonId int NOT NULL,
-	VoteCount int NOT NULL,
+	RightCount int NOT NULL,
+	ExerciseCount int NOT NULL,
+	InvalidCount int NOT NULL,
+	NoVoteCount int NOT NULL,
     CONSTRAINT PK_MPDVoteStatistic PRIMARY KEY 
     (
         ThaiYear ASC
       , ADM1Code ASC
       , PollingUnitNo ASC
-      , CandidateNo ASC
-      , RevoteNo ASC
-      , PartyId ASC
-      , PersonId ASC
     )
 )
 GO
@@ -30,23 +25,14 @@ GO
 CREATE INDEX IX_MPDVoteStatistic_PollingUnitNo ON MPDVoteStatistic(PollingUnitNo ASC)
 GO
 
-CREATE INDEX IX_MPDVoteStatistic_CandidateNo ON MPDVoteStatistic(CandidateNo ASC)
+ALTER TABLE MPDVoteStatistic ADD  CONSTRAINT DF_MPDVoteStatistic_RightCount  DEFAULT 0 FOR RightCount
 GO
 
-CREATE INDEX IX_MPDVoteStatistic_RevoteNo ON MPDVoteStatistic(RevoteNo ASC)
+ALTER TABLE MPDVoteStatistic ADD  CONSTRAINT DF_MPDVoteStatistic_ExerciseCount  DEFAULT 0 FOR ExerciseCount
 GO
 
-CREATE INDEX IX_MPDVoteStatistic_PartyId ON MPDVoteStatistic(PartyId ASC)
+ALTER TABLE MPDVoteStatistic ADD  CONSTRAINT DF_MPDVoteStatistic_InvalidCount  DEFAULT 0 FOR InvalidCount
 GO
 
-CREATE INDEX IX_MPDVoteStatistic_PersonId ON MPDVoteStatistic(PersonId ASC)
-GO
-
-ALTER TABLE MPDVoteStatistic ADD  CONSTRAINT DF_MPDVoteStatistic_CandidateNo  DEFAULT 0 FOR CandidateNo
-GO
-
-ALTER TABLE MPDVoteStatistic ADD  CONSTRAINT DF_MPDVoteStatistic_RevoteNo  DEFAULT 0 FOR RevoteNo
-GO
-
-ALTER TABLE MPDVoteStatistic ADD  CONSTRAINT DF_MPDVoteStatistic_VoteCount  DEFAULT 0 FOR VoteCount
+ALTER TABLE MPDVoteStatistic ADD  CONSTRAINT DF_MPDVoteStatistic_NoVoteCount  DEFAULT 0 FOR NoVoteCount
 GO
