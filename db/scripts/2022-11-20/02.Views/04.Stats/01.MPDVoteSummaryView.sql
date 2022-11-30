@@ -9,6 +9,13 @@ CREATE VIEW [dbo].[MPDVoteSummaryView]
 AS
 	SELECT A.ThaiYear
          , A.ADM1Code
+         , B.ProvinceId
+         , B.ProvinceNameTH
+         , B.ProvinceNameEN
+         , B.RegionId
+         , B.RegionName
+         , B.GeoGroup
+         , B.GeoSubgroup
 	     , A.PollingUnitNo
 	     , A.CandidateNo
 	     , A.RevoteNo
