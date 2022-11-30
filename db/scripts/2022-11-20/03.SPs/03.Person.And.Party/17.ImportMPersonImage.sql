@@ -25,6 +25,7 @@ DECLARE @PersonId int;
 DECLARE @Prefix nvarchar(100)
 DECLARE @FirstName nvarchar(200)
 DECLARE @LastName nvarchar(200)
+DECLARE @GenderId int;
 	BEGIN TRY
         -- Parse Full Name into Prefix, FirstName, LastName
         EXEC Parse_FullName @FullName, @Prefix out, @FirstName out, @LastName out
@@ -36,39 +37,32 @@ DECLARE @LastName nvarchar(200)
             RETURN
         END
 
-		IF (NOT EXISTS 
-			(
-				SELECT * 
-				  FROM MPerson
-			     WHERE LTRIM(RTRIM(FirstName)) = LTRIM(RTRIM(@FirstName))
-                   AND LTRIM(RTRIM(LastName)) = LTRIM(RTRIM(@LastName))
-			)
-		   )
-		BEGIN
-			INSERT INTO MPerson
-			(
-				  Prefix
-				, FirstName
-				, LastName
-				, [Data] 
-			)
-			VALUES
-			(
-				  @Prefix
-                , @FirstName
-                , @LastName
-				, @Data
-			);
+        SELECT @GenderId = GenderId 
+          FROM MTitle 
+         WHERE UPPER(LTRIM(RTRIM([Description]))) = UPPER(LTRIM(RTRIM(@Prefix)))
+        
+        IF (@GenderId IS NULL) SET @GenderId = 0
 
-            SET @PersonId = @@IDENTITY;
-		END
-		ELSE
+        -- Call Save to get PartyId
+        EXEC SaveMPerson @Prefix, @FirstName, @LastName
+                       , NULL -- DOB
+                       , @GenderId -- GenderId
+                       , NULL -- EducationId
+                       , NULL -- OccupationId
+                       , NULL -- Remark
+                       , @PersonId out -- PersonId
+                       , @errNum out, @errMsg out
+
+        IF (@errNum <> 0)
+        BEGIN
+            RETURN
+        END
+
+		IF (@PersonId IS NOT NULL)
 		BEGIN
 			UPDATE MPerson
 			   SET [Data] = @Data
-                 , Prefix = LTRIM(RTRIM(COALESCE(@Prefix, Prefix)))
-			 WHERE LTRIM(RTRIM(FirstName)) = LTRIM(RTRIM(@FirstName))
-               AND LTRIM(RTRIM(LastName)) = LTRIM(RTRIM(@LastName))
+             WHERE PersonId = @PersonId;
 		END
 
 		-- Update Error Status/Message
