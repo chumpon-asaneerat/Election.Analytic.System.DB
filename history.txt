@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #116
+  - Prepare file for SP ImportVoteStatVoter
+  - Prepare file for SP ImportMPDC
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #115
   - Update SP DeleteMParty #1
   - Update SP DeleteMPerson #1
