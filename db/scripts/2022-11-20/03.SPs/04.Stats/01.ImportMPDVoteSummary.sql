@@ -103,7 +103,7 @@ DECLARE @LastName nvarchar(MAX) = null
 			RETURN
 		END
 
-        -- Call Save to get PartyId
+        -- Call Save to get PersonId
         EXEC SaveMPerson @Prefix, @FirstName, @LastName
                        , NULL -- DOB
                        , @GenderId -- GenderId

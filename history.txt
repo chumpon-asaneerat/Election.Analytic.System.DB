@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #118
+  - Update SP ImportMPDC
+  - Update SP ImportMPDVoteSummary (fixed misspell code comment)
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #117
   - Update SP ImportMPDStatVoter
   - Update SP ImportMPDVoteSummary (remote comment).
