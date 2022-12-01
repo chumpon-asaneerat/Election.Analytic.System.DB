@@ -1,7 +1,13 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #117
+  - Update SP ImportMPDStatVoter
+  - Update SP ImportMPDVoteSummary (remote comment).
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #116
-  - Prepare file for SP ImportVoteStatVoter
+  - Prepare file for SP ImportMPDStatVoter
   - Prepare file for SP ImportMPDC
 
 ----------------------------------------------------------------------------------------------

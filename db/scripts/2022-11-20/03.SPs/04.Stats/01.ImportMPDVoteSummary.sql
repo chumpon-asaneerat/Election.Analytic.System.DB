@@ -79,11 +79,6 @@ DECLARE @LastName nvarchar(MAX) = null
 		  FROM MProvince
 		 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
 
-        /*
-		SELECT @PartyId = PartyId 
-		  FROM MParty
-		 WHERE UPPER(LTRIM(RTRIM(PartyName))) = UPPER(LTRIM(RTRIM(@PartyName)))
-        */
         -- Call Save to get PartyId
         EXEC SaveMParty @PartyName, @PartyId out, @errNum out, @errMsg out
 
@@ -108,12 +103,6 @@ DECLARE @LastName nvarchar(MAX) = null
 			RETURN
 		END
 
-        /*
-		SELECT @PersonId = PersonId 
-		  FROM MPerson
-		 WHERE UPPER(LTRIM(RTRIM(FirstName))) = UPPER(LTRIM(RTRIM(@FirstName)))
-           AND UPPER(LTRIM(RTRIM(LastName))) = UPPER(LTRIM(RTRIM(@LastName)))
-        */
         -- Call Save to get PartyId
         EXEC SaveMPerson @Prefix, @FirstName, @LastName
                        , NULL -- DOB
