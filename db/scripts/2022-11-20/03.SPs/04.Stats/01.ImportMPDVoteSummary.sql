@@ -12,8 +12,34 @@ GO
 --	- Stored Procedure Created.
 --
 -- [== Example ==]
---
--- =============================================
+-- 
+-- DECLARE @errNum int
+-- DECLARE @errMsg nvarchar(max)
+-- DECLARE @ProvinceName nvarchar(200)
+-- DECLARE @PollingUnitNo int
+-- DECLARE @CandidateNo int
+-- DECLARE @PartyName nvarchar(200)
+-- DECLARE @FullName nvarchar(max)
+-- DECLARE @VoteCount int
+-- DECLARE @RevoteNo int
+-- 
+-- SET @ProvinceName = N'เชียงใหม่'
+-- SET @PollingUnitNo = 1
+-- SET @CandidateNo = 6
+-- SET @PartyName = N'เพื่อไทย'
+-- SET @FullName = N'นางสาว ทัศนีย์ บูรณุปกรณ์'
+-- SET @VoteCount = 46034
+-- SET @RevoteNo = 0
+-- 
+-- EXEC ImportMPDVoteSummary 2562
+--                         , @ProvinceName, @PollingUnitNo
+-- 						   , @CandidateNo
+-- 						   , @PartyName, @FullName
+-- 						   , @VoteCount, @RevoteNo
+-- 						   , @errNum out, @errMsg out
+-- SELECT @errNum as ErrNum, @errMsg as ErrMsg
+-- 
+-- -- =============================================
 CREATE PROCEDURE [dbo].[ImportMPDVoteSummary] (
   @ThaiYear int    
 , @ProvinceNameTH nvarchar(200)

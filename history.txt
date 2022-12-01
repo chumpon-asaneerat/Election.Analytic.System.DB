@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #112
+  - Update SP ImportMPDVoteSummary #2
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #111
   - Update SP SaveMPerson
   - Update SP ImportMPDVoteSummary
