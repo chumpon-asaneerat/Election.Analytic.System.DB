@@ -29,9 +29,21 @@ CREATE PROCEDURE [dbo].[DeleteMPerson] (
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
+DECLARE @cntMPD int
+DECLARE @cntMPDC int
 	BEGIN TRY
         IF (@PersonId IS NOT NULL)
         BEGIN
+            SELECT @cntMPD = COUNT(*) FROM MPDVoteSummary WHERE PersonId = @PersonId
+            SELECT @cntMPDC = COUNT(*) FROM MPDC WHERE PersonId = @PersonId
+
+            IF (@cntMPD > 0 OR @cntMPDC > 0)
+            BEGIN
+		        SET @errNum = 201;
+		        SET @errMsg = N'Cannot delete data that in used in another table(s).';
+                RETURN
+            END
+
             DELETE 
               FROM MPerson
              WHERE PersonId = @PersonId

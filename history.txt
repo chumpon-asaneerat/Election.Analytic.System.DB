@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #113
+  - Update SP DeleteMPerson
+    - Check cannot delete if data is reference in another table(s)
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #112
   - Update SP ImportMPDVoteSummary #2
 
