@@ -29,20 +29,22 @@ CREATE PROCEDURE [dbo].[DeleteMParty] (
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
-DECLARE @cntMPD int
-DECLARE @cntMPDC int
+DECLARE @cnt int
 	BEGIN TRY
         IF (@PartyId IS NOT NULL)
         BEGIN
-            SELECT @cntMPD = COUNT(*) FROM MPDVoteSummary WHERE PartyId = @PartyId
-            SELECT @cntMPDC = COUNT(*) FROM MPDC WHERE PartyId = @PartyId
+            SELECT @cnt = dbo.CheckPartyIdReferences(@PartyId)
 
-            IF (@cntMPD > 0 OR @cntMPDC > 0)
+            IF (@cnt > 0)
             BEGIN
-                DELETE 
-                FROM MParty
-                WHERE PartyId = @PartyId
+		        SET @errNum = 201;
+		        SET @errMsg = N'Cannot delete data that in used in another table(s).';
+                RETURN
             END
+
+            DELETE 
+            FROM MParty
+            WHERE PartyId = @PartyId
         END
 
 		-- Update Error Status/Message

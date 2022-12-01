@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #115
+  - Update SP DeleteMParty #1
+  - Update SP DeleteMPerson #1
+  - Update SP SaveMPerson #2
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #114
   - Add Function CheckPartyIdReferences
   - Add Function CheckPersonIdReferences

@@ -74,10 +74,10 @@ DECLARE @matchId int
                SET Prefix = LTRIM(RTRIM(COALESCE(@Prefix, Prefix)))
                  , FirstName = LTRIM(RTRIM(COALESCE(@FirstName, FirstName)))
                  , LastName = LTRIM(RTRIM(COALESCE(@LastName, LastName)))
-                 , DOB = @DOB
-                 , GenderId = @GenderId
-                 , EducationId = @EducationId
-                 , OccupationId = @OccupationId
+                 , DOB = COALESCE(@DOB, DOB)
+                 , GenderId = COALESCE(@GenderId, GenderId)
+                 , EducationId = COALESCE(@EducationId, EducationId)
+                 , OccupationId = COALESCE(@OccupationId, OccupationId)
                  , [Remark] = LTRIM(RTRIM(COALESCE(@Remark, Remark)))
              WHERE PersonId = @PersonId;
         END
