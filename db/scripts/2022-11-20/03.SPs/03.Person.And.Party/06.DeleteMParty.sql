@@ -29,12 +29,20 @@ CREATE PROCEDURE [dbo].[DeleteMParty] (
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
+DECLARE @cntMPD int
+DECLARE @cntMPDC int
 	BEGIN TRY
         IF (@PartyId IS NOT NULL)
         BEGIN
-            DELETE 
-              FROM MParty
-             WHERE PartyId = @PartyId
+            SELECT @cntMPD = COUNT(*) FROM MPDVoteSummary WHERE PartyId = @PartyId
+            SELECT @cntMPDC = COUNT(*) FROM MPDC WHERE PartyId = @PartyId
+
+            IF (@cntMPD > 0 OR @cntMPDC > 0)
+            BEGIN
+                DELETE 
+                FROM MParty
+                WHERE PartyId = @PartyId
+            END
         END
 
 		-- Update Error Status/Message
