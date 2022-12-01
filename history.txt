@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #111
+  - Update SP SaveMPerson
+  - Update SP ImportMPDVoteSummary
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #110
   - Update View MPDCView #1
 

@@ -71,14 +71,14 @@ DECLARE @matchId int
         ELSE
         BEGIN
             UPDATE MPerson
-               SET Prefix = LTRIM(RTRIM(@Prefix))
-                 , FirstName = LTRIM(RTRIM(@FirstName))
-                 , LastName = LTRIM(RTRIM(@LastName))
+               SET Prefix = LTRIM(RTRIM(COALESCE(@Prefix, Prefix)))
+                 , FirstName = LTRIM(RTRIM(COALESCE(@FirstName, FirstName)))
+                 , LastName = LTRIM(RTRIM(COALESCE(@LastName, LastName)))
                  , DOB = @DOB
                  , GenderId = @GenderId
                  , EducationId = @EducationId
                  , OccupationId = @OccupationId
-                 , [Remark] = LTRIM(RTRIM(@Remark))
+                 , [Remark] = LTRIM(RTRIM(COALESCE(@Remark, Remark)))
              WHERE PersonId = @PersonId;
         END
 

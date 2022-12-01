@@ -28,6 +28,7 @@ CREATE PROCEDURE [dbo].[ImportMPDVoteSummary] (
 AS
 BEGIN
 DECLARE @ADM1Code nvarchar(20)
+DECLARE @GenderId int
 DECLARE @PartyId int
 DECLARE @PersonId int
 DECLARE @Prefix nvarchar(MAX) = null
@@ -52,9 +53,18 @@ DECLARE @LastName nvarchar(MAX) = null
 		  FROM MProvince
 		 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
 
+        /*
 		SELECT @PartyId = PartyId 
 		  FROM MParty
 		 WHERE UPPER(LTRIM(RTRIM(PartyName))) = UPPER(LTRIM(RTRIM(@PartyName)))
+        */
+        -- Call Save to get PartyId
+        EXEC SaveMParty @PartyName, @PartyId out, @errNum out, @errMsg out
+
+        IF (@errNum <> 0)
+        BEGIN
+            RETURN
+        END
 
 		IF (@ADM1Code IS NULL OR @PartyId IS NULL)
 		BEGIN
@@ -72,15 +82,31 @@ DECLARE @LastName nvarchar(MAX) = null
 			RETURN
 		END
 
+        /*
 		SELECT @PersonId = PersonId 
 		  FROM MPerson
 		 WHERE UPPER(LTRIM(RTRIM(FirstName))) = UPPER(LTRIM(RTRIM(@FirstName)))
            AND UPPER(LTRIM(RTRIM(LastName))) = UPPER(LTRIM(RTRIM(@LastName)))
+        */
+        -- Call Save to get PartyId
+        EXEC SaveMPerson @Prefix, @FirstName, @LastName
+                       , NULL -- DOB
+                       , @GenderId -- GenderId
+                       , NULL -- EducationId
+                       , NULL -- OccupationId
+                       , NULL -- Remark
+                       , @PersonId out -- PersonId
+                       , @errNum out, @errMsg out
+
+        IF (@errNum <> 0)
+        BEGIN
+            RETURN
+        END
 
 		IF (@PersonId IS NULL)
 		BEGIN
 			SET @errNum = 103;
-			SET @errMsg = 'Cannot PersonId.';
+			SET @errMsg = 'Cannot find PersonId.';
 			RETURN
 		END
 
