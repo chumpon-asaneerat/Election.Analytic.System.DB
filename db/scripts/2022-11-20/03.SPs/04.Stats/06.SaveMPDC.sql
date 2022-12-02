@@ -23,7 +23,7 @@ GO
 -- [== Example ==]
 --
 -- =============================================
-CREATE PROCEDURE [dbo].[SaveMPDC] (
+ALTER PROCEDURE [dbo].[SaveMPDC] (
   @ThaiYear int    
 , @ADM1Code nvarchar(20)
 , @PollingUnitNo int
@@ -58,11 +58,22 @@ DECLARE @iCnt int
 			SET @errMsg = 'Some parameter(s) is null.';
 			RETURN
 		END
-		-- FIND PersonId
-		SELECT @PersonId = PersonId
-		  FROM MPerson
-		 WHERE UPPER(LTRIM(RTRIM(FirstName))) = UPPER(LTRIM(RTRIM(@FirstName)))
-		   AND UPPER(LTRIM(RTRIM(LastName))) = UPPER(LTRIM(RTRIM(@LastName)))
+
+        -- Call Save to get PersonId
+        EXEC SaveMPerson @Prefix, @FirstName, @LastName
+                       , NULL -- DOB
+                       , NULL -- GenderId
+                       , NULL -- EducationId
+                       , NULL -- OccupationId
+                       , NULL -- Remark
+                       , @PersonId out -- PersonId
+                       , @errNum out, @errMsg out
+
+        IF (@errNum <> 0)
+        BEGIN
+            RETURN
+        END
+
 		IF (@PersonId IS NULL)
 		BEGIN
 			SET @errNum = 101;
@@ -74,75 +85,75 @@ DECLARE @iCnt int
 		    (@PollingUnitNoOri IS NULL OR @PollingUnitNoOri <= 0) AND
 			(@CandidateNoOri IS NULL OR @CandidateNoOri <= 0))
 		BEGIN
-			-- NO PREVIOUS DATA
-			IF (NOT EXISTS 
-				(
-					SELECT * 
-					  FROM MPDC
-					 WHERE ThaiYear = @ThaiYear
-                       AND LTRIM(RTRIM(ADM1Code)) = LTRIM(RTRIM(@ADM1Code))
-					   AND PollingUnitNo = @PollingUnitNo
-					   AND PersonId = @PersonId
-				)
-			   )
-			BEGIN
-                -- NO PREVIOUS DATA AND PersonId not exists in Province, PollingUnitNo
-				INSERT INTO MPDC
-				(
-					  ThaiYear
-                    , ADM1Code
-					, PollingUnitNo
-					, CandidateNo 
-					, PersonId
-					, PrevPartyId
-					, SubGroup
-					, [Remark]
-					, EducationId
-				)
-				VALUES
-				(
-					  @ThaiYear
-					, @ADM1Code
-					, @PollingUnitNo
-					, @CandidateNo
-					, @PersonId
-					, @PrevPartyId
-					, @SubGroup
-					, @Remark
-					, @EducationId
-				);
-
-                SELECT @iCnt = COUNT(CandidateNo) 
-                  FROM MPDC
-                 WHERE ThaiYear = @ThaiYear
+			-- NO PREVIOUS DATA (SAME PERSON)
+			IF (EXISTS (
+				SELECT * 
+				  FROM MPDC
+				 WHERE ThaiYear = @ThaiYear
                    AND LTRIM(RTRIM(ADM1Code)) = LTRIM(RTRIM(@ADM1Code))
-                   AND PollingUnitNo = @PollingUnitNo
-
-				IF (@iCnt > @CandidateNo)
-			    BEGIN
-                    -- REORDER PREVIOUS PROVINCE + POLLING UNIT
-					SET @SkipNo = NULL
-                    EXEC ReorderMPDC @ThaiYear, @ADM1CodeOri, @PollingUnitNoOri, @SkipNo
-                    -- REORDER NEW PROVINCE + POLLING UNIT WITH ALLOCATE SLOT FOR NEW CANDIDATE NO
-					SET @SkipNo = 0
-                    EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, @SkipNo
-				END
-			END
-			ELSE
+				   AND PollingUnitNo = @PollingUnitNo
+				   AND PersonId = @PersonId
+				))
 			BEGIN
-			    -- NO PREVIOUS DATA BUT PersonId is already exists in Province, PollingUnitNo
-				UPDATE MPDC
-				   SET PrevPartyId = COALESCE(@PrevPartyId, PrevPartyId)
-					 , SubGroup = COALESCE(@SubGroup, SubGroup)
-					 , [Remark] = COALESCE(@Remark, [Remark])
-					 , EducationId = COALESCE(@EducationId, EducationId)
+				-- CANDIDATE EXIST SO FIRST DELETE SAME PROVINCE + POLLING UNIT
+				DELETE FROM MPDC 
 				 WHERE ThaiYear = @ThaiYear
                    AND ADM1Code = @ADM1Code
 				   AND PollingUnitNo = @PollingUnitNo
-				   AND CandidateNo = @CandidateNo
 				   AND PersonId = @PersonId
 			END
+
+			IF (@CandidateNo = 0) SET @CandidateNo = 1
+
+			IF (EXISTS(
+				SELECT CandidateNo 
+				  FROM MPDC
+				 WHERE ThaiYear = @ThaiYear
+				   AND ADM1Code = @ADM1Code
+				   AND PollingUnitNo = @PollingUnitNo
+				   AND CandidateNo = @CandidateNo
+			   ))
+			BEGIN
+				-- SLOT IN USED REORDER ALL IN SAME PROVINCE + POLLING UNIT AND MAKE EMPTY SLOT
+				UPDATE MPDC
+				   SET CandidateNo = CandidateNo + 1
+				 WHERE ThaiYear = @ThaiYear
+				   AND ADM1Code = @ADM1Code
+				   AND PollingUnitNo = @PollingUnitNo
+				   AND CandidateNo >= @CandidateNo
+				/*
+				SET @SkipNo = @CandidateNo
+				EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, @SkipNo
+				*/
+			END
+
+			-- INSERT PERSON ON PROVINCE + POLLING UNIT
+			INSERT INTO MPDC
+			(
+				  ThaiYear
+                , ADM1Code
+				, PollingUnitNo
+				, CandidateNo 
+				, PersonId
+				, PrevPartyId
+				, SubGroup
+				, [Remark]
+				, EducationId
+			)
+			VALUES
+			(
+				  @ThaiYear
+				, @ADM1Code
+				, @PollingUnitNo
+				, @CandidateNo
+				, @PersonId
+				, @PrevPartyId
+				, @SubGroup
+				, @Remark
+				, @EducationId
+			);
 		END
+		/*
 		ELSE
 		BEGIN
 			-- HAS PREVIOUS DATA
@@ -162,9 +173,6 @@ DECLARE @iCnt int
 				-- REORDER PREVIOUS PROVINCE + POLLING UNIT
 				SET @SkipNo = NULL
 				EXEC ReorderMPDC @ThaiYear, @ADM1CodeOri, @PollingUnitNoOri, @SkipNo
-				-- REORDER NEW PROVINCE + POLLING UNIT WITH ALLOCATE SLOT FOR NEW CANDIDATE NO
-				SET @SkipNo = NULL
-				EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, @CandidateNo, @SkipNo
 
 				-- INSERT DATA TO NEW PROVINCE + POLLING UNIT
 				INSERT INTO MPDC
@@ -191,15 +199,21 @@ DECLARE @iCnt int
 					, @Remark
 					, @EducationId
 				);
+
+				-- REORDER NEW PROVINCE + POLLING UNIT WITH ALLOCATE SLOT FOR NEW CANDIDATE NO
+				SET @SkipNo = NULL
+				EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, @CandidateNo, @SkipNo
 			END
 			ELSE
 			BEGIN
 				-- MISSING REQUIRED DATA
-				SET @errNum = 200;
-				SET @errMsg = 'Some previous parameter(s) is null.';
-				RETURN
+				PRINT 'MISSING REQUIRED DATA'
+				--SET @errNum = 200;
+				--SET @errMsg = 'Some previous parameter(s) is null.';
+				--RETURN
 			END
 		END
+		*/
 
 		-- Update Error Status/Message
 		SET @errNum = 0;

@@ -51,7 +51,7 @@ BEGIN
 		DECLARE @iCnt int = 1
 		DECLARE @CandidateNo int
 		DECLARE @PersonId int
-		DECLARE MPDC2566_CURSOR CURSOR 
+		DECLARE MPDC_CURSOR CURSOR 
 			LOCAL
 			FORWARD_ONLY 
 			READ_ONLY 
@@ -59,7 +59,7 @@ BEGIN
 		FOR  
 			SELECT CandidateNo
 			     , PersonId
-			  FROM #MPDC2566DATA
+			  FROM #MPDCDATA
 		  ORDER BY CandidateNo;
 
 		OPEN MPDC_CURSOR  
