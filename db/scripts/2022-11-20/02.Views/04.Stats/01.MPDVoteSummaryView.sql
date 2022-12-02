@@ -5,9 +5,26 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+/****** Object:  View [dbo].[MPD2562VoteSummaryView]    Script Date: 12/2/2022 6:00:02 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/*********** Script Update Date: 2022-10-09  ***********/
 CREATE VIEW [dbo].[MPDVoteSummaryView]
 AS
-	SELECT A.ThaiYear
+    SELECT ROW_NUMBER() OVER
+		   (
+			   ORDER BY ThaiYear, ProvinceNameTH, PollingUnitNo, VoteCount DESC
+		   ) AS RowNo
+		 , ROW_NUMBER() OVER
+		   (
+		       PARTITION BY ThaiYear, ProvinceNameTH, PollingUnitNo
+			   ORDER BY ThaiYear, ProvinceNameTH, PollingUnitNo, VoteCount DESC
+		   ) AS RankNo
+         , A.ThaiYear
          , A.ADM1Code
          , B.ProvinceId
          , B.ProvinceNameTH

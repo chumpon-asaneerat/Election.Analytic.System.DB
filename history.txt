@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #128
+  - Update View MPDVoteSummaryView
+  - Add SP GetMPDVoteSummaries
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #127
   - ALTER TABLE REMOVE UNIQUE INDEX for
     - MDistrict
