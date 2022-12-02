@@ -19,7 +19,6 @@ CREATE PROCEDURE [dbo].[DeleteMPDC] (
 , @ADM1Code nvarchar(20)
 , @PollingUnitNo int
 , @CandidateNo int
-, @PersonId int
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
@@ -29,8 +28,7 @@ DECLARE @iCnt int
 		IF (@ThaiYear IS NULL
          OR @ADM1Code IS NULL 
 		 OR @PollingUnitNo IS NULL
-		 OR @CandidateNo IS NULL
-		 OR @PersonId IS NULL)
+		 OR @CandidateNo IS NULL)
 		BEGIN
 			SET @errNum = 100;
 			SET @errMsg = 'Some parameter(s) is null.';
@@ -43,25 +41,13 @@ DECLARE @iCnt int
            AND ADM1Code = @ADM1Code
 		   AND PollingUnitNo = @PollingUnitNo
 		   AND CandidateNo = @CandidateNo
-		   AND PersonId = @PersonId
 
-        -- CHECKS AFTER DELETE
-        SELECT @iCnt = COUNT(CandidateNo) 
-          FROM MPDC
-         WHERE ThaiYear = @ThaiYear
+		UPDATE MPDC
+		  SET CandidateNo = CandidateNo - 1
+		 WHERE ThaiYear = @ThaiYear
            AND ADM1Code = @ADM1Code
-           AND PollingUnitNo = @PollingUnitNo
-
-		   	-- REORDER IF STILL HAS DATA NEED TO REORDER ONCE
-			IF (@iCnt > 0)
-			BEGIN
-				-- REORDER NEW PROVINCE + POLLING UNIT WITH ALLOCATE SLOT 
-                -- FOR NEW CANDIDATE NO (CandidateNo = 0)
-				EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, 0
-			END
-
-        -- REORDER ALL (SORT ALL WITHOUT EXCEPTION)
-		EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, NULL
+		   AND PollingUnitNo = @PollingUnitNo
+		   AND CandidateNo >= @CandidateNo
 
 		-- Update Error Status/Message
 		SET @errNum = 0;

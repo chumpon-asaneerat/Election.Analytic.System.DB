@@ -23,7 +23,7 @@ GO
 -- [== Example ==]
 --
 -- =============================================
-ALTER PROCEDURE [dbo].[SaveMPDC] (
+CREATE PROCEDURE [dbo].[SaveMPDC] (
   @ThaiYear int    
 , @ADM1Code nvarchar(20)
 , @PollingUnitNo int
@@ -45,6 +45,7 @@ BEGIN
 DECLARE @PersonId int
 DECLARE @SkipNo int
 DECLARE @iCnt int
+DECLARE @iMaxCandidateNo int
 	BEGIN TRY
 		IF (@ThaiYear IS NULL 
 		 OR @ADM1Code IS NULL 
@@ -121,10 +122,6 @@ DECLARE @iCnt int
 				   AND ADM1Code = @ADM1Code
 				   AND PollingUnitNo = @PollingUnitNo
 				   AND CandidateNo >= @CandidateNo
-				/*
-				SET @SkipNo = @CandidateNo
-				EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, @SkipNo
-				*/
 			END
 
 			-- INSERT PERSON ON PROVINCE + POLLING UNIT
@@ -153,7 +150,6 @@ DECLARE @iCnt int
 				, @EducationId
 			);
 		END
-		/*
 		ELSE
 		BEGIN
 			-- HAS PREVIOUS DATA
@@ -171,8 +167,29 @@ DECLARE @iCnt int
 				   AND PersonId = @PersonId
 
 				-- REORDER PREVIOUS PROVINCE + POLLING UNIT
-				SET @SkipNo = NULL
-				EXEC ReorderMPDC @ThaiYear, @ADM1CodeOri, @PollingUnitNoOri, @SkipNo
+				UPDATE MPDC
+				   SET CandidateNo = CandidateNo - 1
+				 WHERE ThaiYear = @ThaiYear
+				   AND ADM1Code = @ADM1CodeOri
+				   AND PollingUnitNo = @PollingUnitNoOri
+				   AND CandidateNo >= @CandidateNoOri
+
+				-- FIND MAX CandidateNo THAT NEED TO REARRANGE ORDER
+				SELECT @iMaxCandidateNo = MIN(CandidateNo)
+				  FROM MPDC
+				 WHERE ThaiYear = @ThaiYear
+				   AND ADM1Code = @ADM1CodeOri
+				   AND PollingUnitNo = @PollingUnitNoOri
+				   AND CandidateNo > @CandidateNoOri
+
+				-- REORDER NEW PROVINCE + POLLING UNIT TO MAKE EMPTY SLOT
+				UPDATE MPDC
+				   SET CandidateNo = CandidateNo + 1
+				 WHERE ThaiYear = @ThaiYear
+				   AND ADM1Code = @ADM1Code
+				   AND PollingUnitNo = @PollingUnitNo
+				   AND CandidateNo >= @CandidateNo
+				   AND CandidateNo < @iMaxCandidateNo
 
 				-- INSERT DATA TO NEW PROVINCE + POLLING UNIT
 				INSERT INTO MPDC
@@ -199,10 +216,6 @@ DECLARE @iCnt int
 					, @Remark
 					, @EducationId
 				);
-
-				-- REORDER NEW PROVINCE + POLLING UNIT WITH ALLOCATE SLOT FOR NEW CANDIDATE NO
-				SET @SkipNo = NULL
-				EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, @CandidateNo, @SkipNo
 			END
 			ELSE
 			BEGIN
@@ -213,7 +226,6 @@ DECLARE @iCnt int
 				--RETURN
 			END
 		END
-		*/
 
 		-- Update Error Status/Message
 		SET @errNum = 0;
