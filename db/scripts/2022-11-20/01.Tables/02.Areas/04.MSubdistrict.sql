@@ -23,10 +23,10 @@ GO
 CREATE INDEX IX_MSubdistrict_ADM2Code ON MSubdistrict(ADM2Code ASC)
 GO
 
-CREATE UNIQUE INDEX IX_MSubdistrict_SubdistrictNameTH ON MSubdistrict(SubdistrictNameTH ASC)
+CREATE INDEX IX_MSubdistrict_SubdistrictNameTH ON MSubdistrict(SubdistrictNameTH ASC)
 GO
 
-CREATE UNIQUE INDEX IX_MSubdistrict_SubdistrictNameEN ON MSubdistrict(SubdistrictNameEN ASC)
+CREATE INDEX IX_MSubdistrict_SubdistrictNameEN ON MSubdistrict(SubdistrictNameEN ASC)
 GO
 
 CREATE INDEX IX_MSubdistrict_RegionId ON MSubdistrict(RegionId ASC)

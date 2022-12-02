@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #127
+  - ALTER TABLE REMOVE UNIQUE INDEX for
+    - MDistrict
+    - MSubdistrict
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #126
   - Add SP GetMADMPaks
 
