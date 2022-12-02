@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #119
+  - Add SP ReorderMPDC
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #118
   - Update SP ImportMPDC
   - Update SP ImportMPDVoteSummary (fixed misspell code comment)
