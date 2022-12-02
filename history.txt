@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #129
+  - Update SP GetMProvinces
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #128
   - Update View MPDVoteSummaryView
   - Add SP GetMPDVoteSummaries
