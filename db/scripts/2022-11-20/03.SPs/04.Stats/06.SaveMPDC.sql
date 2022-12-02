@@ -28,7 +28,9 @@ CREATE PROCEDURE [dbo].[SaveMPDC] (
 , @ADM1Code nvarchar(20)
 , @PollingUnitNo int
 , @CandidateNo int
-, @PersonId int
+, @Prefix nvarchar(100)
+, @FirstName nvarchar(200)
+, @LastName nvarchar(200)
 , @PrevPartyId int = NULL
 , @Remark nvarchar(max) = NULL
 , @SubGroup nvarchar(max) = NULL
@@ -40,6 +42,8 @@ CREATE PROCEDURE [dbo].[SaveMPDC] (
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
 BEGIN
+DECLARE @PersonId int
+DECLARE @SkipNo int
 DECLARE @iCnt int
 	BEGIN TRY
 		IF (@ThaiYear IS NULL 
@@ -47,10 +51,22 @@ DECLARE @iCnt int
 		 OR @PollingUnitNo IS NULL 
 		 OR @PollingUnitNo < 1 
 		 OR @CandidateNo IS NULL
-		 OR @PersonId IS NULL)
+		 OR @FirstName IS NULL
+		 OR @LastName IS NULL)
 		BEGIN
 			SET @errNum = 100;
 			SET @errMsg = 'Some parameter(s) is null.';
+			RETURN
+		END
+		-- FIND PersonId
+		SELECT @PersonId = PersonId
+		  FROM MPerson
+		 WHERE UPPER(LTRIM(RTRIM(FirstName))) = UPPER(LTRIM(RTRIM(@FirstName)))
+		   AND UPPER(LTRIM(RTRIM(LastName))) = UPPER(LTRIM(RTRIM(@LastName)))
+		IF (@PersonId IS NULL)
+		BEGIN
+			SET @errNum = 101;
+			SET @errMsg = 'Cannot find PersonId from firstname and lastname.';
 			RETURN
 		END
 
@@ -105,9 +121,11 @@ DECLARE @iCnt int
 				IF (@iCnt > @CandidateNo)
 			    BEGIN
                     -- REORDER PREVIOUS PROVINCE + POLLING UNIT
-                    EXEC ReorderMPDC @ThaiYear, @ADM1CodeOri, @PollingUnitNoOri
+					SET @SkipNo = NULL
+                    EXEC ReorderMPDC @ThaiYear, @ADM1CodeOri, @PollingUnitNoOri, @SkipNo
                     -- REORDER NEW PROVINCE + POLLING UNIT WITH ALLOCATE SLOT FOR NEW CANDIDATE NO
-                    EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, 0
+					SET @SkipNo = 0
+                    EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, @SkipNo
 				END
 			END
 			ELSE
@@ -142,9 +160,11 @@ DECLARE @iCnt int
 				   AND PersonId = @PersonId
 
 				-- REORDER PREVIOUS PROVINCE + POLLING UNIT
-				EXEC ReorderMPDC @ThaiYear, @ADM1CodeOri, @PollingUnitNoOri
+				SET @SkipNo = NULL
+				EXEC ReorderMPDC @ThaiYear, @ADM1CodeOri, @PollingUnitNoOri, @SkipNo
 				-- REORDER NEW PROVINCE + POLLING UNIT WITH ALLOCATE SLOT FOR NEW CANDIDATE NO
-				EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, @CandidateNo
+				SET @SkipNo = NULL
+				EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, @CandidateNo, @SkipNo
 
 				-- INSERT DATA TO NEW PROVINCE + POLLING UNIT
 				INSERT INTO MPDC
