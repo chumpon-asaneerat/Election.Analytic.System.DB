@@ -30,7 +30,8 @@ BEGIN
 	)
 
 	BEGIN TRY
-		IF (@ADM1Code IS NULL 
+		IF (@ThaiYear IS NULL
+         OR @ADM1Code IS NULL 
 		 OR @PollingUnitNo IS NULL)
 		BEGIN
 			SET @errNum = 100;
