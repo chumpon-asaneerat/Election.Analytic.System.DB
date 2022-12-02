@@ -15,15 +15,13 @@ GO
 --
 -- [== Example ==]
 --
--- EXEC GetMDistricts NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL	-- Gets all
--- EXEC GetMDistricts NULL, NULL, NULL, NULL, NULL, N'1', NULL, NULL	-- Search all that RegionName contains '1'
--- EXEC GetMDistricts NULL, NULL, NULL, N'ก', NULL, NULL, N'กลาง', NULL	-- Search all that ProvinceNameTH contains 'ก' GeoGroup contains 'กลาง'
+-- EXEC GetMDistricts NULL, NULL, NULL
 -- =============================================
 CREATE PROCEDURE [dbo].[GetMDistricts]
 (
-  @ADM2Code nvarchar(20) = NULL
+  @RegionId nvarchar(20) = NULL
 , @ADM1Code nvarchar(20) = NULL
-, @RegionId nvarchar(20) = NULL
+, @ADM2Code nvarchar(20) = NULL
 )
 AS
 BEGIN
