@@ -19,9 +19,9 @@ GO
 CREATE PROCEDURE [dbo].[GetMADMPaks]
 (
   @RegionId nvarchar(20) = NULL
-, @ProvinceNameTH nvarchar(200) = NULL
-, @DistrictNameTH nvarchar(200) = NULL
-, @SubdistrictNameTH nvarchar(200) = NULL
+, @ADM1Code nvarchar(20) = NULL
+, @ADM2Code nvarchar(20) = NULL
+, @ADM3Code nvarchar(20) = NULL
 )
 AS
 BEGIN
@@ -43,10 +43,12 @@ BEGIN
 		 , GeoSubGroup
 		 , SubdistrictAreaM2
 	  FROM MSubdistrictView
-	 WHERE UPPER(LTRIM(RTRIM(SubdistrictNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@SubdistrictNameTH, SubdistrictNameTH)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(DistrictNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@DistrictNameTH, DistrictNameTH)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
+	 WHERE UPPER(LTRIM(RTRIM(ADM3Code))) = UPPER(LTRIM(RTRIM(COALESCE(@ADM3Code, ADM3Code))))
+	   AND UPPER(LTRIM(RTRIM(ADM2Code))) = UPPER(LTRIM(RTRIM(COALESCE(@ADM2Code, ADM2Code))))
+	   AND UPPER(LTRIM(RTRIM(ADM1Code))) = UPPER(LTRIM(RTRIM(COALESCE(@ADM1Code, ADM1Code))))
+	   AND (   UPPER(LTRIM(RTRIM(RegionId))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId)))) + '%'
+            OR (RegionId IS NULL AND @RegionId IS NULL)
+           )
 	 ORDER BY ProvinceNameTH
 
 END

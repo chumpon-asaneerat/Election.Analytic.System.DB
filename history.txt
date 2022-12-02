@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #133
+  - Update SP GetMADMPaks
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #132
   - Update SP GetMProvinces #2
   - Update SP GetMDistricts #3
