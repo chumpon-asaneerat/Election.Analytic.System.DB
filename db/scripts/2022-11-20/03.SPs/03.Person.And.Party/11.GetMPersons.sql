@@ -41,7 +41,7 @@ BEGIN
 		SELECT @totalRecords = COUNT(*) 
 		  FROM MPerson
 		 WHERE UPPER(RTRIM(LTRIM(Prefix))) LIKE '%' + COALESCE(@Prefix, Prefix) + '%'
-           AND UPPER(RTRIM(LTRIM(FirstName))) LIKE '%' + COALESCE(@FirstName, LastName) + '%'
+           AND UPPER(RTRIM(LTRIM(FirstName))) LIKE '%' + COALESCE(@FirstName, FirstName) + '%'
            AND UPPER(RTRIM(LTRIM(LastName))) LIKE '%' + COALESCE(@LastName, LastName) + '%'
 
 		SELECT @maxPage = 
