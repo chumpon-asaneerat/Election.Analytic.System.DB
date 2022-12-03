@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #136
+  - Update GetMPDVoteSummaries
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #135
   - Update SP GetMParties #2
   - Update SP DeleteMParty

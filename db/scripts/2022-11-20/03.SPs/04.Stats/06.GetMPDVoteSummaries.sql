@@ -32,7 +32,35 @@ BEGIN
     AS
     -- Define the Vote Summary by Province and PollingUnit query.
     (
-        SELECT * 
+        SELECT RowNo
+		     , RankNo
+			 , ThaiYear
+			 , ADM1Code 
+			 , PollingUnitNo
+			 , CandidateNo
+			 , RevoteNo
+			 , VoteCount
+			 , PartyId
+			 , PartyName
+			 --, PartyImageData
+			 , PersonId
+			 , Prefix
+			 , FirstName
+			 , LastName
+			 , FullName
+			 --, PersonImageData
+			 , DOB
+			 , GenderId
+			 , EducationId
+			 , OccupationId
+			 , PersonRemark
+			 , ProvinceId 
+			 , ProvinceNameTH
+			 , ProvinceNameEN 
+			 , RegionId
+			 , RegionName
+			 , GeoGroup
+			 , GeoSubgroup
           FROM MPDVoteSummaryView
          WHERE ThaiYear = @ThaiYear
 		   AND UPPER(LTRIM(RTRIM(RegionId))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId)))) + '%'
