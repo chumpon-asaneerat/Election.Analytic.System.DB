@@ -24,7 +24,7 @@ GO
 -- =============================================
 CREATE PROCEDURE [dbo].[GetMParties]
 (
-  @PartyName nvarchar(100) = null
+  @PartyName nvarchar(200) = null
 , @pageNum as int = 1 out
 , @rowsPerPage as int = 10 out
 , @totalRecords as int = 0 out
