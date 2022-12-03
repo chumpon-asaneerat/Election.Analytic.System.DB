@@ -43,8 +43,8 @@ DECLARE @cnt int
             END
 
             DELETE 
-            FROM MParty
-            WHERE PartyId = @PartyId
+              FROM MParty
+             WHERE PartyId = @PartyId
         END
 
 		-- Update Error Status/Message

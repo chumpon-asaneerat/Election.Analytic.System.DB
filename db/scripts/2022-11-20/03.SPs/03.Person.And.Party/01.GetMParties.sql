@@ -60,6 +60,7 @@ DECLARE @sPartyName nvarchar(100)
 		WITH SQLPaging AS
 		(
 			SELECT TOP(@rowsPerPage * @pageNum) ROW_NUMBER() OVER (ORDER BY PartyName) AS RowNo
+			     , PartyId
 			     , PartyName
 				 , [Data]
 			  FROM MParty
