@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[GetMPDStatVoterSummaries]    Script Date: 12/4/2022 7:46:53 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetMPDStatVoters]    Script Date: 12/4/2022 7:46:53 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6,7 +6,7 @@ GO
 
 -- =============================================
 -- Author: Chumpon Asaneerat
--- Description:	GetMPDStatVoterSummaries
+-- Description:	GetMPDStatVoters
 -- [== History ==]
 -- <2022-09-29> :
 --	- Stored Procedure Created.
@@ -14,14 +14,14 @@ GO
 -- [== Example ==]
 --
 -- =============================================
-CREATE PROCEDURE [dbo].[GetMPDStatVoterSummaries]
+CREATE PROCEDURE [dbo].[GetMPDStatVoters]
 (
   @ThaiYear int
 , @ProvinceNameTH nvarchar(100) = NULL
 )
 AS
 BEGIN
-    SELECT ThaiYear
+	SELECT ThaiYear
          , ADM1Code
          , ProvinceId
          , ProvinceNameTH
@@ -34,7 +34,11 @@ BEGIN
          , RightCount
          , ExerciseCount
          , InvalidCount
-         , NoVoteCount 
+         , NoVoteCount
+		 , FullName
+		 , PartyName
+		 , VoteCount
+		 , PollingUnitCount
       FROM MPDStatVoterView
      WHERE @ThaiYear = COALESCE(@ThaiYear, ThaiYear)
        AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH))))
