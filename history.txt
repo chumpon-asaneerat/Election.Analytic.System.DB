@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #139
+  - Update SP GetMPDStatVoterSummaries #2
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #138
   - Update SP GetMPDStatVoterSummaries
 
