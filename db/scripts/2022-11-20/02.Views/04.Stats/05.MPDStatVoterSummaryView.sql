@@ -7,54 +7,28 @@ GO
 
 CREATE VIEW [dbo].[MPDStatVoterSummaryView]
 AS
-	SELECT POL.ThaiYear
-		 , POL.ADM1Code
-		 , POL.PollingUnitNo
-         , POL.PollingUnitCount
-         , STA.ProvinceId
-         , STA.ProvinceNameTH
-         , STA.ProvinceNameEN
-         , STA.RegionId
-         , STA.RegionName
-         , STA.GeoGroup
-         , STA.GeoSubgroup
-		 , STA.RightCount
-		 , STA.ExerciseCount
-		 , STA.InvalidCount
-		 , STA.NoVoteCount
-		 , MVS.PartyId
-		 , MVS.PartyName
-		 , MVS.PersonId
-		 , MVS.FullName
-		 , MVS.VoteCount
-	  FROM PollingUnit POL
-	  JOIN 
-		   MPDStatVoterView STA ON (    STA.ThaiYear = POL.ThaiYear 
-								AND STA.ADM1Code = POL.ADM1Code 
-								AND STA.PollingUnitNo = POL.PollingUnitNo)
-	  LEFT OUTER JOIN
-		   (
-			SELECT VSO.ThaiYear
-				 , VSO.ADM1Code
-				 , VSO.PollingUnitNo
-				 , VSO.CandidateNo
-				 , VSO.PartyId
-				 , VSO.PartyName
-				 , VSO.PersonId
-				 , VSO.FullName
-				 , VSO.VoteCount
-			  FROM MPDVoteSummaryView VSO
-			 WHERE VSO.VoteCount = 
-				   (
-					SELECT MAX(VS.VoteCount) AS VoteCount
-					  FROM MPDVoteSummary VS
-					 WHERE VS.ThaiYear = VSO.ThaiYear
-					   AND VS.ADM1Code = VSO.ADM1Code
-					   AND VS.PollingUnitNo = VSO.PollingUnitNo
-					 GROUP BY VS.ThaiYear, VS.ADM1Code, VS.PollingUnitNo
-				   )
-		   ) MVS ON (    MVS.ThaiYear = POL.ThaiYear 
-					 AND MVS.ADM1Code = POL.ADM1Code 
-					 AND MVS.PollingUnitNo = POL.PollingUnitNo)
+	SELECT A.ThaiYear
+		 , A.ADM1Code
+		 , B.ProvinceId
+		 , B.ProvinceNameTH
+		 , B.ProvinceNameEN
+		 , A.PollingUnitNo
+		 , D.PollingUnitCount
+		 , A.RightCount
+		 , A.ExerciseCount
+		 , A.InvalidCount
+		 , A.NoVoteCount
+		 , A.PartyId
+		 , A.PartyName
+		 , A.PersonId
+		 , C.Prefix
+		 , C.FirstName
+		 , C.LastName
+		 , A.FullName
+		 , A.VoteCount
+      FROM __MPDStatVoterSummaryView A
+	  LEFT OUTER JOIN MProvince B ON (A.ADM1Code = B.ADM1Code)
+	  LEFT OUTER JOIN MPerson C ON (A.PersonId = C.PersonId)
+	  LEFT OUTER JOIN PollingUnit D ON (A.ThaiYear = D.ThaiYear and A.ADM1Code = D.ADM1Code AND A.PollingUnitNo = D.PollingUnitNo)
 
 GO
