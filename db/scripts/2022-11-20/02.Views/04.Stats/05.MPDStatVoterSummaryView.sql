@@ -12,6 +12,10 @@ AS
 		 , B.ProvinceId
 		 , B.ProvinceNameTH
 		 , B.ProvinceNameEN
+         , B.RegionId
+         , B.RegionName
+         , B.GeoGroup
+         , B.GeoSubGroup
 		 , A.PollingUnitNo
 		 , D.PollingUnitCount
 		 , A.RightCount
@@ -27,7 +31,7 @@ AS
 		 , A.FullName
 		 , A.VoteCount
       FROM __MPDStatVoterSummaryView A
-	  LEFT OUTER JOIN MProvince B ON (A.ADM1Code = B.ADM1Code)
+	  LEFT OUTER JOIN MProvinceView B ON (A.ADM1Code = B.ADM1Code)
 	  LEFT OUTER JOIN MPerson C ON (A.PersonId = C.PersonId)
 	  LEFT OUTER JOIN PollingUnit D ON (A.ThaiYear = D.ThaiYear and A.ADM1Code = D.ADM1Code AND A.PollingUnitNo = D.PollingUnitNo)
 

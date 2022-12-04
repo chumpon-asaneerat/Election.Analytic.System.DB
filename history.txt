@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #146
+  - Update View MPDStatVoterSummaryView #4
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #145
   - Update View MPDStatVoterSummaryView #3
 
