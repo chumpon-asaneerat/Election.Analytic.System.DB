@@ -851,33 +851,6 @@ GO
 
 
 /*********** Script Update Date: 2022-11-20  ***********/
-/****** Object:  View [dbo].[PollingUnitView]    Script Date: 11/30/2022 12:35:43 AM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE VIEW PollingUnitView
-AS
-	SELECT A.ThaiYear
-         , A.ADM1Code
-	     , A.PollingUnitNo
-	     , A.PollingUnitCount
-	     , A.AreaRemark
-		 , B.RegionId
-		 , B.RegionName
-		 , B.GeoGroup
-		 , B.GeoSubGroup
-		 , B.ProvinceId
-		 , B.ProvinceNameEN
-		 , B.ProvinceNameTH
-	  FROM PollingUnit A LEFT OUTER JOIN MProvinceView B ON B.ADM1Code = A.ADM1Code
-
-GO
-
-
-/*********** Script Update Date: 2022-11-20  ***********/
 /****** Object:  View [dbo].[MProvinceView]    Script Date: 11/26/2022 2:48:37 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -966,6 +939,33 @@ AS
 		 , MProvince C LEFT OUTER JOIN MRegion B ON B.RegionId = C.RegionId
 	 WHERE A.ADM1Code = C.ADM1Code
 	   AND A.ADM2Code = D.ADM2Code
+
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+/****** Object:  View [dbo].[PollingUnitView]    Script Date: 11/30/2022 12:35:43 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW PollingUnitView
+AS
+	SELECT A.ThaiYear
+         , A.ADM1Code
+	     , A.PollingUnitNo
+	     , A.PollingUnitCount
+	     , A.AreaRemark
+		 , B.RegionId
+		 , B.RegionName
+		 , B.GeoGroup
+		 , B.GeoSubGroup
+		 , B.ProvinceId
+		 , B.ProvinceNameEN
+		 , B.ProvinceNameTH
+	  FROM PollingUnit A LEFT OUTER JOIN MProvinceView B ON B.ADM1Code = A.ADM1Code
 
 GO
 
@@ -1750,159 +1750,6 @@ BEGIN
 	SELECT *
 	  FROM MEducation
 	 WHERE Active = COALESCE(@active, Active)
-END
-
-GO
-
-
-/*********** Script Update Date: 2022-11-20  ***********/
-/****** Object:  StoredProcedure [dbo].[GetPollingUnits]    Script Date: 11/26/2022 3:06:52 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
--- =============================================
--- Author: Chumpon Asaneerat
--- Description:	GetPollingUnits
--- [== History ==]
--- <2022-09-11> :
---	- Stored Procedure Created.
---
--- [== Example ==]
---
--- =============================================
-CREATE PROCEDURE [dbo].[GetPollingUnits]
-(
-  @ThaiYear int = NULL
-, @ADM1Code nvarchar(20) = NULL
-, @ProvinceNameTH nvarchar(200) = NULL
-, @RegionId nvarchar(20) = NULL
-, @RegionName nvarchar(200) = NULL
-, @GeoGroup nvarchar(200) = NULL
-, @GeoSubGroup nvarchar(200) = NULL
-)
-AS
-BEGIN
-	SELECT ThaiYear
-         , ADM1Code
-	     , PollingUnitNo
-	     , PollingUnitCount
-	     , RegionId
-		 , RegionName
-		 , GeoGroup
-		 , GeoSubGroup
-         , ProvinceId
-	     , ProvinceNameTH
-	     , ProvinceNameEN
-         , AreaRemark
-	  FROM PollingUnitView
-	 WHERE ThaiYear = COALESCE(@ThaiYear, ThaiYear)
-       AND UPPER(LTRIM(RTRIM(ADM1Code))) = UPPER(LTRIM(RTRIM(COALESCE(@ADM1Code, ADM1Code))))
-	   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
-	   AND UPPER(LTRIM(RTRIM(RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, RegionName)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, GeoGroup)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, GeoSubGroup)))) + '%'
-	 ORDER BY ThaiYear, RegionId, RegionName, ProvinceNameTH
-
-END
-
-GO
-
-
-/*********** Script Update Date: 2022-11-20  ***********/
-/****** Object:  StoredProcedure [dbo].[ImportPollingUnit]    Script Date: 11/26/2022 3:17:28 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
--- =============================================
--- Author: Chumpon Asaneerat
--- Description:	ImportPollingUnit
--- [== History ==]
--- <2022-09-29> :
---	- Stored Procedure Created.
---
--- [== Example ==]
---
--- =============================================
-CREATE PROCEDURE [dbo].[ImportPollingUnit] (
-  @ThaiYear int    
-, @ProvinceNameTH nvarchar(200)
-, @PollingUnitNo int
-, @PollingUnitCount int = 0
-, @AreaRemark nvarchar(MAX) = null
-, @errNum as int = 0 out
-, @errMsg as nvarchar(MAX) = N'' out)
-AS
-BEGIN
-DECLARE @ADM1Code nvarchar(20)
-	BEGIN TRY
-		IF (   @ThaiYear IS NULL 
-            OR @ProvinceNameTH IS NULL 
-            OR @PollingUnitNo IS NULL 
-            OR @PollingUnitCount IS NULL)
-		BEGIN
-			SET @errNum = 100;
-			SET @errMsg = 'Some parameter(s) is null';
-			RETURN
-		END
-
-		SELECT @ADM1Code = ADM1Code 
-		  FROM MProvince
-		 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
-
-		IF (@ADM1Code IS NULL)
-		BEGIN
-			SET @errNum = 101;
-			SET @errMsg = 'ADM1Code is null';
-			RETURN
-		END
-
-        IF (EXISTS(
-              SELECT * 
-			    FROM PollingUnit
-			   WHERE ThaiYear = @ThaiYear
-                 AND UPPER(LTRIM(RTRIM(ADM1Code))) = UPPER(LTRIM(RTRIM(@ADM1Code)))
-                 AND PollingUnitNo = @PollingUnitNo
-           ))
-		BEGIN
-			UPDATE PollingUnit
-			   SET PollingUnitCount = COALESCE(@PollingUnitCount, PollingUnitCount)
-				 , AreaRemark = LTRIM(RTRIM(COALESCE(@AreaRemark, AreaRemark)))
-			 WHERE ThaiYear = @ThaiYear
-               AND UPPER(LTRIM(RTRIM(ADM1Code))) = UPPER(LTRIM(RTRIM(@ADM1Code)))
-               AND PollingUnitNo = @PollingUnitNo
-		END
-        ELSE
-        BEGIN
-            INSERT INTO PollingUnit
-            (
-                  ThaiYear
-                , ADM1Code
-                , PollingUnitNo
-                , PollingUnitCount
-                , AreaRemark
-            )
-            VALUES
-            (
-                  @ThaiYear
-                , LTRIM(RTRIM(@ADM1Code))
-                , @PollingUnitNo
-                , @PollingUnitCount
-                , LTRIM(RTRIM(@AreaRemark))
-            )
-        END
-		-- Update Error Status/Message
-		SET @errNum = 0;
-		SET @errMsg = 'Success';
-	END TRY
-	BEGIN CATCH
-		SET @errNum = ERROR_NUMBER();
-		SET @errMsg = ERROR_MESSAGE();
-	END CATCH
 END
 
 GO
@@ -2750,6 +2597,159 @@ BEGIN
            )
 	 ORDER BY ProvinceNameTH
 
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+/****** Object:  StoredProcedure [dbo].[GetPollingUnits]    Script Date: 11/26/2022 3:06:52 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetPollingUnits
+-- [== History ==]
+-- <2022-09-11> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- =============================================
+CREATE PROCEDURE [dbo].[GetPollingUnits]
+(
+  @ThaiYear int = NULL
+, @ADM1Code nvarchar(20) = NULL
+, @ProvinceNameTH nvarchar(200) = NULL
+, @RegionId nvarchar(20) = NULL
+, @RegionName nvarchar(200) = NULL
+, @GeoGroup nvarchar(200) = NULL
+, @GeoSubGroup nvarchar(200) = NULL
+)
+AS
+BEGIN
+	SELECT ThaiYear
+         , ADM1Code
+	     , PollingUnitNo
+	     , PollingUnitCount
+	     , RegionId
+		 , RegionName
+		 , GeoGroup
+		 , GeoSubGroup
+         , ProvinceId
+	     , ProvinceNameTH
+	     , ProvinceNameEN
+         , AreaRemark
+	  FROM PollingUnitView
+	 WHERE ThaiYear = COALESCE(@ThaiYear, ThaiYear)
+       AND UPPER(LTRIM(RTRIM(ADM1Code))) = UPPER(LTRIM(RTRIM(COALESCE(@ADM1Code, ADM1Code))))
+	   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
+	   AND UPPER(LTRIM(RTRIM(RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, RegionName)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, GeoGroup)))) + '%'
+	   AND UPPER(LTRIM(RTRIM(GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, GeoSubGroup)))) + '%'
+	 ORDER BY ThaiYear, RegionId, RegionName, ProvinceNameTH
+
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-11-20  ***********/
+/****** Object:  StoredProcedure [dbo].[ImportPollingUnit]    Script Date: 11/26/2022 3:17:28 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	ImportPollingUnit
+-- [== History ==]
+-- <2022-09-29> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+--
+-- =============================================
+CREATE PROCEDURE [dbo].[ImportPollingUnit] (
+  @ThaiYear int    
+, @ProvinceNameTH nvarchar(200)
+, @PollingUnitNo int
+, @PollingUnitCount int = 0
+, @AreaRemark nvarchar(MAX) = null
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+DECLARE @ADM1Code nvarchar(20)
+	BEGIN TRY
+		IF (   @ThaiYear IS NULL 
+            OR @ProvinceNameTH IS NULL 
+            OR @PollingUnitNo IS NULL 
+            OR @PollingUnitCount IS NULL)
+		BEGIN
+			SET @errNum = 100;
+			SET @errMsg = 'Some parameter(s) is null';
+			RETURN
+		END
+
+		SELECT @ADM1Code = ADM1Code 
+		  FROM MProvince
+		 WHERE UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(@ProvinceNameTH)))
+
+		IF (@ADM1Code IS NULL)
+		BEGIN
+			SET @errNum = 101;
+			SET @errMsg = 'ADM1Code is null';
+			RETURN
+		END
+
+        IF (EXISTS(
+              SELECT * 
+			    FROM PollingUnit
+			   WHERE ThaiYear = @ThaiYear
+                 AND UPPER(LTRIM(RTRIM(ADM1Code))) = UPPER(LTRIM(RTRIM(@ADM1Code)))
+                 AND PollingUnitNo = @PollingUnitNo
+           ))
+		BEGIN
+			UPDATE PollingUnit
+			   SET PollingUnitCount = COALESCE(@PollingUnitCount, PollingUnitCount)
+				 , AreaRemark = LTRIM(RTRIM(COALESCE(@AreaRemark, AreaRemark)))
+			 WHERE ThaiYear = @ThaiYear
+               AND UPPER(LTRIM(RTRIM(ADM1Code))) = UPPER(LTRIM(RTRIM(@ADM1Code)))
+               AND PollingUnitNo = @PollingUnitNo
+		END
+        ELSE
+        BEGIN
+            INSERT INTO PollingUnit
+            (
+                  ThaiYear
+                , ADM1Code
+                , PollingUnitNo
+                , PollingUnitCount
+                , AreaRemark
+            )
+            VALUES
+            (
+                  @ThaiYear
+                , LTRIM(RTRIM(@ADM1Code))
+                , @PollingUnitNo
+                , @PollingUnitCount
+                , LTRIM(RTRIM(@AreaRemark))
+            )
+        END
+		-- Update Error Status/Message
+		SET @errNum = 0;
+		SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
 END
 
 GO
