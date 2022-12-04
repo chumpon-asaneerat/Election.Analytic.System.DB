@@ -39,7 +39,7 @@ BEGIN
 		 , PartyName
 		 , VoteCount
 		 , PollingUnitCount
-      FROM MPDStatVoterView
+      FROM MPDStatVoterSummaryView
      WHERE @ThaiYear = COALESCE(@ThaiYear, ThaiYear)
        AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH))))
      ORDER BY ProvinceNameTH, PollingUnitNo
