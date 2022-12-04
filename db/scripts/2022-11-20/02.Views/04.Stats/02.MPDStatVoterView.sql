@@ -1,4 +1,4 @@
-/****** Object:  View [dbo].[MPDStatVoterView]    Script Date: 11/26/2022 1:56:52 PM ******/
+/****** Object:  View [dbo].[MPDStatVoterView]    Script Date: 12/4/2022 9:16:14 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -21,7 +21,22 @@ AS
          , A.ExerciseCount
          , A.InvalidCount
          , A.NoVoteCount
+		 , B.FullName
+		 , B.PartyName
+		 , B.VoteCount
+		 , C.PollingUnitCount
 	  FROM MPDStatVoter A
-        LEFT OUTER JOIN MProvinceView B ON B.ADM1Code = A.ADM1Code
+	  INNER JOIN PollingUnit C
+		ON (   
+		        C.ThaiYear = A.ThaiYear
+			AND C.ADM1Code = A.ADM1Code
+			AND C.PollingUnitNo = A.PollingUnitNo
+		   )
+	  INNER JOIN MPDVoteSummaryView B
+		ON (
+		        B.ThaiYear = A.ThaiYear
+			AND	B.ADM1Code = A.ADM1Code
+			AND B.PollingUnitNo = A.PollingUnitNo
+		   )
 
 GO
