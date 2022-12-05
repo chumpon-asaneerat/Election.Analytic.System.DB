@@ -103,6 +103,11 @@ DECLARE @LastName nvarchar(MAX) = null
 			RETURN
 		END
 
+        IF (@Prefix IS NOT NULL)
+        BEGIN
+            SELECT @GenderId = GenderId FROM dbo.GetGenderFromTitle(@Prefix)
+        END
+
         -- Call Save to get PersonId
         EXEC SaveMPerson @Prefix, @FirstName, @LastName
                        , NULL -- DOB
