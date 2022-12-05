@@ -23,7 +23,7 @@ GO
 -- [== Example ==]
 --
 -- =============================================
-CREATE PROCEDURE [dbo].[SaveMPDC] (
+ALTER PROCEDURE [dbo].[SaveMPDC] (
   @ThaiYear int    
 , @ADM1Code nvarchar(20)
 , @PollingUnitNo int
@@ -64,7 +64,7 @@ DECLARE @iMaxCandidateNo int
         EXEC SaveMPerson @Prefix, @FirstName, @LastName
                        , NULL -- DOB
                        , NULL -- GenderId
-                       , NULL -- EducationId
+                       , @EducationId -- EducationId
                        , NULL -- OccupationId
                        , NULL -- Remark
                        , @PersonId out -- PersonId
@@ -135,7 +135,6 @@ DECLARE @iMaxCandidateNo int
 				, PrevPartyId
 				, SubGroup
 				, [Remark]
-				, EducationId
 			)
 			VALUES
 			(
@@ -147,7 +146,6 @@ DECLARE @iMaxCandidateNo int
 				, @PrevPartyId
 				, @SubGroup
 				, @Remark
-				, @EducationId
 			);
 		END
 		ELSE
@@ -202,7 +200,6 @@ DECLARE @iMaxCandidateNo int
 					, PrevPartyId
 					, SubGroup
 					, [Remark]
-					, EducationId
 				)
 				VALUES
 				(
@@ -214,7 +211,6 @@ DECLARE @iMaxCandidateNo int
 					, @PrevPartyId
 					, @SubGroup
 					, @Remark
-					, @EducationId
 				);
 			END
 			ELSE
