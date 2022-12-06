@@ -34,7 +34,6 @@ ALTER PROCEDURE [dbo].[SaveMPDC] (
 , @PrevPartyId int = NULL
 , @Remark nvarchar(max) = NULL
 , @SubGroup nvarchar(max) = NULL
-, @EducationId int = null
 , @ADM1CodeOri nvarchar(100) = NULL
 , @PollingUnitNoOri int = NULL
 , @CandidateNoOri int = NULL
@@ -64,7 +63,7 @@ DECLARE @iMaxCandidateNo int
         EXEC SaveMPerson @Prefix, @FirstName, @LastName
                        , NULL -- DOB
                        , NULL -- GenderId
-                       , @EducationId -- EducationId
+                       , NULL -- EducationId
                        , NULL -- OccupationId
                        , NULL -- Remark
                        , @PersonId out -- PersonId
