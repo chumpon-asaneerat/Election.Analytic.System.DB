@@ -42,17 +42,15 @@ DECLARE @matchGenderId int
             -- REPLACE ID IN CASE PartyName is EXISTS but not specificed Id when call this SP
             SET @PersonId = @matchPersonId
         END
-        ELSE
+        
+        IF (@GenderId IS NULL OR @GenderId = 0) -- NULL OR NOT SPECIFICED GENDER
         BEGIN
-            IF (@GenderId IS NULL OR @GenderId = 0) -- NULL OR NOT SPECIFICED GENDER
-            BEGIN
-                SELECT @matchGenderId = GenderId
-                  FROM MPerson 
-                  WHERE PersonId = @PersonId
-                  -- REPLACE ID IN CASE No GenderId but the EXISTS person already assign GenderId
-                  -- so need to preserve last GenderId
-                  SET @GenderId = @matchPersonId
-            END
+            SELECT @matchGenderId = GenderId
+              FROM MPerson 
+             WHERE PersonId = @PersonId
+                -- REPLACE ID IN CASE No GenderId but the EXISTS person already assign GenderId
+                -- so need to preserve last GenderId
+               SET @GenderId = @matchPersonId
         END
 
 		IF (@PersonId IS NULL)
