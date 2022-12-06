@@ -12,7 +12,6 @@ GO
 
 /*********** Script Update Date: 2022-12-06  ***********/
 INSERT INTO MTitle([Description], GenderId) VALUES(N'ดาบตำรวจ', 1);
-INSERT INTO MTitle([Description], GenderId) VALUES(N'ดาบตำรวจ', 1);
 INSERT INTO MTitle([Description], GenderId) VALUES(N'พันเอกหญิง', 2);
 INSERT INTO MTitle([Description], GenderId) VALUES(N'พันโทหญิง', 2);
 INSERT INTO MTitle([Description], GenderId) VALUES(N'พันตรีหญิง', 2);
