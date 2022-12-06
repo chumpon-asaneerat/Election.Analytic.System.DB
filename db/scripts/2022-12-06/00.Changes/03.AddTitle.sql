@@ -12,4 +12,7 @@ INSERT INTO MTitle([Description], GenderId) VALUES(N'นาวาอากาศ
 INSERT INTO MTitle([Description], GenderId) VALUES(N'นาวาเอกหญิง', 2);
 INSERT INTO MTitle([Description], GenderId) VALUES(N'นาวาโทหญิง', 2);
 INSERT INTO MTitle([Description], GenderId) VALUES(N'นาวาตรีหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'พลตรีหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'พลโทหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'พลเอกหญิง', 2);
 GO
