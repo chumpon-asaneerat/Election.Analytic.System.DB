@@ -11,6 +11,27 @@ GO
 
 
 /*********** Script Update Date: 2022-12-06  ***********/
+INSERT INTO MTitle([Description], GenderId) VALUES(N'ดาบตำรวจ', 1);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'ดาบตำรวจ', 1);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'พันเอกหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'พันโทหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'พันตรีหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'ร้อยเอกหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'ร้อยโทหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'ร้อยตรีหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'นาวาอากาศเอกหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'นาวาอากาศโทหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'นาวาอากาศตรีหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'นาวาเอกหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'นาวาโทหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'นาวาตรีหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'พลตรีหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'พลโทหญิง', 2);
+INSERT INTO MTitle([Description], GenderId) VALUES(N'พลเอกหญิง', 2);
+GO
+
+
+/*********** Script Update Date: 2022-12-06  ***********/
 -- EducationId can be use from MPerson table.
 ALTER TABLE MPDC DROP COLUMN EducationId
 GO
@@ -227,20 +248,19 @@ DECLARE @matchGenderId int
               FROM MPerson 
              WHERE UPPER(LTRIM(RTRIM(FirstName))) = UPPER(LTRIM(RTRIM(@FirstName)))
                AND UPPER(LTRIM(RTRIM(LastName))) = UPPER(LTRIM(RTRIM(@LastName)))
-            -- REPLACE ID IN CASE PartyName is EXISTS but not specificed Id when call this SP
+            -- REPLACE ID IN CASE Person Full Name is EXISTS but not specificed Id when call this SP
             SET @PersonId = @matchPersonId
         END
-        ELSE
+
+        SELECT @matchGenderId = GenderId
+          FROM MPerson 
+         WHERE PersonId = @PersonId
+
+        IF (@GenderId IS NULL OR @GenderId = 0) -- NULL OR NOT SPECIFICED GENDER
         BEGIN
-            IF (@GenderId IS NULL OR @GenderId = 0) -- NULL OR NOT SPECIFICED GENDER
-            BEGIN
-                SELECT @matchGenderId = GenderId
-                  FROM MPerson 
-                  WHERE PersonId = @PersonId
-                  -- REPLACE ID IN CASE No GenderId but the EXISTS person already assign GenderId
-                  -- so need to preserve last GenderId
-                  SET @GenderId = @matchPersonId
-            END
+            -- REPLACE ID IN CASE No GenderId but the EXISTS person already assign GenderId
+            -- so need to preserve last GenderId
+            SET @GenderId = @matchGenderId
         END
 
 		IF (@PersonId IS NULL)
