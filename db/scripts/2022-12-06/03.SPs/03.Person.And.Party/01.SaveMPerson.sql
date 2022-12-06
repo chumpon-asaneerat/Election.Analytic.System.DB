@@ -43,7 +43,7 @@ DECLARE @matchGenderId int
             SET @PersonId = @matchPersonId
         END
         
-        IF (@GenderId IS NULL OR @GenderId = 0) -- NULL OR NOT SPECIFICED GENDER
+        IF (@GenderId IS NULL /*OR @GenderId = 0*/) -- NULL OR NOT SPECIFICED GENDER
         BEGIN
             SELECT @matchGenderId = GenderId
               FROM MPerson 
