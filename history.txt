@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #165
+  - Update SP ImportMPDVoteSummary #2
+  - Update SP ImportMPDC #2
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #164
   - Update gulpfile.
   - retest gen merge script
