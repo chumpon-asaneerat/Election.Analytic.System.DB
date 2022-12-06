@@ -4,6 +4,13 @@ GO
 
 
 /*********** Script Update Date: 2022-12-06  ***********/
+DROP PROCEDURE GetMParty
+GO
+DROP PROCEDURE GetMPerson
+GO
+
+
+/*********** Script Update Date: 2022-12-06  ***********/
 -- EducationId can be use from MPerson table.
 ALTER TABLE MPDC DROP COLUMN EducationId
 GO
@@ -225,7 +232,7 @@ DECLARE @matchGenderId int
         END
         ELSE
         BEGIN
-            IF (@GenderId IS NULL)
+            IF (@GenderId IS NULL OR @GenderId = 0) -- NULL OR NOT SPECIFICED GENDER
             BEGIN
                 SELECT @matchGenderId = GenderId
                   FROM MPerson 
@@ -276,6 +283,214 @@ DECLARE @matchGenderId int
                  , [Remark] = LTRIM(RTRIM(COALESCE(@Remark, Remark)))
              WHERE PersonId = @PersonId;
         END
+
+        -- Update Error Status/Message
+        SET @errNum = 0;
+        SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-12-06  ***********/
+/****** Object:  StoredProcedure [dbo].[GetMPartyById]    Script Date: 11/26/2022 1:17:52 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetMPartyById
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+-- 
+-- =============================================
+CREATE PROCEDURE [dbo].[GetMPartyById] (
+  @PartyId int
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+        SELECT PartyId
+             , PartyName
+             , [Data]
+          FROM MParty
+         WHERE PartyId = @PartyId
+        -- Update Error Status/Message
+        SET @errNum = 0;
+        SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-12-06  ***********/
+/****** Object:  StoredProcedure [dbo].[GetMPersonById]    Script Date: 11/26/2022 1:17:52 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetMPersonById
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+-- 
+-- =============================================
+CREATE PROCEDURE [dbo].[GetMPersonById] (
+  @PersonId int
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+        SELECT A.PersonId
+             , A.Prefix
+             , A.FirstName
+             , A.LastName
+             , LTRIM(RTRIM(
+                LTRIM(RTRIM(A.Prefix)) + ' ' + 
+                LTRIM(RTRIM(A.FirstName)) + ' ' + 
+                LTRIM(RTRIM(A.LastName))
+               )) AS FullName
+             , A.[Data]
+             , A.DOB
+             , A.GenderId
+             , B.[Description] AS GenderDescription
+             , A.EducationId
+             , C.[Description] AS EducationDescription
+             , A.OccupationId
+             , D.[Description] AS OccupationDescription
+             , A.[Remark]
+          FROM MPerson A 
+            LEFT OUTER JOIN MGender B ON B.GenderId = A.GenderId
+            LEFT OUTER JOIN MEducation C ON C.EducationId = A.EducationId
+            LEFT OUTER JOIN MOccupation D ON D.OccupationId = A.OccupationId
+         WHERE A.PersonId = @PersonId
+        -- Update Error Status/Message
+        SET @errNum = 0;
+        SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-12-06  ***********/
+/****** Object:  StoredProcedure [dbo].[GetMPartyByName]    Script Date: 11/26/2022 1:17:52 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetMPartyByName
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+-- 
+-- =============================================
+CREATE PROCEDURE [dbo].[GetMPartyByName] (
+  @PartyName nvarchar(200)
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+        SELECT PartyId
+             , PartyName
+             , [Data]
+          FROM MParty
+         WHERE UPPER(LTRIM(RTRIM(PartyName))) = UPPER(LTRIM(RTRIM(@PartyName)))
+
+        -- Update Error Status/Message
+        SET @errNum = 0;
+        SET @errMsg = 'Success';
+	END TRY
+	BEGIN CATCH
+		SET @errNum = ERROR_NUMBER();
+		SET @errMsg = ERROR_MESSAGE();
+	END CATCH
+END
+
+GO
+
+
+/*********** Script Update Date: 2022-12-06  ***********/
+/****** Object:  StoredProcedure [dbo].[GetMPersonByName]    Script Date: 11/26/2022 1:17:52 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Chumpon Asaneerat
+-- Description:	GetMPersonByName
+-- [== History ==]
+-- <2022-08-20> :
+--	- Stored Procedure Created.
+--
+-- [== Example ==]
+-- 
+-- =============================================
+CREATE PROCEDURE [dbo].[GetMPersonByName] (
+  @FirstName nvarchar(200)
+, @LastName nvarchar(200)
+, @errNum as int = 0 out
+, @errMsg as nvarchar(MAX) = N'' out)
+AS
+BEGIN
+	BEGIN TRY
+        SELECT A.PersonId
+             , A.Prefix
+             , A.FirstName
+             , A.LastName
+             , LTRIM(RTRIM(
+                LTRIM(RTRIM(A.Prefix)) + ' ' + 
+                LTRIM(RTRIM(A.FirstName)) + ' ' + 
+                LTRIM(RTRIM(A.LastName))
+               )) AS FullName
+             , A.[Data]
+             , A.DOB
+             , A.GenderId
+             , B.[Description] AS GenderDescription
+             , A.EducationId
+             , C.[Description] AS EducationDescription
+             , A.OccupationId
+             , D.[Description] AS OccupationDescription
+             , A.[Remark]
+          FROM MPerson A 
+            LEFT OUTER JOIN MGender B ON B.GenderId = A.GenderId
+            LEFT OUTER JOIN MEducation C ON C.EducationId = A.EducationId
+            LEFT OUTER JOIN MOccupation D ON D.OccupationId = A.OccupationId
+         WHERE UPPER(LTRIM(RTRIM(FirstName))) = UPPER(LTRIM(RTRIM(@FirstName)))
+           AND UPPER(LTRIM(RTRIM(LastName))) = UPPER(LTRIM(RTRIM(@LastName)))
 
         -- Update Error Status/Message
         SET @errNum = 0;
@@ -398,7 +613,7 @@ DECLARE @LastName nvarchar(MAX) = null
 
         IF (@Prefix IS NOT NULL)
         BEGIN
-            SELECT @GenderId = GenderId FROM dbo.GetGenderFromTitle(@Prefix)
+            SELECT @GenderId = dbo.GetGenderFromTitle(@Prefix)
         END
 
         -- Call Save to get PersonId
@@ -584,7 +799,7 @@ DECLARE @LastName nvarchar(MAX) = null
 
         IF (@Prefix IS NOT NULL)
         BEGIN
-            SELECT @GenderId = GenderId FROM dbo.GetGenderFromTitle(@Prefix)
+            SELECT @GenderId = dbo.GetGenderFromTitle(@Prefix)
         END
 
         -- Call Save to get PersonId
