@@ -51,7 +51,7 @@ ALTER PROCEDURE [dbo].[ImportMPDC] (
 , @PrevPartyName nvarchar(200) = NULL
 , @Remark nvarchar(max) = NULL
 , @SubGroup nvarchar(max) = NULL
-, @EducationId int = null
+, @EducationLevel nvarchar(max) = null
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out)
 AS
@@ -63,6 +63,7 @@ DECLARE @PersonId int
 DECLARE @Prefix nvarchar(MAX) = null
 DECLARE @FirstName nvarchar(MAX) = null
 DECLARE @LastName nvarchar(MAX) = null
+DECLARE @EducationId int = null;
 	BEGIN TRY
 		IF (   @ThaiYear IS NULL 
             OR @ProvinceNameTH IS NULL 
@@ -99,6 +100,13 @@ DECLARE @LastName nvarchar(MAX) = null
         IF (@Prefix IS NOT NULL)
         BEGIN
             SELECT @GenderId = dbo.GetGenderFromTitle(@Prefix)
+        END
+
+        IF (@EducationLevel IS NOT NULL)
+        BEGIN
+            SELECT @EducationId = EducationId 
+              FROM MEducation
+             WHERE UPPER(LTRIM(RTRIM([Description]))) = UPPER(LTRIM(RTRIM(@EducationLevel)))
         END
 
         -- Call Save to get PersonId
