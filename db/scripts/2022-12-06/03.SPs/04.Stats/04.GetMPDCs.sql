@@ -43,7 +43,8 @@ DECLARE @sFullName nvarchar(MAX)
 			SET @sFullName = @FullName;
 		END
 
-		SELECT ProvinceNameTH
+		SELECT ThaiYear
+             , ProvinceNameTH
 			 , ADM1Code
 			 , PollingUnitNo
 			 , CandidateNo
