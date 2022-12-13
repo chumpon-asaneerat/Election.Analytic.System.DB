@@ -44,6 +44,7 @@ DECLARE @sFullName nvarchar(MAX)
 		END
 
 		SELECT ProvinceNameTH
+			 , ADM1Code
 			 , PollingUnitNo
 			 , CandidateNo
              , PersonId
