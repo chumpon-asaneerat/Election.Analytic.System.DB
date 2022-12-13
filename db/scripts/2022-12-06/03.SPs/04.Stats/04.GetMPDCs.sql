@@ -24,8 +24,8 @@ GO
 CREATE PROCEDURE [dbo].[GetMPDCs]
 (
   @ThaiYear int
-, @ProvinceNameTH nvarchar(200)
-, @PollingUnitNo as int
+, @ProvinceNameTH nvarchar(200) = NULL
+, @PollingUnitNo as int = NULL
 , @FullName nvarchar(MAX) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out
@@ -62,8 +62,8 @@ DECLARE @sFullName nvarchar(MAX)
              , FullName AS FullNameOri
 		  FROM MPDCView 
 		 WHERE ThaiYear = @ThaiYear
-           AND ProvinceNameTH = @ProvinceNameTH
-		   AND PollingUnitNo = @PollingUnitNo
+           AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH))))
+		   AND PollingUnitNo = COALESCE(@PollingUnitNo, PollingUnitNo)
 		   AND UPPER(LTRIM(RTRIM(FullName))) LIKE '%' + UPPER(LTRIM(RTRIM(@sFullName))) + '%'
 
 		-- Update Error Status/Message
