@@ -24,15 +24,15 @@ GO
 CREATE PROCEDURE [dbo].[GetMPDCs]
 (
   @ThaiYear int
-, @ProvinceNameTH nvarchar(100)
+, @ProvinceNameTH nvarchar(200)
 , @PollingUnitNo as int
-, @FullName nvarchar(200) = NULL
+, @FullName nvarchar(MAX) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out
 )
 AS
 BEGIN
-DECLARE @sFullName nvarchar(200)
+DECLARE @sFullName nvarchar(MAX)
 	BEGIN TRY
 	    IF (@FullName IS NULL)
 		BEGIN
