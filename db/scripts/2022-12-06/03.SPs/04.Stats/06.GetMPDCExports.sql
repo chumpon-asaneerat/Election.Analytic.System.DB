@@ -24,6 +24,7 @@ GO
 CREATE PROCEDURE [dbo].[GetMPDCExports]
 (
   @ThaiYear int
+, @ProvinceNameTH nvarchar(200) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out
 )
@@ -44,6 +45,7 @@ BEGIN
 			 , CandidateSubGroup
 		  FROM MPDCView 
 		 WHERE ThaiYear = @ThaiYear
+           AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH))))
          ORDER BY ThaiYear, ProvinceNameTH, PollingUnitNo, CandidateNo
 
 		-- Update Error Status/Message
