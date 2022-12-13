@@ -24,25 +24,12 @@ GO
 CREATE PROCEDURE [dbo].[GetMPDCExports]
 (
   @ThaiYear int
-, @ProvinceNameTH nvarchar(200) = NULL
-, @PollingUnitNo as int = NULL
-, @FullName nvarchar(MAX) = NULL
 , @errNum as int = 0 out
 , @errMsg as nvarchar(MAX) = N'' out
 )
 AS
 BEGIN
-DECLARE @sFullName nvarchar(MAX)
 	BEGIN TRY
-	    IF (@FullName IS NULL)
-		BEGIN
-			SET @sFullName = N'';
-		END
-		ELSE 
-		BEGIN
-			SET @sFullName = @FullName;
-		END
-
 		SELECT ThaiYear
              , ProvinceNameTH
 			 , ADM1Code
@@ -57,9 +44,7 @@ DECLARE @sFullName nvarchar(MAX)
 			 , CandidateSubGroup
 		  FROM MPDCView 
 		 WHERE ThaiYear = @ThaiYear
-           AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH))))
-		   AND PollingUnitNo = COALESCE(@PollingUnitNo, PollingUnitNo)
-		   AND UPPER(LTRIM(RTRIM(FullName))) LIKE '%' + UPPER(LTRIM(RTRIM(@sFullName))) + '%'
+         ORDER BY ThaiYear, ProvinceNameTH, PollingUnitNo, CandidateNo
 
 		-- Update Error Status/Message
 		SET @errNum = 0;
