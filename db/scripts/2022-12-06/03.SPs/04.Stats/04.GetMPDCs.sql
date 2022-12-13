@@ -56,7 +56,7 @@ DECLARE @sFullName nvarchar(MAX)
 			 , CandidateRemark
 			 , CandidateSubGroup
 			 , PersonImageData
-             , ProvinceNameTH AS ProvinceNameOri
+             , ADM1Code AS ADM1CodeOri
              , PollingUnitNo AS PollingUnitNoOri
              , CandidateNo AS CandidateNoOri
              , FullName AS FullNameOri
