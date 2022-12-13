@@ -100,7 +100,7 @@ DECLARE @iTotalUnits int;
 					SELECT DISTINCT ThaiYear
 						 , ProvinceNameTH
 						 , PollingUnitNo 
-					  FROM MPDCView A
+					  FROM MPDCView
 				     WHERE ThaiYear = @ThaiYear
 					   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, ProvinceNameTH))))
 				), SQLPaging AS
@@ -130,16 +130,10 @@ DECLARE @iTotalUnits int;
 			ELSE
 			BEGIN
 				SELECT @iTotalUnits = COUNT(*) 
-				  FROM PollingUnitView
+				  FROM MPDCView
 				 WHERE ThaiYear = @ThaiYear
-				   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) IN 
-				       (
-					      SELECT DISTINCT ProvinceNameTH
-						    FROM MPDCView
-						   WHERE ThaiYear = @ThaiYear
-						     AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, ProvinceNameTH))))
-						     AND UPPER(LTRIM(RTRIM(FullName))) LIKE '%' + UPPER(LTRIM(RTRIM((@FullName)))) + '%'
-					   )
+				   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, ProvinceNameTH))))
+				   AND UPPER(LTRIM(RTRIM(FullName))) LIKE '%' + UPPER(LTRIM(RTRIM((@FullName)))) + '%'
 
 				SELECT @maxPage = 
 					   CASE WHEN (@iTotalUnits % @rowsPerPage > 0) THEN 
@@ -153,7 +147,7 @@ DECLARE @iTotalUnits int;
 					SELECT DISTINCT ThaiYear
 						 , ProvinceNameTH
 						 , PollingUnitNo 
-					  FROM MPDCView A
+					  FROM MPDCView
 				     WHERE ThaiYear = @ThaiYear
 					   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, ProvinceNameTH))))
 					   AND UPPER(LTRIM(RTRIM(FullName))) LIKE '%' + UPPER(LTRIM(RTRIM(@FullName))) + '%'
