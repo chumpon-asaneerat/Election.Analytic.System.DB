@@ -22,7 +22,7 @@ CREATE PROCEDURE [dbo].[GetMPDVoteSummaries]
   @ThaiYear int
 , @RegionId nvarchar(20) = NULL
 , @RegionName nvarchar(200) = NULL
-, @ProvinceNameTH nvarchar(20) = NULL
+, @ProvinceNameTH nvarchar(100) = NULL
 , @PartyName nvarchar(200) = NULL
 , @FullName nvarchar(MAX) = NULL
 )
