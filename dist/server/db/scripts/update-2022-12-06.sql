@@ -1894,7 +1894,7 @@ BEGIN
 			 , FullName
              , PrevPartyId
 			 , PartyName AS PrevPartyName
-			 , EducationName
+			 , EducationDescription AS EducationName
 			 , CandidateRemark
 			 , CandidateSubGroup
 		  FROM MPDCView 
