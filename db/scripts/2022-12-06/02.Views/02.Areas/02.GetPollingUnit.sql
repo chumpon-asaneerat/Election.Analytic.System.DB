@@ -18,12 +18,7 @@ CREATE PROCEDURE [dbo].[GetPollingUnit]
 (
   @ThaiYear int = NULL
 , @ADM1Code nvarchar(20) = NULL
-, @ProvinceNameTH nvarchar(200) = NULL
 , @PollingUnitNo int = NULL
-, @RegionId nvarchar(20) = NULL
-, @RegionName nvarchar(200) = NULL
-, @GeoGroup nvarchar(200) = NULL
-, @GeoSubGroup nvarchar(200) = NULL
 )
 AS
 BEGIN
@@ -43,11 +38,6 @@ BEGIN
 	 WHERE ThaiYear = COALESCE(@ThaiYear, ThaiYear)
        AND UPPER(LTRIM(RTRIM(ADM1Code))) = UPPER(LTRIM(RTRIM(COALESCE(@ADM1Code, ADM1Code))))
        AND UPPER(LTRIM(RTRIM(PollingUnitNo))) = UPPER(LTRIM(RTRIM(COALESCE(@PollingUnitNo, PollingUnitNo))))
-	   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(RegionId))) = UPPER(LTRIM(RTRIM(COALESCE(@RegionId, RegionId))))
-	   AND UPPER(LTRIM(RTRIM(RegionName))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@RegionName, RegionName)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(GeoGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoGroup, GeoGroup)))) + '%'
-	   AND UPPER(LTRIM(RTRIM(GeoSubGroup))) LIKE '%' + UPPER(LTRIM(RTRIM(COALESCE(@GeoSubGroup, GeoSubGroup)))) + '%'
 	 ORDER BY ThaiYear, RegionId, RegionName, ProvinceNameTH
 
 END
