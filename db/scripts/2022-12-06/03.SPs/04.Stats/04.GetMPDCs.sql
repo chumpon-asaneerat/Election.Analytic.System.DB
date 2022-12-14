@@ -52,10 +52,10 @@ DECLARE @sFullName nvarchar(MAX)
 			 , FullName
              , PrevPartyId
 			 , PartyName AS PrevPartyName
-			 , EducationName
+			 , EducationDescription AS EducationName
 			 , CandidateRemark
 			 , CandidateSubGroup
-			 , PersonImageData
+			 , PersonImageData AS [Data]
              , ADM1Code AS ADM1CodeOri
              , PollingUnitNo AS PollingUnitNoOri
              , CandidateNo AS CandidateNoOri

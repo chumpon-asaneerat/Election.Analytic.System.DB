@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[GetMPDCPullingUnitsPaging]    Script Date: 12/13/2022 8:55:11 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetMPDCPullingUnitsPaging]    Script Date: 12/14/2022 10:19:07 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -83,10 +83,18 @@ DECLARE @iTotalUnits int;
 		    -- FILTER MODE
 			IF (@FullName IS NULL)
 			BEGIN
+				-- NEED TO CHECK HAS CANDIDATE ON SPECIFICED PROVINCE
+				;WITH MPDCUnits AS
+				(
+					SELECT ProvinceNameTH, PollingUnitNo, COUNT(PollingUnitNo) CandidateCount
+					  FROM MPDCView
+					 WHERE ThaiYear = @ThaiYear
+					   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, ProvinceNameTH))))
+					 GROUP BY ProvinceNameTH, PollingUnitNo
+				)
+				-- COUNT TOTAL POLLING UNITS
 				SELECT @iTotalUnits = COUNT(*) 
-				  FROM PollingUnitView
-				 WHERE ThaiYear = @ThaiYear
-				   AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceName, ProvinceNameTH))))
+				  FROM MPDCUnits
 
 				SELECT @maxPage = 
 					   CASE WHEN (@iTotalUnits % @rowsPerPage > 0) THEN 
