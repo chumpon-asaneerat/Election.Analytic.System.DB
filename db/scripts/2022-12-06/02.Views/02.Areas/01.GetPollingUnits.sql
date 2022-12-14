@@ -19,11 +19,11 @@ ALTER PROCEDURE [dbo].[GetPollingUnits]
   @ThaiYear int = NULL
 , @ADM1Code nvarchar(20) = NULL
 , @ProvinceNameTH nvarchar(200) = NULL
+, @PollingUnitNo int = NULL
 , @RegionId nvarchar(20) = NULL
 , @RegionName nvarchar(200) = NULL
 , @GeoGroup nvarchar(200) = NULL
 , @GeoSubGroup nvarchar(200) = NULL
-, @PollingUnitNo int = NULL
 )
 AS
 BEGIN
