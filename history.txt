@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #197
+  - Update View MPDCView
+  - Update SP GetMPDCSummaries #2
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #196
   - Add SP GetMPDCSummaries
 

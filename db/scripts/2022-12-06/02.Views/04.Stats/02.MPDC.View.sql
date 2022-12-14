@@ -36,10 +36,9 @@ AS
          , D.GenderId
          , E.[Description] AS GenderName
          , D.EducationId
-         , F.[Description] AS EducationName
          , D.OccupationId
          , G.[Description] AS OccupationName
-         , E.[Description] AS EducationDescription
+         , F.[Description] AS EducationDescription
          , A.[Remark] AS CandidateRemark
          , A.SubGroup As CandidateSubGroup
 	  FROM MPDC A

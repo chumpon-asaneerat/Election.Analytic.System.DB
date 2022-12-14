@@ -36,9 +36,9 @@ DECLARE @sqlCommand as nvarchar(MAX);
          , PartyName
          , PartyImageData
          , CandidateNo
-         , EducationDescription
-         , CandidateSubGroup
-         , CandidateRemark
+         , EducationDescription AS EducationLevel
+         , CandidateSubGroup AS SubGroup
+         , CandidateRemark AS [Remark]
       FROM MPDCView
     WHERE ThaiYear = ' + CONVERT(nvarchar, @ThaiYear) + ' 
 	  AND ADM1Code = N''' + @ADM1Code + '''
