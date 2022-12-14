@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #198
+  - Update SP GetPollingUnits
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #197
   - Update View MPDCView
   - Update SP GetMPDCSummaries #2
