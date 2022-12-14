@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #205
+  - Update SP GetMPDCSummaries #3
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #204
   - Update SP GetMPDCs #6
   - Update SP GetMPDCPullingUnitsPaging #3

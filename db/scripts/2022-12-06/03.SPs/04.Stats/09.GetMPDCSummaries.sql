@@ -36,6 +36,7 @@ DECLARE @sqlCommand as nvarchar(MAX);
          , PartyName
          , PartyImageData
          , CandidateNo
+         , DOB
          , EducationDescription AS EducationLevel
          , CandidateSubGroup AS SubGroup
          , CandidateRemark AS [Remark]
