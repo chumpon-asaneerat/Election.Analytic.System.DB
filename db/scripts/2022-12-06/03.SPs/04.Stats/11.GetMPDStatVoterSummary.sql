@@ -17,7 +17,7 @@ GO
 CREATE PROCEDURE [dbo].[GetMPDStatVoterSummary]
 (
   @ThaiYear int
-, @ProvinceNameTH nvarchar(100) = NULL
+, @ADM1Code nvarchar(20) = NULL
 , @PollingUnitNo int = NULL
 )
 AS
@@ -42,7 +42,7 @@ BEGIN
 		 , PollingUnitCount
       FROM MPDStatVoterSummaryView
      WHERE ThaiYear = COALESCE(@ThaiYear, ThaiYear)
-       AND UPPER(LTRIM(RTRIM(ProvinceNameTH))) = UPPER(LTRIM(RTRIM(COALESCE(@ProvinceNameTH, ProvinceNameTH))))
+       AND UPPER(LTRIM(RTRIM(ADM1Code))) = UPPER(LTRIM(RTRIM(COALESCE(@ADM1Code, ADM1Code))))
        AND PollingUnitNo = COALESCE(@PollingUnitNo, PollingUnitNo)
      ORDER BY ProvinceNameTH, PollingUnitNo
 END

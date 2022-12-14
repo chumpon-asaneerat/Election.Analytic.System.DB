@@ -17,7 +17,7 @@ GO
 ALTER PROCEDURE [dbo].[GetMPDStatVoterSummaries]
 (
   @ThaiYear int
-, @ProvinceNameTH nvarchar(100) = NULL
+, @ProvinceNameTH nvarchar(200) = NULL
 )
 AS
 BEGIN
