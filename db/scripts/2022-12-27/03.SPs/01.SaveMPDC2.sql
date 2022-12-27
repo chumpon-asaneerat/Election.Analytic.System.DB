@@ -166,24 +166,37 @@ DECLARE @iMaxCandidateNo int
 				   AND PollingUnitNo = @PollingUnitNoOri
 				   AND CandidateNo >= @CandidateNoOri
 
-				-- FIND MAX CandidateNo THAT NEED TO REARRANGE ORDER
-				SELECT @iMaxCandidateNo = MIN(CandidateNo)
-				  FROM MPDC
-				 WHERE ThaiYear = @ThaiYear
-				   AND LTRIM(RTRIM(ADM1Code)) = LTRIM(RTRIM(@ADM1CodeOri))
-				   AND PollingUnitNo = @PollingUnitNoOri
-				   AND CandidateNo > @CandidateNoOri
+				IF (@CandidateNo > 0)
+				BEGIN
+					-- FIND MAX CandidateNo THAT NEED TO REARRANGE ORDER
+					SELECT @iMaxCandidateNo = MIN(CandidateNo)
+					  FROM MPDC
+					 WHERE ThaiYear = @ThaiYear
+					   AND LTRIM(RTRIM(ADM1Code)) = LTRIM(RTRIM(@ADM1CodeOri))
+					   AND PollingUnitNo = @PollingUnitNoOri
+					   AND CandidateNo > @CandidateNoOri
 
-				IF (@CandidateNo = 0) SET @CandidateNo = 1
-
-				-- REORDER NEW PROVINCE + POLLING UNIT TO MAKE EMPTY SLOT
-				UPDATE MPDC
-				   SET CandidateNo = CandidateNo + 1
-				 WHERE ThaiYear = @ThaiYear
-				   AND LTRIM(RTRIM(ADM1Code)) = LTRIM(RTRIM(@ADM1Code))
-				   AND PollingUnitNo = @PollingUnitNo
-				   AND CandidateNo >= @CandidateNo
-				   AND CandidateNo < @iMaxCandidateNo
+					-- REORDER NEW PROVINCE + POLLING UNIT TO MAKE EMPTY SLOT
+					UPDATE MPDC
+					   SET CandidateNo = CandidateNo + 1
+					 WHERE ThaiYear = @ThaiYear
+					   AND LTRIM(RTRIM(ADM1Code)) = LTRIM(RTRIM(@ADM1Code))
+					   AND PollingUnitNo = @PollingUnitNo
+					   AND CandidateNo >= @CandidateNo
+					   AND CandidateNo < @iMaxCandidateNo
+				END
+				ELSE
+				BEGIN
+					-- APPEND TO END SO NEED TO FIND MAX CandidateNo
+					SELECT @iMaxCandidateNo = MAX(CandidateNo)
+					  FROM MPDC
+					 WHERE ThaiYear = @ThaiYear
+					   AND LTRIM(RTRIM(ADM1Code)) = LTRIM(RTRIM(@ADM1Code))
+					   AND PollingUnitNo = @PollingUnitNo
+					IF (@iMaxCandidateNo IS NULL)
+						SET @CandidateNo = 1 -- MIN CANDIDATE NO IS 1
+					ELSE SET @CandidateNo = @iMaxCandidateNo
+				END
 
 				-- INSERT DATA TO NEW PROVINCE + POLLING UNIT
 				INSERT INTO MPDC
