@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[SaveMPDC2]    Script Date: 1/8/2023 21:24:10 ******/
+/****** Object:  StoredProcedure [dbo].[SaveMPDC2]    Script Date: 1/8/2023 21:32:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -55,39 +55,58 @@ DECLARE @iCnt int
 			RETURN
 		END
 
+		-- CHECKS AND ASSIGNED PROPER CandidateNo
+		IF (@CandidateNo <= 0) 
+		BEGIN
+			SELECT @iMaxCandidateNo = MAX(CandidateNo)
+			  FROM MPDC 
+			 WHERE ThaiYear = @ThaiYear
+			   AND LTRIM(RTRIM(UPPER(ADM1Code))) = LTRIM(RTRIM(UPPER(@ADM1Code)))
+			   AND PollingUnitNo = @PollingUnitNo
+
+			IF (@iMaxCandidateNo IS NULL) 
+				SET @CandidateNo = 1
+			ELSE SET @CandidateNo = @iMaxCandidateNo + 1
+		END
+
 		-- HAS ORIGINAL
 		IF (@ADM1CodeOri IS NOT NULL AND 
 		    @PollingUnitNoOri IS NOT NULL)
 		BEGIN
-			-- CHECKS AND ASSIGNED PROPER CandidateNo
-			IF (@CandidateNo <= 0) 
-			BEGIN
-				SELECT @iMaxCandidateNo = MAX(CandidateNo)
-					FROM MPDC 
-					WHERE ThaiYear = @ThaiYear
-					AND LTRIM(RTRIM(UPPER(ADM1Code))) = LTRIM(RTRIM(UPPER(@ADM1Code)))
-					AND PollingUnitNo = @PollingUnitNo
-				IF (@iMaxCandidateNo IS NULL) 
-					SET @CandidateNo = 1
-				ELSE SET @CandidateNo = @iMaxCandidateNo + 1
-			END
-
-			IF (LTRIM(RTRIM(UPPER(@ADM1CodeOri))) = LTRIM(RTRIM(UPPER(@ADM1Code))) AND 
-				@PollingUnitNoOri = @PollingUnitNo)
-			BEGIN
-				-- SAME AREA
-				PRINT 'SAME AREA';
-			END
-			ELSE 
-			BEGIN
-				-- DIFF AREA
-				PRINT 'DIFF AREA';
-			END
+			-- FIRST DELETE ROW FROM ORIGINAL AREA				
+			EXEC DeleteMPDC @ThaiYear, @ADM1CodeOri, @PollingUnitNoOri, @CandidateNoOri
+			-- NEXT IS Reorder to make insert space.
+			EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, @CandidateNo
 		END
 		ELSE
 		BEGIN
-			PRINT 'NO ORIGINAL';
+			--NO ORIGINAL DATA EXISTS SO Reorder to make insert space.
+			EXEC ReorderMPDC @ThaiYear, @ADM1Code, @PollingUnitNo, @CandidateNo
 		END
+		-- Add New Row
+		INSERT INTO MPDC 
+		(
+			ThaiYear
+		  , ADM1Code
+		  , PollingUnitNo
+		  , CandidateNo
+		  , PersonId
+		  , PrevPartyId
+		  , [Remark]
+		  , SubGroup
+		)
+		VALUES
+		(
+			@ThaiYear
+		  , @ADM1Code
+		  , @PollingUnitNo
+		  , @CandidateNo
+		  , @PersonId
+		  , @PrevPartyId
+		  , @Remark
+		  , @SubGroup
+		)
+
 		-- Update Error Status/Message
 		SET @errNum = 0;
 		SET @errMsg = 'Success';
@@ -99,4 +118,3 @@ DECLARE @iCnt int
 END
 
 GO
-
