@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[ReorderMPDC]    Script Date: 1/8/2023 20:59:15 ******/
+/****** Object:  StoredProcedure [dbo].[ReorderMPDC]    Script Date: 1/8/2023 21:45:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -25,12 +25,22 @@ AS
 BEGIN
 DECLARE @iCnt int = 1
 DECLARE @CandidateNo int
+DECLARE @PersonId int
+DECLARE @PrevPartyId int
+DECLARE @Remark nvarchar(max)
+DECLARE @SubGroup nvarchar(max)
+
+	-- BEGIN TRANSACTION
+	BEGIN TRANSACTION
 
 	CREATE TABLE #MPDCDATA
 	(
-		CandidateNo int
+		CandidateNo int,
+		PersonId int,
+		PrevPartyId int,
+		[Remark] nvarchar(max),
+		SubGroup nvarchar(max)
 	)
-
 	BEGIN TRY
 		IF (@ThaiYear IS NULL OR
 		    @ADM1Code IS NULL OR
@@ -43,6 +53,10 @@ DECLARE @CandidateNo int
 		-- ADD DATA TO TEMP TABLE
 		INSERT INTO #MPDCDATA 
 		    SELECT CandidateNo
+				 , PersonId
+				 , PrevPartyId
+				 , [Remark]
+				 , SubGroup
 			  FROM MPDC
 			 WHERE ThaiYear = @ThaiYear
 			   AND LTRIM(RTRIM(UPPER(ADM1Code))) = LTRIM(RTRIM(UPPER(@ADM1Code)))
@@ -52,11 +66,22 @@ DECLARE @CandidateNo int
 		DECLARE MPDC_CURSOR CURSOR LOCAL FORWARD_ONLY READ_ONLY FAST_FORWARD
 		FOR  
 		    SELECT CandidateNo
+				 , PersonId
+				 , PrevPartyId
+				 , [Remark]
+				 , SubGroup
 			  FROM #MPDCDATA
 		     ORDER BY CandidateNo
 
+		-- REMOVE ALL EXISTS
+		DELETE 
+		  FROM MPDC
+	     WHERE ThaiYear = @ThaiYear
+		   AND LTRIM(RTRIM(UPPER(ADM1Code))) = LTRIM(RTRIM(UPPER(@ADM1Code)))
+		   AND PollingUnitNo = @PollingUnitNo
+
 		OPEN MPDC_CURSOR  
-		FETCH NEXT FROM MPDC_CURSOR INTO @CandidateNo
+		FETCH NEXT FROM MPDC_CURSOR INTO @CandidateNo, @PersonId, @PrevPartyId, @Remark, @SubGroup
 		WHILE @@FETCH_STATUS = 0  
 		BEGIN
 			IF (@SkipCandidateNo IS NOT NULL)
@@ -76,7 +101,7 @@ DECLARE @CandidateNo int
 
 			-- INCREASE RUNNING NO
 			SET @iCnt = @iCnt + 1
-			FETCH NEXT FROM MPDC_CURSOR INTO @CandidateNo
+			FETCH NEXT FROM MPDC_CURSOR INTO @CandidateNo, @PersonId, @PrevPartyId, @Remark, @SubGroup
 		END
 
 		CLOSE MPDC_CURSOR  
@@ -89,9 +114,15 @@ DECLARE @CandidateNo int
 	BEGIN CATCH
 		SET @errNum = ERROR_NUMBER();
 		SET @errMsg = ERROR_MESSAGE();
+
+		-- ROLLBACK TRANSACTION
+		IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION; 
 	END CATCH
 
 	DROP TABLE #MPDCDATA
+
+	-- COMMIT TRANSACTION
+	IF @@TRANCOUNT > 0 COMMIT TRANSACTION;
 END
 
 GO
