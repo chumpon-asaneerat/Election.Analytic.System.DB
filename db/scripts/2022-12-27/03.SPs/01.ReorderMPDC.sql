@@ -91,13 +91,30 @@ DECLARE @SubGroup nvarchar(max)
 					SET @iCnt = @iCnt + 1
 				END
 			END
-			-- UPDATE RUNNING NO
-			UPDATE MPDC
-			   SET CandidateNo = @iCnt
-			 WHERE ThaiYear = @ThaiYear
-			   AND LTRIM(RTRIM(UPPER(ADM1Code))) = LTRIM(RTRIM(UPPER(@ADM1Code)))
-			   AND PollingUnitNo = @PollingUnitNo
-			   AND CandidateNo = @CandidateNo
+			-- INSERT NEW DATA WITH REASSIGN NEW RUNNING NO
+			-- Add New Row
+			INSERT INTO MPDC 
+			(
+			   ThaiYear
+			 , ADM1Code
+			 , PollingUnitNo
+			 , CandidateNo
+			 , PersonId
+			 , PrevPartyId
+			 , [Remark]
+			 , SubGroup
+			)
+			VALUES
+			(
+			   @ThaiYear
+			 , @ADM1Code
+			 , @PollingUnitNo
+			 , @iCnt
+			 , @PersonId
+			 , @PrevPartyId
+			 , @Remark
+			 , @SubGroup
+			)
 
 			-- INCREASE RUNNING NO
 			SET @iCnt = @iCnt + 1
