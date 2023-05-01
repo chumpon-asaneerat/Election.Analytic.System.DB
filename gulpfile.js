@@ -89,7 +89,7 @@ gulp.task('merge-sql-scripts', () => {
 
     // Change date here!!!!!!!!!!!!!!!!!!!!!
     //let sDate = '2022-11-20'; // Change date here!!!!
-    let sDate = '2023-01-08'; // Change date here!!!!
+    let sDate = '2023-05-01'; // Change date here!!!!
     // Change date here!!!!!!!!!!!!!!!!!!!!!
 
     let rootPath = path.join(__dirname, 'db/scripts/' + sDate);
