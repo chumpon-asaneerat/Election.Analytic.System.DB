@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #233
+  - Update SP GetMPDCOfficials
+  - Add SP GetMPDCOfficialByFullName
+  - Re Init some MTitle data
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #232
   - Add SP GetMPDCOfficials
 
