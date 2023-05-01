@@ -36,6 +36,7 @@ DECLARE @sqlCommand as nvarchar(MAX);
              , PartyName
              , PartyId
              , PartyImageData
+             , PersonId
              , PersonImageData
              , RankNo
              , VoteCount
