@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #231
+  - Add View MPDCOfficialView
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #230
   - Update Table MPDCOfficial
   - Add SP ImportMPDCOfficial
