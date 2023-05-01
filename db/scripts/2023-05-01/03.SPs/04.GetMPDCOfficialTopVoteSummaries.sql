@@ -17,6 +17,7 @@ GO
 CREATE PROCEDURE [dbo].[GetMPDCOfficialTopVoteSummaries]
 (
   @ThaiYear int
+, @PrevThaiYear int
 , @ADM1Code nvarchar(20)
 , @PollingUnitNo int
 , @Top int = 6
@@ -27,22 +28,29 @@ DECLARE @sqlCommand as nvarchar(MAX);
     SET @sqlCommand = N'
     ;WITH Top6VoteSum66 AS
     (
-        SELECT ThaiYear
-		     , ProvinceId
-             , ADM1Code
-             , ProvinceNameTH
-             , PollingUnitNo
-             , FullName
-             , PartyName
-             , PartyId
-             , PartyImageData
-             , PersonId
-             , PersonImageData
-             , RankNo
-             , VoteCount
-             , SortOrder
-          FROM MPDCOfficialView
-		 WHERE ThaiYear = ' + CONVERT(nvarchar, @ThaiYear) + '
+        SELECT A.ThaiYear
+		     , A.ProvinceId
+             , A.ADM1Code
+             , A.ProvinceNameTH
+             , A.PollingUnitNo
+             , A.FullName
+             , A.PartyName
+             , A.PartyId
+             , A.PartyImageData
+             , A.PersonId
+             , A.PersonImageData
+             , A.RankNo
+             , A.VoteCount
+             , A.SortOrder
+			 , B.ADM1Code AS PrevADM1Code
+			 , B.PartyId AS PrevPartyId
+			 , B.PartyName AS PrevPartyName
+			 , B.ProvinceNameTH AS PrevProvinceNameTH
+			 , B.PollingUnitNo AS PrevPollingUnitNo
+			 , B.VoteCount AS PrevVoteCount
+          FROM MPDCOfficialView A LEFT OUTER JOIN MPDVoteSummaryView B 
+		    ON B.PersonId = A.PersonId AND B.ThaiYear = ' + CONVERT(nvarchar, @PrevThaiYear) + '
+		 WHERE A.ThaiYear = ' + CONVERT(nvarchar, @ThaiYear) + '
     )
     SELECT TOP ' + CONVERT(nvarchar, @Top) + ' *
       FROM Top6VoteSum66
