@@ -3,20 +3,18 @@ CREATE TABLE MPDCOfficial (
 	ThaiYear int NOT NULL,
 	ADM1Code nvarchar(20) NOT NULL,
 	PollingUnitNo int NOT NULL,
-	CandidateNo int NOT NULL,
 	RevoteNo int NOT NULL,
 	PartyId int NOT NULL,
 	PersonId int NOT NULL,
+    SortOrder int NOT NULL,
 	VoteCount int NOT NULL,
     CONSTRAINT PK_MPDCOfficial PRIMARY KEY 
     (
         ThaiYear ASC
       , ADM1Code ASC
       , PollingUnitNo ASC
-      , CandidateNo ASC
       , RevoteNo ASC
       , PartyId ASC
-      , PersonId ASC
     )
 )
 GO
@@ -30,9 +28,6 @@ GO
 CREATE INDEX IX_MPDCOfficial_PollingUnitNo ON MPDCOfficial(PollingUnitNo ASC)
 GO
 
-CREATE INDEX IX_MPDCOfficial_CandidateNo ON MPDCOfficial(CandidateNo ASC)
-GO
-
 CREATE INDEX IX_MPDCOfficial_RevoteNo ON MPDCOfficial(RevoteNo ASC)
 GO
 
@@ -42,7 +37,10 @@ GO
 CREATE INDEX IX_MPDCOfficial_PersonId ON MPDCOfficial(PersonId ASC)
 GO
 
-ALTER TABLE MPDCOfficial ADD  CONSTRAINT DF_MPDCOfficial_CandidateNo  DEFAULT 0 FOR CandidateNo
+CREATE INDEX IX_MPDCOfficial_SortOrder ON MPDCOfficial(SortOrder ASC)
+GO
+
+ALTER TABLE MPDCOfficial ADD  CONSTRAINT DF_MPDCOfficial_SortOrder  DEFAULT 0 FOR SortOrder
 GO
 
 ALTER TABLE MPDCOfficial ADD  CONSTRAINT DF_MPDCOfficial_RevoteNo  DEFAULT 0 FOR RevoteNo

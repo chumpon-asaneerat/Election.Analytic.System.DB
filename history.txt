@@ -1,5 +1,11 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #230
+  - Update Table MPDCOfficial
+  - Add SP ImportMPDCOfficial
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #229
   - Update Gulp file
 
