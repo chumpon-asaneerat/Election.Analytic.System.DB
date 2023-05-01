@@ -1,5 +1,10 @@
 ----------------------------------------------------------------------------------------------
 [commited]
+- PPRPv1 Rework #237
+  - Update SP GetMPDCOfficialTopVoteSummaries
+
+----------------------------------------------------------------------------------------------
+[commited]
 - PPRPv1 Rework #236
   - Update SP GetMPDCOfficialTopVoteSummaries
 

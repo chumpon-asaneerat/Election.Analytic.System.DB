@@ -43,11 +43,12 @@ DECLARE @sqlCommand as nvarchar(MAX);
              , A.VoteCount
              , A.SortOrder
 			 , B.ADM1Code AS PrevADM1Code
-			 , B.PartyId AS PrevPartyId
-			 , B.PartyName AS PrevPartyName
 			 , B.ProvinceNameTH AS PrevProvinceNameTH
 			 , B.PollingUnitNo AS PrevPollingUnitNo
+			 , B.PartyId AS PrevPartyId
+			 , B.PartyName AS PrevPartyName
 			 , B.VoteCount AS PrevVoteCount
+			 , B.RankNo AS PrevRankNo
           FROM MPDCOfficialView A LEFT OUTER JOIN MPDVoteSummaryView B 
 		    ON B.PersonId = A.PersonId AND B.ThaiYear = ' + CONVERT(nvarchar, @PrevThaiYear) + '
 		 WHERE A.ThaiYear = ' + CONVERT(nvarchar, @ThaiYear) + '
