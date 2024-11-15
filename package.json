@@ -18,6 +18,9 @@
     "url": "https://github.com/chumpon-asaneerat/Election.Analytic.System.DB/issues"
   },
   "homepage": "https://github.com/chumpon-asaneerat/Election.Analytic.System.DB#readme",
+  "volta": {
+    "node": "12.14.0"
+  },
   "devDependencies": {
     "@types/compression": "^1.0.1",
     "@types/dot": "^1.1.3",
